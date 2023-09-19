@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Talpa.10_WebApp", "Talpa.10_WebApp\Talpa.10_WebApp.csproj", "{6ECAFEF6-F60C-460E-94B1-07FB06BA5A86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Talpa", "Talpa\Talpa.csproj", "{6ECAFEF6-F60C-460E-94B1-07FB06BA5A86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Talpa.20_BusinessLogicLayer", "Talpa.20_BusinessLogicLayer\Talpa.20_BusinessLogicLayer.csproj", "{2D01F0E3-2F3E-4D04-8ACA-236D119915B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogicLayer", "BusinessLogicLayer\BusinessLogicLayer.csproj", "{2D01F0E3-2F3E-4D04-8ACA-236D119915B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Talpa.30_DataAccessLayer", "Talpa.30_DataAccessLayer\Talpa.30_DataAccessLayer.csproj", "{2313F87E-ED2A-4CA6-A8EC-6085D746F21B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{2313F87E-ED2A-4CA6-A8EC-6085D746F21B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
