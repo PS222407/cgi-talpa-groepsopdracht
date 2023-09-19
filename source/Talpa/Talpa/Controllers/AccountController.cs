@@ -1,7 +1,11 @@
 ﻿using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 using Auth0.AspNetCore.Authentication;
+using DataAccessLayer;
+using DataAccessLayer.Interfaces;
+using DataAccessLayer.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -12,6 +16,16 @@ namespace Talpa.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly IConfiguration _configuration;
+        
+        private readonly IUserRepository _userRepository;
+
+        public AccountController(IConfiguration configuration, IUserRepository userRepository)
+        {
+            _configuration = configuration;
+            _userRepository = userRepository;
+        }
+
         public async Task Login(string returnUrl = "/")
         {
             var authenticationProperties = new LoginAuthenticationPropertiesBuilder()
@@ -45,51 +59,23 @@ namespace Talpa.Controllers
             });
         }
 
-        
-        private HttpClient _httpClient;
-        
-        private const string BaseUrl = "https://dev-2djpjw5qr1fcoxc2.eu.auth0.com/api/v2";
-        private const string Auth0TokenEndpoint = "/oauth/token";
-        private const string GetUserEndpoint = "/users";
-        private const string ClientId = "";
-        private const string ClientSecret = "";
-        private const string Audience = "https://dev-2djpjw5qr1fcoxc2.eu.auth0.com/api/v2/";
-
         /// <summary>
         /// This is just a helper action to enable you to easily see all claims related to a user. It helps when debugging your
         /// application to see the in claims populated from the Auth0 ID Token
         /// </summary>
         /// <returns></returns>
         [Authorize]
-        public IActionResult Claims()
+        public async Task<IActionResult> Claims()
         {
-            // using (var httpClient = new HttpClient())
-            // {
-            //     var requestContent = new StringContent(
-            //         $"{{\"client_id\":\"{ClientId}\",\"client_secret\":\"{ClientSecret}\",\"audience\":\"{Audience}\",\"grant_type\":\"client_credentials\"}}",
-            //         Encoding.UTF8,
-            //         "application/json");
-            //
-            //     var response = await httpClient.PostAsync(Auth0TokenEndpoint, requestContent);
-            //
-            //     if (response.IsSuccessStatusCode)
-            //     {
-            //         var responseContent = await response.Content.ReadAsStringAsync();
-            //     }
-            //     else
-            //     {
-            //         // Handle the error response here
-            //         throw new HttpRequestException($"Error: {response.StatusCode}");
-            //     }
-            // }
-            
+            var ab = await _userRepository.GetUserById();
+
             foreach (Claim claim in User.Claims)
             {
                 var a = claim;
             }
 
             var id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            
+
             return View();
         }
 

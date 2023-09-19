@@ -1,10 +1,14 @@
 using Auth0.AspNetCore.Authentication;
+using DataAccessLayer.Interfaces;
+using DataAccessLayer.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Talpa.Data;
 using Talpa.Support;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<IUserRepository>(_ => new UserRepository(builder.Configuration["Auth0:ClientId"], builder.Configuration["Auth0:ClientSecret"]));
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
