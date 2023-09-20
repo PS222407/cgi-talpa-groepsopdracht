@@ -1,11 +1,7 @@
-﻿using System.Net.Http.Headers;
-using System.Security.Claims;
-using System.Text;
-using System.Text.Json;
+﻿using System.Security.Claims;
 using Auth0.AspNetCore.Authentication;
-using DataAccessLayer;
-using DataAccessLayer.Interfaces;
-using DataAccessLayer.Repositories;
+using BusinessLogicLayer.Interfaces;
+using BusinessLogicLayer.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -16,31 +12,42 @@ namespace Talpa.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IConfiguration _configuration;
-        
-        private readonly IUserRepository _userRepository;
+        private readonly IUserService _userService;
 
-        public AccountController(IConfiguration configuration, IUserRepository userRepository)
+        public AccountController(IUserService userService)
         {
-            _configuration = configuration;
-            _userRepository = userRepository;
+            _userService = userService;
         }
 
-        public async Task Login(string returnUrl = "/")
+        public async Task Login()
         {
             var authenticationProperties = new LoginAuthenticationPropertiesBuilder()
-                .WithRedirectUri(returnUrl)
+                .WithRedirectUri(Url.Action(nameof(LoginHook)))
                 .Build();
 
             await HttpContext.ChallengeAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
+        }
+
+        public async Task<IActionResult> LoginHook()
+        {
+            string id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            User? user = await _userService.GetUserByIdWithRoles(id);
+            
+            ClaimsIdentity? userClaims = User.Identity as ClaimsIdentity;
+            foreach (Role role in user.Roles)
+            {
+                userClaims.AddClaim(new Claim(ClaimTypes.Role, role.Name));
+            }
+
+            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(userClaims));
+            
+            return RedirectToAction(nameof(Index), "Home");
         }
 
         [Authorize]
         public async Task Logout()
         {
             var authenticationProperties = new LogoutAuthenticationPropertiesBuilder()
-                // Indicate here where Auth0 should redirect the user after a logout.
-                // Note that the resulting absolute Uri must be whitelisted in 
                 .WithRedirectUri(Url.Action("Index", "Home"))
                 .Build();
 
@@ -51,30 +58,22 @@ namespace Talpa.Controllers
         [Authorize]
         public IActionResult Profile()
         {
-            return View(new UserViewModel()
+            return View(new UserViewModel   
             {
                 Name = User.Identity.Name,
                 EmailAddress = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
                 ProfileImage = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value
             });
         }
-
-        /// <summary>
-        /// This is just a helper action to enable you to easily see all claims related to a user. It helps when debugging your
-        /// application to see the in claims populated from the Auth0 ID Token
-        /// </summary>
-        /// <returns></returns>
-        [Authorize]
+        
         public async Task<IActionResult> Claims()
         {
-            var ab = await _userRepository.GetUserById();
+            var roles = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
 
             foreach (Claim claim in User.Claims)
             {
                 var a = claim;
             }
-
-            var id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
             return View();
         }

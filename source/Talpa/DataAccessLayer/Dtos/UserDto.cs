@@ -7,4 +7,6 @@ public class UserDto
     public string name { get; set; }
     
     public string nickname { get; set; }
+
+    public List<RoleDto>? roles { get; set; }
 }

@@ -1,4 +1,6 @@
 using Auth0.AspNetCore.Authentication;
+using BusinessLogicLayer.Interfaces;
+using BusinessLogicLayer.Services;
 using DataAccessLayer.Interfaces;
 using DataAccessLayer.Repositories;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +11,7 @@ using Talpa.Support;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IUserRepository>(_ => new UserRepository(builder.Configuration["Auth0:ClientId"], builder.Configuration["Auth0:ClientSecret"]));
+builder.Services.AddScoped<IUserService, UserService>();
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");

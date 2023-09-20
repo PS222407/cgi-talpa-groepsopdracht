@@ -2,7 +2,7 @@
 
 namespace DataAccessLayer;
 
-public class JwtService
+public static class JwtService
 {
     public static DateTime? GetTokenExpirationDate(string token)
     {

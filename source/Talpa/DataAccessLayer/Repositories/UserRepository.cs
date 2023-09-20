@@ -24,4 +24,31 @@ public class UserRepository : Repository, IUserRepository
 
         return userDto;
     }
+
+    public async Task<List<RoleDto>?> GetUserRoles(string id)
+    {
+        using HttpClient httpClient = new HttpClient();
+        
+        string url = $"{Auth0.BaseUrl}{Auth0.GetUserEndpoint}/{id}/roles";
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await GetAccessToken());
+        
+        HttpResponseMessage response = await httpClient.GetAsync(url);
+        string status = response.Content.ReadAsStringAsync().Result;
+        List<RoleDto>? roleDtos = JsonSerializer.Deserialize<List<RoleDto>>(status);
+
+        return roleDtos;
+    }
+
+    public async Task<UserDto?> GetUserByIdWithRoles(string id)
+    {
+        UserDto? userDto = await GetUserById(id);
+        if (userDto == null)
+        {
+            return null;
+        }
+
+        userDto.roles = await GetUserRoles(id);
+        
+        return userDto;
+    }
 }

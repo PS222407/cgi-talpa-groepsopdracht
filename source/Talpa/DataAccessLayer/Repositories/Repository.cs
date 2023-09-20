@@ -15,8 +15,8 @@ public class Repository
         _clientId = clientId;
         _clientSecret = clientSecret;
     }
-    
-    public async Task<string?> GetAccessToken()
+
+    protected async Task<string?> GetAccessToken()
     {
         bool validAccessTokenExists = Auth0.AccessToken != null && DateTime.Now.AddMinutes(1) < JwtService.GetTokenExpirationDate(Auth0.AccessToken);
         if (validAccessTokenExists)
@@ -41,6 +41,7 @@ public class Repository
         HttpResponseMessage response = await httpClient.PostAsync(url, postData);
         string status = response.Content.ReadAsStringAsync().Result;
         TokenDto? tokenDto = JsonSerializer.Deserialize<TokenDto>(status);
+        Auth0.AccessToken = tokenDto?.access_token;
 
         return tokenDto?.access_token;
     }
