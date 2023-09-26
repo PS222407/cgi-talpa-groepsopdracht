@@ -1,14 +1,16 @@
-﻿namespace Talpa.ViewModels;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace Talpa.ViewModels;
 
 public class TeamViewModel
 {
-    public int? Id { get; private set; }
+    public int? Id { get; set; }
 
-    public string Name { get; private set; }
+    public string? Name { get; set; }
+
+    public List<UserViewModel>? Users { get; set; }
     
-    public TeamViewModel(int? id, string name)
-    {
-        Id = id;
-        Name = name;
-    }
+    public List<string>? SelectedUserIds { get; set; }
+    
+    public List<SelectListItem>? UserOptions { get; set; }
 }

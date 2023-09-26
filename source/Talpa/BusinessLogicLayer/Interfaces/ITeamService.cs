@@ -13,4 +13,8 @@ public interface ITeamService
     public bool Update(Team team);
 
     public bool Delete(int id);
+    
+    public Task<bool> SyncUsers(int teamId, List<string> userIds);
+
+    public Task<bool> AttachUsers(int teamId, List<string> userIds);
 }

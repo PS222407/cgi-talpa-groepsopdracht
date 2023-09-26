@@ -5,6 +5,8 @@ namespace BusinessLogicLayer.Interfaces;
 public interface IUserService
 {
     public Task<User?> GetById(string id);
+
+    public Task<List<User>?> GetAll();
     
     public Task<List<Role>?> GetRoles(string id);
     

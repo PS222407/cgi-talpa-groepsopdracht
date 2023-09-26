@@ -8,17 +8,17 @@ namespace BusinessLogicLayer.Services;
 public class OutingService : IOutingService
 {
     private readonly IOutingRepository _outingRepository;
-    
+
     public OutingService(IOutingRepository outingRepository)
     {
         _outingRepository = outingRepository;
     }
 
-    public Outing Create(Outing outing)
+    public Outing Create(Outing outing, int teamId)
     {
-        OutingDto outingDto = _outingRepository.Create(new OutingDto(null, outing.Name));
-        
-        return new Outing(outingDto.Id, outingDto.Name);
+        OutingDto outingDto = _outingRepository.Create(new OutingDto { Name = outing.Name }, teamId);
+
+        return new Outing{Id = outingDto.Id, Name = outingDto.Name};
     }
 
     public Outing? GetById(int id)
@@ -28,22 +28,27 @@ public class OutingService : IOutingService
         {
             return null;
         }
-        
-        return new Outing(outingDto.Id, outingDto.Name);
+
+        return new Outing{Id = outingDto.Id, Name = outingDto.Name};
     }
 
     public List<Outing> GetAll()
     {
-        return _outingRepository.GetAll().Select(outingDto => new Outing(outingDto.Id, outingDto.Name)).ToList();
+        return _outingRepository.GetAll().Select(outingDto => new Outing{Id = outingDto.Id, Name = outingDto.Name}).ToList();
     }
 
     public bool Update(Outing outing)
     {
-        return _outingRepository.Update(new OutingDto(outing.Id, outing.Name));
+        return _outingRepository.Update(new OutingDto { Id = outing.Id, Name = outing.Name });
     }
 
     public bool Delete(int id)
     {
         return _outingRepository.Delete(id);
+    }
+
+    public List<Outing> GetAllFromTeam(int teamId)
+    {
+        return _outingRepository.GetAllFromTeam(teamId).Select(o => new Outing { Id = o.Id, Name = o.Name }).ToList();
     }
 }

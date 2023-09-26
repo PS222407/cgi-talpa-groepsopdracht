@@ -26,6 +26,20 @@ public class UserRepository : Repository, IUserRepository
         return userDto;
     }
 
+    public async Task<List<UserDto>?> GetAll()
+    {
+        using HttpClient httpClient = new HttpClient();
+        
+        string url = $"{Auth0.BaseUrl}{Auth0.GetUserEndpoint}";
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await GetAccessToken());
+        
+        HttpResponseMessage response = await httpClient.GetAsync(url);
+        string status = response.Content.ReadAsStringAsync().Result;
+        List<UserDto>? userDtos = JsonSerializer.Deserialize<List<UserDto>>(status);
+
+        return userDtos;
+    }
+
     public async Task<List<RoleDto>?> GetRoles(string id)
     {
         using HttpClient httpClient = new HttpClient();
@@ -53,7 +67,7 @@ public class UserRepository : Repository, IUserRepository
         return userDto;
     }
 
-    public async Task<bool> UpdateTeam(string userId, int teamId)
+    public async Task<bool> UpdateTeam(string userId, int? teamId)
     {
         var patchData = new
         {
@@ -62,7 +76,7 @@ public class UserRepository : Repository, IUserRepository
                 teamId = teamId
             }
         };
-        string jsonData = JsonSerializer.Serialize(patchData);        // { "user_metadata" : { "teamId": 1479 } }
+        string jsonData = JsonSerializer.Serialize(patchData);
         
         using HttpClient httpClient = new HttpClient();
         

@@ -4,7 +4,7 @@ namespace BusinessLogicLayer.Interfaces;
 
 public interface IOutingService
 {
-    public Outing Create(Outing outing);
+    public Outing Create(Outing outing, int teamId);
 
     public Outing? GetById(int id);
     
@@ -13,4 +13,6 @@ public interface IOutingService
     public bool Update(Outing outing);
 
     public bool Delete(int id);
+    
+    public List<Outing> GetAllFromTeam(int teamId);
 }

@@ -20,7 +20,6 @@ namespace Talpa.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
         public IActionResult Privacy()
         {
             return View();

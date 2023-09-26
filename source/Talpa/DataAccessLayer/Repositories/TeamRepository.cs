@@ -41,8 +41,9 @@ public class TeamRepository : ITeamRepository
         }
 
         team.Name = teamDto.Name;
+        _dataContext.SaveChanges();
 
-        return _dataContext.SaveChanges() > 0;
+        return true;
     }
 
     public bool Delete(int id)

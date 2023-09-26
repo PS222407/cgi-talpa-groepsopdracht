@@ -28,6 +28,17 @@ public class UserService : IUserService
         
         return _userTransformer.User(userDto);
     }
+    
+    public async Task<List<User>?> GetAll()
+    {
+        List<UserDto>? userDtos = await _userRepository.GetAll();
+        if (userDtos == null)
+        {
+            return null;
+        }
+        
+        return _userTransformer.Users(userDtos);
+    }
 
     public async Task<List<Role>?> GetRoles(string id)
     {

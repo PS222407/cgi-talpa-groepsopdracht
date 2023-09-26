@@ -2,13 +2,7 @@
 
 public class Outing
 {
-    public int? Id { get; private set; }
+    public int? Id { get; set; }
 
-    public string Name { get; private set; }
-    
-    public Outing(int? id, string name)
-    {
-        Id = id;
-        Name = name;
-    }
+    public string Name { get; set; }
 }

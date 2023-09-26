@@ -30,10 +30,12 @@ public class UserTransformer
     {
         return new User
         {
+            Id = userDto.user_id,
             Name = userDto.name,
             NickName = userDto.nickname,
             Email = userDto.email,
             Roles = Roles(userDto.roles),
+            TeamId = userDto.user_metadata.teamId,
         };
     }
 

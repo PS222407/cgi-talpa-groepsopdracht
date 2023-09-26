@@ -14,8 +14,9 @@ public class OutingRepository : IOutingRepository
         _dataContext = dbContext;
     }
 
-    public OutingDto Create(OutingDto outingDto)
+    public OutingDto Create(OutingDto outingDto, int teamId)
     {
+        outingDto.TeamId = teamId;
         EntityEntry<OutingDto> entry = _dataContext.Add(outingDto);
         _dataContext.SaveChanges();
 
@@ -57,5 +58,10 @@ public class OutingRepository : IOutingRepository
         _dataContext.Remove(outing);
 
         return _dataContext.SaveChanges() > 0;
+    }
+
+    public List<OutingDto> GetAllFromTeam(int teamId)
+    {
+        return _dataContext.Outings.Where(o => o.TeamId == teamId).ToList();
     }
 }
