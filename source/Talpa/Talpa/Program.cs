@@ -12,31 +12,23 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IUserRepository>(_ => new UserRepository(builder.Configuration["Auth0:ClientId"], builder.Configuration["Auth0:ClientSecret"]));
 builder.Services.AddScoped<IUserService, UserService>();
-
-// Add services to the container.
-// var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-// builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//     options.UseSqlServer(connectionString));
-
-// var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-// var serverVersion = new MySqlServerVersion(new Version(8, 0, 24));
-// builder.Services.AddDbContext<ApplicationDbContext>(opt => opt.UseMySql(connectionString, serverVersion));
+builder.Services.AddScoped<IOutingService, OutingService>();
+builder.Services.AddScoped<IOutingRepository, OutingRepository>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+builder.Services.AddDbContext<DataContext>(options =>
     options.UseMySql(
         connectionString,
         new MySqlServerVersion(new Version(10, 4, 22)), // Edit this to your SQL server version.
         mySqlOptions => mySqlOptions.MigrationsAssembly("DataAccessLayer")
     ));
 
-builder.Services.AddScoped<ApplicationDbContext>();
+builder.Services.AddScoped<DataContext>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-// builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-//     .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<DataContext>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddAuth0WebAppAuthentication(options =>
