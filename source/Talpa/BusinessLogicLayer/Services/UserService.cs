@@ -18,9 +18,9 @@ public class UserService : IUserService
         _userTransformer = new UserTransformer();
     }
 
-    public async Task<User?> GetUserById(string id)
+    public async Task<User?> GetById(string id)
     {
-        UserDto? userDto = await _userRepository.GetUserById(id);
+        UserDto? userDto = await _userRepository.GetById(id);
         if (userDto == null)
         {
             return null;
@@ -29,9 +29,9 @@ public class UserService : IUserService
         return _userTransformer.User(userDto);
     }
 
-    public async Task<List<Role>?> GetUserRoles(string id)
+    public async Task<List<Role>?> GetRoles(string id)
     {
-        List<RoleDto>? roleDtos = await _userRepository.GetUserRoles(id);
+        List<RoleDto>? roleDtos = await _userRepository.GetRoles(id);
         if (roleDtos == null)
         {
             return null;
@@ -40,14 +40,24 @@ public class UserService : IUserService
         return _userTransformer.Roles(roleDtos);
     }
 
-    public async Task<User?> GetUserByIdWithRoles(string id)
+    public async Task<User?> GetByIdWithRoles(string id)
     {
-        UserDto? userDto = await _userRepository.GetUserByIdWithRoles(id);
+        UserDto? userDto = await _userRepository.GetByIdWithRoles(id);
         if (userDto == null)
         {
             return null;
         }
 
         return _userTransformer.User(userDto);
+    }
+
+    public async Task<bool> UpdateTeam(string id, int teamId)
+    {
+        return await _userRepository.UpdateTeam(id, teamId);
+    }
+
+    public async Task<List<User>?> GetByTeam(int teamId)
+    {
+        return _userTransformer.Users(await _userRepository.GetByTeam(teamId));
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
 using DataAccessLayer.Dtos;
 using DataAccessLayer.Interfaces;
@@ -11,7 +12,7 @@ public class UserRepository : Repository, IUserRepository
     {
     }
 
-    public async Task<UserDto?> GetUserById(string id)
+    public async Task<UserDto?> GetById(string id)
     {
         using HttpClient httpClient = new HttpClient();
         
@@ -25,7 +26,7 @@ public class UserRepository : Repository, IUserRepository
         return userDto;
     }
 
-    public async Task<List<RoleDto>?> GetUserRoles(string id)
+    public async Task<List<RoleDto>?> GetRoles(string id)
     {
         using HttpClient httpClient = new HttpClient();
         
@@ -39,16 +40,61 @@ public class UserRepository : Repository, IUserRepository
         return roleDtos;
     }
 
-    public async Task<UserDto?> GetUserByIdWithRoles(string id)
+    public async Task<UserDto?> GetByIdWithRoles(string id)
     {
-        UserDto? userDto = await GetUserById(id);
+        UserDto? userDto = await GetById(id);
         if (userDto == null)
         {
             return null;
         }
 
-        userDto.roles = await GetUserRoles(id);
+        userDto.roles = await GetRoles(id);
         
         return userDto;
+    }
+
+    public async Task<bool> UpdateTeam(string userId, int teamId)
+    {
+        var patchData = new
+        {
+            user_metadata = new
+            {
+                teamId = teamId
+            }
+        };
+        string jsonData = JsonSerializer.Serialize(patchData);        // { "user_metadata" : { "teamId": 1479 } }
+        
+        using HttpClient httpClient = new HttpClient();
+        
+        string url = $"{Auth0.BaseUrl}{Auth0.GetUserEndpoint}/{userId}";
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await GetAccessToken());
+        
+        var request = new HttpRequestMessage(HttpMethod.Patch, url)
+        {
+            Content = new StringContent(jsonData, Encoding.UTF8, "application/json")
+        };
+
+        HttpResponseMessage response = await httpClient.SendAsync(request);
+
+        return response.IsSuccessStatusCode;
+    }
+
+    public async Task<List<UserDto>?> GetByTeam(int teamId)
+    {
+        using HttpClient httpClient = new HttpClient();
+        
+        string searchQuery = $"user_metadata.teamId: {teamId}";
+        string searchEngineVersion = "v3";
+        string encodedSearchQuery = Uri.EscapeDataString(searchQuery);
+
+        string url = $"{Auth0.BaseUrl}{Auth0.GetUserEndpoint}?q={encodedSearchQuery}&search_engine={searchEngineVersion}";
+        
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await GetAccessToken());
+        
+        HttpResponseMessage response = await httpClient.GetAsync(url);
+        string status = response.Content.ReadAsStringAsync().Result;
+        List<UserDto>? userDtos = JsonSerializer.Deserialize<List<UserDto>>(status);
+        
+        return userDtos;
     }
 }

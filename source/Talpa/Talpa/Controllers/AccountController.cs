@@ -31,7 +31,7 @@ namespace Talpa.Controllers
         public async Task<IActionResult> LoginHook()
         {
             string id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            User? user = await _userService.GetUserByIdWithRoles(id);
+            User? user = await _userService.GetByIdWithRoles(id);
             
             ClaimsIdentity? userClaims = User.Identity as ClaimsIdentity;
             foreach (Role role in user.Roles)

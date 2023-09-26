@@ -4,9 +4,13 @@ namespace BusinessLogicLayer.Interfaces;
 
 public interface IUserService
 {
-    public Task<User?> GetUserById(string id);
+    public Task<User?> GetById(string id);
     
-    public Task<List<Role>?> GetUserRoles(string id);
+    public Task<List<Role>?> GetRoles(string id);
     
-    public Task<User?> GetUserByIdWithRoles(string id);
+    public Task<User?> GetByIdWithRoles(string id);
+    
+    public Task<bool> UpdateTeam(string id, int teamId);
+    
+    public Task<List<User>?> GetByTeam(int teamId);
 }

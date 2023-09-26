@@ -36,4 +36,9 @@ public class UserTransformer
             Roles = Roles(userDto.roles),
         };
     }
+
+    public List<User>? Users(List<UserDto>? userDtos)
+    {
+        return userDtos?.Select(User).ToList();
+    }
 }
