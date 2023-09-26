@@ -10,4 +10,6 @@ public class DataContext : DbContext
     }
     
     public DbSet<OutingDto> Outings { get; set; }
+    public DbSet<TeamDto> Teams { get; set; }
+
 }
