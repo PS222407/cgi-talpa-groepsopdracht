@@ -14,6 +14,8 @@ builder.Services.AddScoped<IUserRepository>(_ => new UserRepository(builder.Conf
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IOutingService, OutingService>();
 builder.Services.AddScoped<IOutingRepository, OutingRepository>();
+builder.Services.AddScoped<ITeamService, TeamService>();
+builder.Services.AddScoped<ITeamRepository, TeamRepository>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<DataContext>(options =>

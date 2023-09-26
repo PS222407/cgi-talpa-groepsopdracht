@@ -45,14 +45,14 @@ public class OutingController : Controller
     // POST: Outing/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Create(OutingRequest courtRequest)
+    public ActionResult Create(OutingRequest outingRequest)
     {
         if (!ModelState.IsValid)
         {
             return View();
         }
 
-        Outing outing = new Outing(null, courtRequest.Name);
+        Outing outing = new Outing(null, outingRequest.Name);
         Outing outingEntry = _outingService.Create(outing);
         if (outingEntry.Id == null)
         {
