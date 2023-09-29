@@ -1,4 +1,4 @@
-﻿using BusinessLogicLayer.Interfaces;
+﻿using BusinessLogicLayer.Interfaces.Services;
 using BusinessLogicLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -26,7 +26,7 @@ public class TeamController : Controller
     // GET: TeamController/Details/5
     public async Task<ActionResult> Details(int id)
     {
-        List<UserViewModel>? users = (await _userService.GetByTeam(id))?.Select(u => new UserViewModel{Name = u.Name}).ToList();
+        List<UserViewModel>? users = (await _userService.GetByTeam(id))?.Select(u => new UserViewModel { Name = u.Name }).ToList();
         Team? team = _teamService.GetById(id);
         if (team == null)
         {
@@ -36,7 +36,7 @@ public class TeamController : Controller
             return View();
         }
 
-        return View(new TeamViewModel { Id = team.Id, Name = team.Name, Users = users});
+        return View(new TeamViewModel { Id = team.Id, Name = team.Name, Users = users });
     }
 
     // GET: TeamController/Create
@@ -75,7 +75,7 @@ public class TeamController : Controller
             });
         }
 
-        Team team = new Team(null, teamRequest.Name);
+        Team team = new() { Name = teamRequest.Name };
         Team teamEntry = _teamService.Create(team);
         if (teamEntry.Id == null)
         {
@@ -116,7 +116,7 @@ public class TeamController : Controller
         {
             userViewModels.AddRange(users.Select(user => new UserViewModel { EmailAddress = user.Email, Name = user.Name }));
         }
-        
+
         Team? team = _teamService.GetById(id);
         if (team == null)
         {
@@ -155,7 +155,7 @@ public class TeamController : Controller
             });
         }
 
-        Team team = new Team(id, teamRequest.Name);
+        Team team = new() { Id = id, Name = teamRequest.Name };
         if (!_teamService.Update(team))
         {
             TempData["Message"] = "Fout tijdens het opslaan van de data.";

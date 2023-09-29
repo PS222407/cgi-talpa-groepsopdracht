@@ -1,5 +1,6 @@
 using System.Security.Claims;
-using BusinessLogicLayer.Interfaces;
+using BusinessLogicLayer.Exceptions;
+using BusinessLogicLayer.Interfaces.Services;
 using BusinessLogicLayer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -74,14 +75,25 @@ public class OutingController : Controller
     {
         if (!ModelState.IsValid)
         {
-            return View(new OutingViewModel(null, outingRequest.Name));
+            return View(outingRequest);
         }
 
-        Outing outing = new Outing { Name = outingRequest.Name };
+        Outing outing = new() { Name = outingRequest.Name };
         string id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
         User user = (await _userService.GetById(id))!;
 
-        Outing outingEntry = _outingService.Create(outing, (int)user.TeamId);
+        Outing outingEntry;
+        try
+        {
+            outingEntry = _outingService.Create(outing, (int)user.TeamId);
+        }
+        catch (TeamNotFoundException e)
+        {
+            TempData["Message"] = "Je bent niet gekoppeld aan een geldig team.";
+            TempData["MessageType"] = "danger";
+            return View();
+        }
+        
         if (outingEntry.Id == null)
         {
             TempData["Message"] = "Fout tijdens het aanmaken.";

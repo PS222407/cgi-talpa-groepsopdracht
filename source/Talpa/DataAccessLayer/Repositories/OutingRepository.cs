@@ -1,7 +1,8 @@
+using BusinessLogicLayer.Exceptions;
 using DataAccessLayer.Data;
-using DataAccessLayer.Dtos;
-using DataAccessLayer.Interfaces;
+using BusinessLogicLayer.Models;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using BusinessLogicLayer.Interfaces.Repositories;
 
 namespace DataAccessLayer.Repositories;
 
@@ -14,41 +15,46 @@ public class OutingRepository : IOutingRepository
         _dataContext = dbContext;
     }
 
-    public OutingDto Create(OutingDto outingDto, int teamId)
+    public Outing Create(Outing outing, int teamId)
     {
-        outingDto.TeamId = teamId;
-        EntityEntry<OutingDto> entry = _dataContext.Add(outingDto);
+        if (!_dataContext.Teams.Any(t => t.Id == teamId))
+        {
+            throw new TeamNotFoundException($"There is no existing team with id {teamId}");
+        }
+        
+        outing.TeamId = teamId;
+        EntityEntry<Outing> entry = _dataContext.Add(outing);
         _dataContext.SaveChanges();
 
         return entry.Entity;
     }
 
-    public OutingDto? GetById(int id)
+    public Outing? GetById(int id)
     {
         return _dataContext.Outings.FirstOrDefault(o => o.Id == id);
     }
 
-    public List<OutingDto> GetAll()
+    public List<Outing> GetAll()
     {
         return _dataContext.Outings.ToList();
     }
 
-    public bool Update(OutingDto outingDto)
+    public bool Update(Outing outing)
     {
-        OutingDto? outing = _dataContext.Outings.FirstOrDefault(o => o.Id == outingDto.Id);
-        if (outing == null)
+        Outing? outingDb = _dataContext.Outings.FirstOrDefault(o => o.Id == outing.Id);
+        if (outingDb == null)
         {
             return false;
         }
 
-        outing.Name = outingDto.Name;
+        outingDb.Name = outing.Name;
 
         return _dataContext.SaveChanges() > 0;
     }
 
     public bool Delete(int id)
     {
-        OutingDto? outing = _dataContext.Outings.FirstOrDefault(o => o.Id == id);
+        Outing? outing = _dataContext.Outings.FirstOrDefault(o => o.Id == id);
 
         if (outing == null)
         {
@@ -60,7 +66,7 @@ public class OutingRepository : IOutingRepository
         return _dataContext.SaveChanges() > 0;
     }
 
-    public List<OutingDto> GetAllFromTeam(int teamId)
+    public List<Outing> GetAllFromTeam(int teamId)
     {
         return _dataContext.Outings.Where(o => o.TeamId == teamId).ToList();
     }

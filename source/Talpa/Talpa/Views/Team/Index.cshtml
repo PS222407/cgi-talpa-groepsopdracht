@@ -1,3 +1,4 @@
+@using Talpa.ViewModels
 @model IEnumerable<Talpa.ViewModels.TeamViewModel>
 
 @{
@@ -19,7 +20,7 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (TeamViewModel item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)

@@ -19,14 +19,13 @@ namespace DataAccessLayer.Migrations
                 .HasAnnotation("ProductVersion", "7.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("DataAccessLayer.Dtos.OutingDto", b =>
+            modelBuilder.Entity("BusinessLogicLayer.Models.Outing", b =>
                 {
                     b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("TeamId")
@@ -39,14 +38,13 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Outings");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Dtos.TeamDto", b =>
+            modelBuilder.Entity("BusinessLogicLayer.Models.Team", b =>
                 {
                     b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -54,9 +52,9 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Teams");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Dtos.OutingDto", b =>
+            modelBuilder.Entity("BusinessLogicLayer.Models.Outing", b =>
                 {
-                    b.HasOne("DataAccessLayer.Dtos.TeamDto", "Team")
+                    b.HasOne("BusinessLogicLayer.Models.Team", "Team")
                         .WithMany()
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)

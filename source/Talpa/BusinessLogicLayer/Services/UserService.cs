@@ -1,8 +1,6 @@
-﻿using BusinessLogicLayer.Interfaces;
+﻿using BusinessLogicLayer.Interfaces.Repositories;
+using BusinessLogicLayer.Interfaces.Services;
 using BusinessLogicLayer.Models;
-using BusinessLogicLayer.Transformers;
-using DataAccessLayer.Dtos;
-using DataAccessLayer.Interfaces;
 
 namespace BusinessLogicLayer.Services;
 
@@ -10,56 +8,29 @@ public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
     
-    private readonly UserTransformer _userTransformer;
-
     public UserService(IUserRepository userRepository)
     {
         _userRepository = userRepository;
-        _userTransformer = new UserTransformer();
     }
 
     public async Task<User?> GetById(string id)
     {
-        UserDto? userDto = await _userRepository.GetById(id);
-        if (userDto == null)
-        {
-            return null;
-        }
-        
-        return _userTransformer.User(userDto);
+        return await _userRepository.GetById(id);
     }
     
     public async Task<List<User>?> GetAll()
     {
-        List<UserDto>? userDtos = await _userRepository.GetAll();
-        if (userDtos == null)
-        {
-            return null;
-        }
-        
-        return _userTransformer.Users(userDtos);
+        return await _userRepository.GetAll();
     }
 
     public async Task<List<Role>?> GetRoles(string id)
     {
-        List<RoleDto>? roleDtos = await _userRepository.GetRoles(id);
-        if (roleDtos == null)
-        {
-            return null;
-        }
-
-        return _userTransformer.Roles(roleDtos);
+        return await _userRepository.GetRoles(id);
     }
 
     public async Task<User?> GetByIdWithRoles(string id)
     {
-        UserDto? userDto = await _userRepository.GetByIdWithRoles(id);
-        if (userDto == null)
-        {
-            return null;
-        }
-
-        return _userTransformer.User(userDto);
+        return await _userRepository.GetByIdWithRoles(id);
     }
 
     public async Task<bool> UpdateTeam(string id, int teamId)
@@ -69,6 +40,6 @@ public class UserService : IUserService
 
     public async Task<List<User>?> GetByTeam(int teamId)
     {
-        return _userTransformer.Users(await _userRepository.GetByTeam(teamId));
+        return await _userRepository.GetByTeam(teamId);
     }
 }

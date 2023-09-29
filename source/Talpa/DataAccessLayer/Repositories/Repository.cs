@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using System.Text.Json;
-using DataAccessLayer.Dtos;
+using BusinessLogicLayer.Models;
 
 namespace DataAccessLayer.Repositories;
 
@@ -40,9 +40,9 @@ public class Repository
     
         HttpResponseMessage response = await httpClient.PostAsync(url, postData);
         string status = response.Content.ReadAsStringAsync().Result;
-        TokenDto? tokenDto = JsonSerializer.Deserialize<TokenDto>(status);
-        Auth0.AccessToken = tokenDto?.access_token;
+        Token? token = JsonSerializer.Deserialize<Token>(status);
+        Auth0.AccessToken = token?.access_token;
 
-        return tokenDto?.access_token;
+        return token?.access_token;
     }
 }

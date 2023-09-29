@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Talpa.ViewModels;
 
@@ -16,7 +17,7 @@ namespace Talpa.Controllers
 
         public IActionResult Index()
         {
-            var a = User.Claims;
+            IEnumerable<Claim> a = User.Claims;
             return View();
         }
 

@@ -1,7 +1,6 @@
-﻿using BusinessLogicLayer.Interfaces;
+﻿using BusinessLogicLayer.Interfaces.Repositories;
+using BusinessLogicLayer.Interfaces.Services;
 using BusinessLogicLayer.Models;
-using DataAccessLayer.Dtos;
-using DataAccessLayer.Interfaces;
 
 namespace BusinessLogicLayer.Services;
 
@@ -19,30 +18,22 @@ public class TeamService : ITeamService
 
     public Team Create(Team team)
     {
-        TeamDto teamDto = _teamRepository.Create(new TeamDto(null, team.Name));
-
-        return new Team(teamDto.Id, teamDto.Name);
+        return _teamRepository.Create(team);
     }
 
     public Team? GetById(int id)
-    {
-        TeamDto? teamDto = _teamRepository.GetById(id);
-        if (teamDto == null)
-        {
-            return null;
-        }
-        
-        return new Team(teamDto.Id, teamDto.Name);
+    {        
+        return _teamRepository.GetById(id);
     }
 
     public List<Team> GetAll()
     {
-        return _teamRepository.GetAll().Select(TeamDto => new Team(TeamDto.Id, TeamDto.Name)).ToList();
+        return _teamRepository.GetAll();
     }
 
     public bool Update(Team team)
     {
-        return _teamRepository.Update(new TeamDto(team.Id, team.Name));
+        return _teamRepository.Update(team);
     }
 
     public bool Delete(int id)
@@ -52,7 +43,7 @@ public class TeamService : ITeamService
 
     public async Task<bool> SyncUsers(int teamId, List<string> userIds)
     {
-        List<string> oldUserIds = (await _userRepository.GetByTeam(teamId))?.Select(u => u.user_id).ToList() ?? new List<string>();
+        List<string> oldUserIds = (await _userRepository.GetByTeam(teamId))?.Select(u => u.Id).ToList() ?? new List<string>();
         List<string> userIdsToRemove = oldUserIds.Except(userIds).ToList();
         List<string> newUserIds = userIds.Except(oldUserIds).ToList();
         

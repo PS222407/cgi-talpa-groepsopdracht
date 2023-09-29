@@ -1,8 +1,8 @@
 ﻿using BusinessLogicLayer.Models;
 
-namespace BusinessLogicLayer.Interfaces;
+namespace BusinessLogicLayer.Interfaces.Repositories;
 
-public interface IOutingService
+public interface IOutingRepository
 {
     public Outing Create(Outing outing, int teamId);
 
@@ -14,5 +14,5 @@ public interface IOutingService
 
     public bool Delete(int id);
     
-    public List<Outing> GetAllFromTeam(int teamId);
+    List<Outing> GetAllFromTeam(int teamId);
 }

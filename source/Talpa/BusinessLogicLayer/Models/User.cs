@@ -8,7 +8,7 @@ public class User
 
     public string Name { get; set; }
     
-    public string NickName { get; set; }
+    public string? NickName { get; set; }
 
     public int? TeamId { get; set; }
     

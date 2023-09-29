@@ -7,7 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
+      <Compile Remove="Interfaces\IUserService.cs" />
     </ItemGroup>
+
 
 </Project>

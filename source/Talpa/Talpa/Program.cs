@@ -1,14 +1,14 @@
 using Auth0.AspNetCore.Authentication;
-using BusinessLogicLayer.Interfaces;
+using BusinessLogicLayer.Interfaces.Repositories;
+using BusinessLogicLayer.Interfaces.Services;
 using BusinessLogicLayer.Services;
 using DataAccessLayer.Data;
-using DataAccessLayer.Interfaces;
 using DataAccessLayer.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Talpa.Support;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IUserRepository>(_ => new UserRepository(builder.Configuration["Auth0:ClientId"], builder.Configuration["Auth0:ClientSecret"]));
 builder.Services.AddScoped<IUserService, UserService>();
@@ -17,7 +17,7 @@ builder.Services.AddScoped<IOutingRepository, OutingRepository>();
 builder.Services.AddScoped<ITeamService, TeamService>();
 builder.Services.AddScoped<ITeamRepository, TeamRepository>();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseMySql(
         connectionString,
@@ -41,7 +41,7 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
 
 
 builder.Services.ConfigureSameSiteNoneCookies();
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

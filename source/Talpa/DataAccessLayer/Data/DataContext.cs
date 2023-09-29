@@ -1,4 +1,4 @@
-﻿using DataAccessLayer.Dtos;
+﻿using BusinessLogicLayer.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Data;
@@ -9,7 +9,7 @@ public class DataContext : DbContext
     {
     }
     
-    public DbSet<OutingDto> Outings { get; set; }
+    public DbSet<Outing> Outings { get; set; }
 
-    public DbSet<TeamDto> Teams { get; set; }
+    public DbSet<Team> Teams { get; set; }
 }

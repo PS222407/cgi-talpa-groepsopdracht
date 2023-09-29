@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 using Auth0.AspNetCore.Authentication;
-using BusinessLogicLayer.Interfaces;
+using BusinessLogicLayer.Interfaces.Services;
 using BusinessLogicLayer.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -21,7 +21,7 @@ namespace Talpa.Controllers
 
         public async Task Login()
         {
-            var authenticationProperties = new LoginAuthenticationPropertiesBuilder()
+            AuthenticationProperties authenticationProperties = new LoginAuthenticationPropertiesBuilder()
                 .WithRedirectUri(Url.Action(nameof(LoginHook)))
                 .Build();
 
@@ -34,7 +34,7 @@ namespace Talpa.Controllers
             User? user = await _userService.GetByIdWithRoles(id);
             
             ClaimsIdentity? userClaims = User.Identity as ClaimsIdentity;
-            foreach (Role role in user.Roles)
+            foreach (Role role in user?.Roles ?? new List<Role>())
             {
                 userClaims.AddClaim(new Claim(ClaimTypes.Role, role.Name));
             }
@@ -47,7 +47,7 @@ namespace Talpa.Controllers
         [Authorize]
         public async Task Logout()
         {
-            var authenticationProperties = new LogoutAuthenticationPropertiesBuilder()
+            AuthenticationProperties authenticationProperties = new LogoutAuthenticationPropertiesBuilder()
                 .WithRedirectUri(Url.Action("Index", "Home"))
                 .Build();
 
@@ -68,11 +68,11 @@ namespace Talpa.Controllers
         
         public async Task<IActionResult> Claims()
         {
-            var roles = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            string? roles = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
 
             foreach (Claim claim in User.Claims)
             {
-                var a = claim;
+                Claim a = claim;
             }
 
             return View();

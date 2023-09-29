@@ -23,10 +23,29 @@
 
 
 
+    <ItemGroup>
+      <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj" />
+    </ItemGroup>
+
+
+
+
+
 
 
     <ItemGroup>
       <Folder Include="Migrations\" />
+    </ItemGroup>
+
+
+
+
+
+    <ItemGroup>
+      <Compile Remove="Dtos\TokenDto.cs" />
+      <Compile Remove="Interfaces\IOutingRepository.cs" />
+      <Compile Remove="Dtos\TeamDto.cs" />
+      <Compile Remove="Interfaces\IUserRepository.cs" />
     </ItemGroup>
 
 

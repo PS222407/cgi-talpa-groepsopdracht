@@ -1,6 +1,6 @@
+using BusinessLogicLayer.Interfaces.Repositories;
+using BusinessLogicLayer.Models;
 using DataAccessLayer.Data;
-using DataAccessLayer.Dtos;
-using DataAccessLayer.Interfaces;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace DataAccessLayer.Repositories;
@@ -14,33 +14,33 @@ public class TeamRepository : ITeamRepository
         _dataContext = dbContext;
     }
 
-    public TeamDto Create(TeamDto teamDto)
+    public Team Create(Team team)
     {
-        EntityEntry<TeamDto> entry = _dataContext.Add(teamDto);
+        EntityEntry<Team> entry = _dataContext.Add(team);
         _dataContext.SaveChanges();
 
         return entry.Entity;
     }
 
-    public TeamDto? GetById(int id)
+    public Team? GetById(int id)
     {
         return _dataContext.Teams.FirstOrDefault(o => o.Id == id);
     }
 
-    public List<TeamDto> GetAll()
+    public List<Team> GetAll()
     {
         return _dataContext.Teams.ToList();
     }
 
-    public bool Update(TeamDto teamDto)
+    public bool Update(Team team)
     {
-        TeamDto? team = _dataContext.Teams.FirstOrDefault(o => o.Id == teamDto.Id);
-        if (team == null)
+        Team? teamDb = _dataContext.Teams.FirstOrDefault(o => o.Id == team.Id);
+        if (teamDb == null)
         {
             return false;
         }
 
-        team.Name = teamDto.Name;
+        teamDb.Name = team.Name;
         _dataContext.SaveChanges();
 
         return true;
@@ -48,7 +48,7 @@ public class TeamRepository : ITeamRepository
 
     public bool Delete(int id)
     {
-        TeamDto? team = _dataContext.Teams.FirstOrDefault(o => o.Id == id);
+        Team? team = _dataContext.Teams.FirstOrDefault(o => o.Id == id);
 
         if (team == null)
         {

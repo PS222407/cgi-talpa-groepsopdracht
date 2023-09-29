@@ -1,6 +1,6 @@
 ﻿using BusinessLogicLayer.Models;
 
-namespace BusinessLogicLayer.Interfaces;
+namespace BusinessLogicLayer.Interfaces.Services;
 
 public interface ITeamService
 {
