@@ -8,82 +8,79 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Talpa.ViewModels;
 
-namespace Talpa.Controllers;
-
-public class AccountController : Controller
+namespace Talpa.Controllers
 {
-    private readonly IUserService _userService;
-
-    public AccountController(IUserService userService)
+    public class AccountController : Controller
     {
-        _userService = userService;
-    }
+        private readonly IUserService _userService;
 
-    public async Task Login()
-    {
-        AuthenticationProperties authenticationProperties = new LoginAuthenticationPropertiesBuilder()
-            .WithRedirectUri(Url.Action(nameof(LoginHook))!)
-            .Build();
-
-        await HttpContext.ChallengeAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
-    }
-
-    public async Task<IActionResult> LoginHook()
-    {
-        string? id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-        User? user = await _userService.GetByIdWithRoles(id!);
-
-        ClaimsIdentity? userClaims = User.Identity as ClaimsIdentity;
-        if (user?.Roles != null && userClaims != null)
+        public AccountController(IUserService userService)
         {
-            foreach (Role role in user.Roles)
+            _userService = userService;
+        }
+
+        public async Task Login()
+        {
+            AuthenticationProperties authenticationProperties = new LoginAuthenticationPropertiesBuilder()
+                .WithRedirectUri(Url.Action(nameof(LoginHook)))
+                .Build();
+
+            await HttpContext.ChallengeAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
+        }
+
+        public async Task<IActionResult> LoginHook()
+        {
+            string? id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            User? user = await _userService.GetByIdWithRoles(id);
+            
+            ClaimsIdentity? userClaims = User.Identity as ClaimsIdentity;
+            foreach (Role role in user?.Roles ?? new List<Role>())
             {
                 userClaims.AddClaim(new Claim(ClaimTypes.Role, role.Name));
             }
 
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(userClaims));
+            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(userClaims));
+            
+            return RedirectToAction(nameof(Index), "Home");
         }
 
-        return RedirectToAction(nameof(Index), "Home");
-    }
-
-    [Authorize]
-    public async Task Logout()
-    {
-        AuthenticationProperties authenticationProperties = new LogoutAuthenticationPropertiesBuilder()
-            .WithRedirectUri(Url.Action("Index", "Home")!)
-            .Build();
-
-        await HttpContext.SignOutAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
-        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-    }
-
-    [Authorize]
-    public IActionResult Profile()
-    {
-        return View(new UserViewModel
+        [Authorize]
+        public async Task Logout()
         {
-            Name = User.Identity?.Name,
-            EmailAddress = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
-            ProfileImage = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value
-        });
-    }
+            AuthenticationProperties authenticationProperties = new LogoutAuthenticationPropertiesBuilder()
+                .WithRedirectUri(Url.Action("Index", "Home"))
+                .Build();
 
-    [Authorize]
-    public IActionResult Claims()
-    {
-        string? roles = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
-
-        foreach (Claim claim in User.Claims)
-        {
-            Claim a = claim;
+            await HttpContext.SignOutAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
-        return View();
-    }
+        [Authorize]
+        public IActionResult Profile()
+        {
+            return View(new UserViewModel   
+            {
+                Name = User.Identity.Name,
+                EmailAddress = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
+                ProfileImage = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value
+            });
+        }
+        
+        public async Task<IActionResult> Claims()
+        {
+            string? roles = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
 
-    public IActionResult AccessDenied()
-    {
-        return View();
+            foreach (Claim claim in User.Claims)
+            {
+                Claim a = claim;
+            }
+
+            return View();
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }

@@ -16,10 +16,6 @@ builder.Services.AddScoped<IOutingService, OutingService>();
 builder.Services.AddScoped<IOutingRepository, OutingRepository>();
 builder.Services.AddScoped<ITeamService, TeamService>();
 builder.Services.AddScoped<ITeamRepository, TeamRepository>();
-builder.Services.AddScoped<ISuggestionService, SuggestionService>();
-builder.Services.AddScoped<ISuggestionRepository, SuggestionRepository>();
-builder.Services.AddScoped<IRestrictionService, RestrictionService>();
-builder.Services.AddScoped<IRestrictionRepository, RestrictionRepository>();
 
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<DataContext>(options =>
@@ -64,11 +60,6 @@ app.UseStaticFiles();
 app.UseCookiePolicy();
 
 app.UseRouting();
-
-app.UseStaticFiles(new StaticFileOptions
-{
-    ServeUnknownFileTypes = true,
-});
 
 app.UseAuthentication();
 app.UseAuthorization();

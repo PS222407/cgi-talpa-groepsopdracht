@@ -3,7 +3,6 @@ using DataAccessLayer.Data;
 using BusinessLogicLayer.Models;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using BusinessLogicLayer.Interfaces.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Repositories;
 
@@ -32,7 +31,7 @@ public class OutingRepository : IOutingRepository
 
     public Outing? GetById(int id)
     {
-        return _dataContext.Outings.Include(o => o.OutingDates).FirstOrDefault(o => o.Id == id);
+        return _dataContext.Outings.FirstOrDefault(o => o.Id == id);
     }
 
     public List<Outing> GetAll()

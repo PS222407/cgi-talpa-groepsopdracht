@@ -1,11 +1,9 @@
-using System.Globalization;
 using System.Security.Claims;
 using BusinessLogicLayer.Exceptions;
 using BusinessLogicLayer.Interfaces.Services;
 using BusinessLogicLayer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Talpa.Constants;
 using Talpa.RequestModels;
 using Talpa.ViewModels;
@@ -16,13 +14,11 @@ public class OutingController : Controller
 {
     private readonly IOutingService _outingService;
     private readonly IUserService _userService;
-    private readonly ISuggestionService _suggestionService;
 
-    public OutingController(IOutingService outingService, IUserService userService, ISuggestionService suggestionService)
+    public OutingController(IOutingService outingService, IUserService userService)
     {
         _outingService = outingService;
         _userService = userService;
-        _suggestionService = suggestionService;
     }
 
     // GET: Outing
@@ -68,15 +64,7 @@ public class OutingController : Controller
     [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     public ActionResult Create()
     {
-        List<Suggestion> suggestions = _suggestionService.GetAll();
-        List<SelectListItem> suggestionOptions = suggestions.Select(suggestion => new SelectListItem { Value = suggestion.Id.ToString(), Text = suggestion.Name, }).ToList();
-
-        OutingRequest outingRequest = new()
-        {
-            SuggestionOptions = suggestionOptions
-        };
-        
-        return View(outingRequest);
+        return View();
     }
 
     // POST: Outing/Create
@@ -89,17 +77,15 @@ public class OutingController : Controller
         {
             return View(outingRequest);
         }
-        
-        List<OutingDate> outingDates = outingRequest.Dates.Select(date => new OutingDate { Date = date }).ToList();
-        Outing outing = new() { Name = outingRequest.Name, OutingDates = outingDates };
-        
+
+        Outing outing = new() { Name = outingRequest.Name };
         string id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
         User user = (await _userService.GetById(id))!;
-        
+
         Outing outingEntry;
         try
         {
-            outingEntry = _outingService.Create(outing, (int)user.TeamId!);
+            outingEntry = _outingService.Create(outing, (int)user.TeamId);
         }
         catch (TeamNotFoundException e)
         {
@@ -114,7 +100,7 @@ public class OutingController : Controller
             TempData["MessageType"] = "danger";
             return View();
         }
-        
+
         TempData["Message"] = "Item succesvol aangemaakt";
         TempData["MessageType"] = "success";
 
@@ -134,17 +120,7 @@ public class OutingController : Controller
             return View();
         }
 
-        List<Suggestion> suggestions = _suggestionService.GetAll();
-        List<SelectListItem> suggestionOptions = suggestions.Select(suggestion => new SelectListItem { Value = suggestion.Id.ToString(), Text = suggestion.Name, }).ToList();
-
-        OutingViewModel outingViewModel = new()
-        {
-            Id = outing.Id,
-            Name = outing.Name,
-            SuggestionOptions = suggestionOptions,
-            SelectedSuggestionIds = new List<string>(), // TODO: Get selected suggestions
-            OutingDates = outing.OutingDates,
-        };
+        OutingViewModel outingViewModel = new OutingViewModel(outing.Id, outing.Name);
 
         return View(outingViewModel);
     }
@@ -160,7 +136,7 @@ public class OutingController : Controller
             return View();
         }
 
-        Outing outing = new() { Id = id, Name = outingRequest.Name };
+        Outing outing = new Outing { Id = id, Name = outingRequest.Name };
         if (!_outingService.Update(outing))
         {
             TempData["Message"] = "Fout tijdens het opslaan van de data.";
