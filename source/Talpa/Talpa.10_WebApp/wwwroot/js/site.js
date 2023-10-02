@@ -2,18 +2,20 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+const mobileBreakPoint = 600;
 let sidenavIsVisible = true;
+let initializedNavMovements = false;
 
 function handleResize() {
-    if (document.body.clientWidth < 600) {
+    if (document.body.clientWidth < mobileBreakPoint) {
         document.getElementById("sidenavbutton").innerText = ">";
-        if (sidenavIsVisible != false) {
+        if (sidenavIsVisible !== false) {
             sidenav();
         }
         sidenavIsVisible = false;
     } else {
         document.getElementById("sidenavbutton").innerText = "<";
-        if (sidenavIsVisible != true) {
+        if (sidenavIsVisible !== true) {
             sidenav();
         }
         sidenavIsVisible = true;
@@ -28,6 +30,7 @@ function sidenav() {
     moveSideNavButton();
     moveMain();
 
+    initializedNavMovements = true;
     sidenavIsVisible = !sidenavIsVisible;
 }
 
@@ -41,7 +44,7 @@ function moveSideNav() {
         let pixel = sidenavIsVisible ? i * -1 : i - width;
         setTimeout(() => {
             sidenav.style.left = pixel + "px";
-        }, i);
+        }, initializedNavMovements ? i : 0);
     }
 }
 
@@ -57,7 +60,7 @@ function moveSideNavButton() {
         let pixel = sidenavIsVisible ? i : width - i;
         setTimeout(() => {
             sidenavbutton.style.left = pixel + "px";
-        }, width - i);
+        }, initializedNavMovements ? width - i : 0);
     }
 }
 
@@ -66,11 +69,20 @@ function moveMain() {
     if (!main) {
         return;
     }
+    const margin = 300;
 
-    for (let i = 300; i >= 20; i--) {
-        let pixel = sidenavIsVisible ? i : 300 - i;
+    for (let i = margin; i >= 20; i--) {
+        let pixel = sidenavIsVisible ? i : margin - i;
         setTimeout(() => {
             main.style.marginLeft = pixel + "px";
-        }, 300 - i);
+        }, initializedNavMovements ? 300 - i : 0);
+    }
+    
+    if (document.body.clientWidth < mobileBreakPoint) {
+        if (sidenavIsVisible) {
+            document.body.style.overflow = 'auto';
+        } else {
+            document.body.style.overflow = 'hidden';
+        }
     }
 }
