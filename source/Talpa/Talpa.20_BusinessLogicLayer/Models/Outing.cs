@@ -9,4 +9,8 @@ public class Outing
     public int TeamId { get; set; }
     
     public Team Team { get; set; }
+
+    public List<SuggestionVote> SuggestionVotes { get; set; }
+
+    public List<OutingDate> OutingDates { get; set; }
 }

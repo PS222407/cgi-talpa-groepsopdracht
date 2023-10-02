@@ -44,7 +44,7 @@ namespace DataAccessLayer.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable( 
+            migrationBuilder.DropTable(
                 name: "Suggestions");
         }
     }

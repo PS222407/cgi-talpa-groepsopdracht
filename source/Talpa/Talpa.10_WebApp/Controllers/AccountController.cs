@@ -22,7 +22,7 @@ namespace Talpa.Controllers
         public async Task Login()
         {
             AuthenticationProperties authenticationProperties = new LoginAuthenticationPropertiesBuilder()
-                .WithRedirectUri(Url.Action(nameof(LoginHook)))
+                .WithRedirectUri(Url.Action(nameof(LoginHook))!)
                 .Build();
 
             await HttpContext.ChallengeAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
@@ -31,15 +31,18 @@ namespace Talpa.Controllers
         public async Task<IActionResult> LoginHook()
         {
             string? id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            User? user = await _userService.GetByIdWithRoles(id);
+            User? user = await _userService.GetByIdWithRoles(id!);
             
             ClaimsIdentity? userClaims = User.Identity as ClaimsIdentity;
-            foreach (Role role in user?.Roles ?? new List<Role>())
+            if (user?.Roles != null && userClaims != null)
             {
-                userClaims.AddClaim(new Claim(ClaimTypes.Role, role.Name));
+                foreach (Role role in user.Roles)
+                {
+                    userClaims.AddClaim(new Claim(ClaimTypes.Role, role.Name));
+                }
+                
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(userClaims));
             }
-
-            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(userClaims));
             
             return RedirectToAction(nameof(Index), "Home");
         }
@@ -48,7 +51,7 @@ namespace Talpa.Controllers
         public async Task Logout()
         {
             AuthenticationProperties authenticationProperties = new LogoutAuthenticationPropertiesBuilder()
-                .WithRedirectUri(Url.Action("Index", "Home"))
+                .WithRedirectUri(Url.Action("Index", "Home")!)
                 .Build();
 
             await HttpContext.SignOutAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
@@ -60,13 +63,13 @@ namespace Talpa.Controllers
         {
             return View(new UserViewModel   
             {
-                Name = User.Identity.Name,
+                Name = User.Identity?.Name,
                 EmailAddress = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
                 ProfileImage = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value
             });
         }
         
-        public async Task<IActionResult> Claims()
+        public IActionResult Claims()
         {
             string? roles = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
 
