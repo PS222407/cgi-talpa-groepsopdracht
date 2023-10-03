@@ -6,6 +6,10 @@ const mobileBreakPoint = 600;
 let sidenavIsVisible = true;
 let initializedNavMovements = false;
 
+setTimeout(() => {
+    initializedNavMovements = true;
+}, 750);
+
 function handleResize() {
     if (document.body.clientWidth < mobileBreakPoint) {
         document.getElementById("sidenavbutton").innerText = ">";
@@ -54,7 +58,7 @@ function moveSideNavButton() {
         return;
     }
     sidenavbutton.innerText = sidenavIsVisible ? ">" : "<";
-    const width = 215;
+    const width = 182;
 
     for (let i = width; i >= 0; i--) {
         let pixel = sidenavIsVisible ? i : width - i;
