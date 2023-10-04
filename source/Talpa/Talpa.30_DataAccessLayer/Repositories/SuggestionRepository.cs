@@ -15,7 +15,6 @@ public class SuggestionRepository : ISuggestionRepository
 
     public List<Suggestion> GetAll()
     {
-        var a = _dataContext.Suggestions;
-        return a.ToList();
+        return _dataContext.Suggestions.ToList();
     }
 }

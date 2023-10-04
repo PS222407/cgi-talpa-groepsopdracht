@@ -90,11 +90,7 @@ public class OutingController : Controller
             return View(outingRequest);
         }
         
-        List<OutingDate> outingDates = new();
-        foreach (DateTime date in outingRequest.Dates)
-        {
-            outingDates.Add(new OutingDate { Date = date });
-        }
+        List<OutingDate> outingDates = outingRequest.Dates.Select(date => new OutingDate { Date = date }).ToList();
         Outing outing = new() { Name = outingRequest.Name, OutingDates = outingDates };
         
         string id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
@@ -138,7 +134,17 @@ public class OutingController : Controller
             return View();
         }
 
-        OutingViewModel outingViewModel = new OutingViewModel(outing.Id, outing.Name);
+        List<Suggestion> suggestions = _suggestionService.GetAll();
+        List<SelectListItem> suggestionOptions = suggestions.Select(suggestion => new SelectListItem { Value = suggestion.Id.ToString(), Text = suggestion.Name, }).ToList();
+
+        OutingViewModel outingViewModel = new()
+        {
+            Id = outing.Id,
+            Name = outing.Name,
+            SuggestionOptions = suggestionOptions,
+            SelectedSuggestionIds = new List<string>(), // TODO: Get selected suggestions
+            OutingDates = outing.OutingDates,
+        };
 
         return View(outingViewModel);
     }
@@ -154,7 +160,7 @@ public class OutingController : Controller
             return View();
         }
 
-        Outing outing = new Outing { Id = id, Name = outingRequest.Name };
+        Outing outing = new() { Id = id, Name = outingRequest.Name };
         if (!_outingService.Update(outing))
         {
             TempData["Message"] = "Fout tijdens het opslaan van de data.";
