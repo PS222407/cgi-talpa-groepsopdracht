@@ -1,0 +1,43 @@
+@model Talpa.RequestModels.OutingRequest
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>Outing</h4>
+<hr/>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control"/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SelectedSuggestionIds" class="control-label">Suggesties</label>
+                <select asp-for="SelectedSuggestionIds" asp-items="Model.SuggestionOptions" multiple="multiple" class="form-control js-tokenizer"></select>
+                <span asp-validation-for="SelectedSuggestionIds" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Datums</label>
+                <div class="input-group date" id="datepicker">
+                    <input type="text" class="form-control" id="Dates" name="StringDates" placeholder="Selecteer dagen" required="">
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-calendar"></i><span class="count">0</span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Create" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
