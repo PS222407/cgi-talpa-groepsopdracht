@@ -34,28 +34,25 @@ public class SuggestionController : Controller
         {
             List<Suggestion> allSuggestions = _suggestionService.GetAll();
 
-            var suggestionViewModels1 = allSuggestions.Select(suggestion =>
+            List<SuggestionViewModel> suggestionViewModels1 = allSuggestions.Select(suggestion =>
                 new SuggestionViewModel(
                     suggestion.Id,
                     suggestion.Name,
                     suggestion.Restrictions.Select(restriction => restriction.Name).ToList()
                 )
-            );
-            foreach (var suggestion in allSuggestions)
+            ).ToList();
+            if (allSuggestions.Any(suggestion => suggestion.Restrictions == null))
             {
-                if (suggestion.Restrictions == null)
-                {
-                    return View(suggestionViewModels1);
-
-                }
+                return View(suggestionViewModels1);
             }
-            var suggestionViewModels = allSuggestions.Select(suggestion =>
+
+            List<SuggestionViewModel> suggestionViewModels = allSuggestions.Select(suggestion =>
                 new SuggestionViewModel(
                     suggestion.Id,
                     suggestion.Name,
                     suggestion.Restrictions.Select(restriction => restriction.Name).ToList()
                 )
-            );
+            ).ToList();
 
             return View(suggestionViewModels);
         }
@@ -69,7 +66,8 @@ public class SuggestionController : Controller
             return View();
         }
 
-        return View(_suggestionService.GetAll().Select(suggestion => new SuggestionViewModel(suggestion.Id, suggestion.Name, suggestion.Restrictions.Select(restriction => restriction.Name).ToList())));
+        return View(_suggestionService.GetAll()
+            .Select(suggestion => new SuggestionViewModel(suggestion.Id, suggestion.Name, suggestion.Restrictions.Select(restriction => restriction.Name).ToList())));
     }
 
     //GET: Outing/Details/5
@@ -92,7 +90,7 @@ public class SuggestionController : Controller
     [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     public ActionResult Create()
     {
-        var restrictions = _restrictionService.GetAll();
+        List<Restriction> restrictions = _restrictionService.GetAll();
         List<SelectListItem> restrictionsOptions = restrictions.Select(restriction => new SelectListItem { Value = restriction.Id.ToString(), Text = restriction.Name, }).ToList();
 
         SuggestionRequest suggestionRequest = new SuggestionRequest
@@ -109,13 +107,13 @@ public class SuggestionController : Controller
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> Create(SuggestionRequest suggestionRequest)
     {
+        if (!ModelState.IsValid)
+        {
+            return View(suggestionRequest);
+        }
 
-        //if (!ModelState.IsValid)
-        //{
-        //    return View(suggestionRequest);
-        //}
-
-        Suggestion suggestion = new() { Name = suggestionRequest.Name, Restrictions = suggestionRequest.SelectedRestrictionIds.Select(restriction => new Restriction { Name = restriction }).ToList() };
+        Suggestion suggestion = new()
+            { Name = suggestionRequest.Name, Restrictions = suggestionRequest.SelectedRestrictionIds?.Select(restriction => new Restriction { Name = restriction }).ToList() };
         string id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
         User user = (await _userService.GetById(id))!;
 
@@ -160,9 +158,10 @@ public class SuggestionController : Controller
             return View();
         }
 
-        SuggestionRequest suggestionRequest = new SuggestionRequest { 
-            Name = suggestion.Name, 
-            SelectedRestrictionIds = suggestion.Restrictions.Select(restriction => restriction.Id.ToString()).ToList(),
+        SuggestionRequest suggestionRequest = new()
+        {
+            Name = suggestion.Name,
+            SelectedRestrictionIds = suggestion.Restrictions?.Select(restriction => restriction.Id.ToString()).ToList(),
             RestrictionOptions = restrictionsOptions
         };
 
@@ -177,10 +176,11 @@ public class SuggestionController : Controller
     {
         if (!ModelState.IsValid)
         {
-            return View();
+            return View(suggestionRequest);
         }
 
-        Suggestion suggestion = new Suggestion { Id = id, Name = suggestionRequest.Name, Restrictions = suggestionRequest.SelectedRestrictionIds.Select(restriction => new Restriction() { Name = restriction }).ToList() };
+        Suggestion suggestion = new()
+            { Id = id, Name = suggestionRequest.Name, Restrictions = suggestionRequest.SelectedRestrictionIds.Select(restriction => new Restriction() { Name = restriction }).ToList() };
         if (!_suggestionService.Update(suggestion))
         {
             TempData["Message"] = "Fout tijdens het opslaan van de data.";
@@ -208,7 +208,7 @@ public class SuggestionController : Controller
             return View();
         }
 
-        SuggestionViewModel suggestionViewModel = new SuggestionViewModel(id, suggestion.Name, suggestion.Restrictions.Select(restriction => restriction.Name).ToList());
+        SuggestionViewModel suggestionViewModel = new(id, suggestion.Name, suggestion.Restrictions.Select(restriction => restriction.Name).ToList());
 
         return View(suggestionViewModel);
     }

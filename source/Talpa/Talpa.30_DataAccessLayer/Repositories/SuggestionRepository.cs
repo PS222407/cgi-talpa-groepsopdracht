@@ -10,7 +10,7 @@ namespace DataAccessLayer.Repositories;
 public class SuggestionRepository : ISuggestionRepository
 {
     private readonly DataContext _dataContext;
-    
+
     public SuggestionRepository(DataContext dbContext)
     {
         _dataContext = dbContext;
@@ -20,9 +20,9 @@ public class SuggestionRepository : ISuggestionRepository
     {
         suggestion.UserId = userId;
 
-        foreach (var inputRestriction in suggestion.Restrictions.ToList())
+        foreach (Restriction inputRestriction in suggestion.Restrictions?.ToList() ?? new List<Restriction>())
         {
-            var existingRestriction = _dataContext.Restrictions.FirstOrDefault(r => r.Id.ToString() == inputRestriction.Name);
+            Restriction? existingRestriction = _dataContext.Restrictions.FirstOrDefault(r => r.Id.ToString() == inputRestriction.Name);
 
             if (existingRestriction != null)
             {
@@ -62,9 +62,9 @@ public class SuggestionRepository : ISuggestionRepository
             return false;
         }
 
-        foreach (var inputRestriction in suggestion.Restrictions.ToList())
+        foreach (Restriction inputRestriction in suggestion.Restrictions?.ToList() ?? new List<Restriction>())
         {
-            var existingRestriction = _dataContext.Restrictions.FirstOrDefault(r => r.Id.ToString() == inputRestriction.Name);
+            Restriction? existingRestriction = _dataContext.Restrictions.FirstOrDefault(r => r.Id.ToString() == inputRestriction.Name);
 
             if (existingRestriction != null)
             {
