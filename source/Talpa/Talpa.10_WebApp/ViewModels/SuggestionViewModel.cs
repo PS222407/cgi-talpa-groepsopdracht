@@ -1,6 +1,4 @@
-﻿using BusinessLogicLayer.Models;
-
-namespace Talpa.ViewModels;
+﻿namespace Talpa.ViewModels;
 
 public class SuggestionViewModel
 {

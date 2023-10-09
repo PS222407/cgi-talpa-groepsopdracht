@@ -38,7 +38,7 @@ public class SuggestionController : Controller
                 new SuggestionViewModel(
                     suggestion.Id,
                     suggestion.Name,
-                    suggestion.Restrictions.Select(restriction => restriction.Name).ToList()
+                    suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>()
                 )
             ).ToList();
             if (allSuggestions.Any(suggestion => suggestion.Restrictions == null))
@@ -50,7 +50,7 @@ public class SuggestionController : Controller
                 new SuggestionViewModel(
                     suggestion.Id,
                     suggestion.Name,
-                    suggestion.Restrictions.Select(restriction => restriction.Name).ToList()
+                    suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>()
                 )
             ).ToList();
 
@@ -67,7 +67,7 @@ public class SuggestionController : Controller
         }
 
         return View(_suggestionService.GetAll()
-            .Select(suggestion => new SuggestionViewModel(suggestion.Id, suggestion.Name, suggestion.Restrictions.Select(restriction => restriction.Name).ToList())));
+            .Select(suggestion => new SuggestionViewModel(suggestion.Id, suggestion.Name, suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>())));
     }
 
     //GET: Outing/Details/5
@@ -83,7 +83,7 @@ public class SuggestionController : Controller
             return View();
         }
 
-        return View(new SuggestionViewModel(suggestion.Id, suggestion.Name, suggestion.Restrictions.Select(restriction => restriction.Name).ToList()));
+        return View(new SuggestionViewModel(suggestion.Id, suggestion.Name, suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>()));
     }
 
     // GET: Outing/Create
@@ -146,7 +146,7 @@ public class SuggestionController : Controller
     [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     public ActionResult Edit(int id)
     {
-        var restrictions = _restrictionService.GetAll();
+        List<Restriction> restrictions = _restrictionService.GetAll();
         List<SelectListItem> restrictionsOptions = restrictions.Select(restriction => new SelectListItem { Value = restriction.Id.ToString(), Text = restriction.Name, }).ToList();
 
         Suggestion? suggestion = _suggestionService.GetById(id);
@@ -180,7 +180,7 @@ public class SuggestionController : Controller
         }
 
         Suggestion suggestion = new()
-            { Id = id, Name = suggestionRequest.Name, Restrictions = suggestionRequest.SelectedRestrictionIds.Select(restriction => new Restriction() { Name = restriction }).ToList() };
+            { Id = id, Name = suggestionRequest.Name, Restrictions = suggestionRequest.SelectedRestrictionIds?.Select(restriction => new Restriction { Name = restriction }).ToList() };
         if (!_suggestionService.Update(suggestion))
         {
             TempData["Message"] = "Fout tijdens het opslaan van de data.";
@@ -208,7 +208,7 @@ public class SuggestionController : Controller
             return View();
         }
 
-        SuggestionViewModel suggestionViewModel = new(id, suggestion.Name, suggestion.Restrictions.Select(restriction => restriction.Name).ToList());
+        SuggestionViewModel suggestionViewModel = new(id, suggestion.Name, suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>());
 
         return View(suggestionViewModel);
     }

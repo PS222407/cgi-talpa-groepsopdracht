@@ -7,6 +7,8 @@ public class OutingRequest
 {
     private string _stringDates;
     
+    public int Id { get; set; }
+    
     public string Name { get; set; }
 
     public string StringDates
