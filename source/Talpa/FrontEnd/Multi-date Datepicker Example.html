@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!-- saved from url=(0106)file:///C:/Users/Jens/Downloads/Multi-date%20Datepicker%20Example%20-%20JSFiddle_files/saved_resource.html -->
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <title>Multi-date Datepicker Example</title>
+
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script type="text/javascript" src="./Multi-date Datepicker Example_files/dummy.js.download"></script>
+  <link rel="stylesheet" type="text/css" href="./Multi-date Datepicker Example_files/result-light.css">
+  <link rel="stylesheet" type="text/css" href="./Multi-date Datepicker Example_files/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="./Multi-date Datepicker Example_files/bootstrap-theme.min.css">
+  <link rel="stylesheet" type="text/css" href="./Multi-date Datepicker Example_files/bootstrap-datepicker3.min.css">
+  <link rel="stylesheet" type="text/css" href="./Multi-date Datepicker Example_files/font-awesome.min.css">
+  <script type="text/javascript" src="./Multi-date Datepicker Example_files/jquery-3.2.1.min.js.download"></script>
+  <script type="text/javascript" src="./Multi-date Datepicker Example_files/bootstrap-datepicker.min.js.download"></script>
+  <script type="text/javascript" src="./Multi-date Datepicker Example_files/bootstrap.min.js.download"></script>
+
+</head>
+
+<body>
+  <div class="input-group date form-group" id="datepicker">
+    <input type="text" class="form-control" id="Dates" name="Dates" placeholder="Select days" required="">
+    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i><span class="count"></span></span>
+  </div>
+
+
+  <script type="text/javascript">//<![CDATA[
+
+
+    $(document).ready(function () {
+      $('#datepicker').datepicker({
+        startDate: new Date(),
+        multidate: true,
+        format: "dd/mm/yyyy",
+        daysOfWeekHighlighted: "0,6",
+
+        language: 'en'
+      }).on('changeDate', function (e) {
+        // `e` here contains the extra attributes
+        $(this).find('.input-group-addon .count').text(' ' + e.dates.length);
+      });
+    });
+
+
+
+    //]]></script>
+
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent) {
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "b20paum2"
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+
+
+
+
+</body>
+
+</html>

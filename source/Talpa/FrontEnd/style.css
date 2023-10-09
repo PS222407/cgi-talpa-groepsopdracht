@@ -1,0 +1,71 @@
+:root {
+    --navcolor: #224957;
+    --sidenavcolor: #CCCCCC;
+    --backgroundcolor: #E5E5E5;
+    --textcolor1: #093545;
+    --white: #ffffff;
+}
+
+.body {
+    background-color: var(--backgroundcolor);
+    min-height: 100vh;
+}
+
+.nav {
+    background-color: var(--navcolor);
+    color: white;
+}
+
+.nav ul {
+    list-style-type: none;
+}
+
+.sidenav {
+    margin: 0;
+    padding: 0 4em;
+    max-width: max-content;
+    min-width: max-content;
+    background-color: var(--sidenavcolor);
+}
+
+.sidenavbutton {
+    z-index: 40;
+    position: absolute;
+    font-weight: bolder;
+    font-size: 1.5em;
+    left: 215px;
+    padding: .5em;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: var(--sidenavcolor);
+    cursor: pointer;
+}
+
+.main {
+    margin-left: 300px;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+.kwartaal-text {
+    color: #093545;
+    font-weight: bold;
+}
+
+.letterspace {
+    letter-spacing: .2em;
+}
+
+@media only screen and (max-width: 600px) {
+    .sidenav {
+        left: -260px;
+    }
+
+    .sidenavbutton {
+        left: 0;
+    }
+
+    .main {
+        margin-left: 20px;
+    }
+}

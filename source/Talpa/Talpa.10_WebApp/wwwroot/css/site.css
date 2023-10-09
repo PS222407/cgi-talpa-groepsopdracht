@@ -22,10 +22,8 @@ body {
 }
 
 :root {
-    --navcolor: #224957;
-    --sidenavcolor: #CCCCCC;
+    --main: #D92A3B;
     --backgroundcolor: #E5E5E5;
-    --textcolor1: #093545;
     --white: #ffffff;
 }
 
@@ -35,68 +33,10 @@ body {
 }
 
 .nav {
-    background-color: var(--navcolor);
+    background-color: var(--main);
     color: white;
 }
 
 .nav ul {
     list-style-type: none;
-}
-
-.sidenav {
-    margin: 0;
-    padding: 0 4em;
-    max-width: max-content;
-    min-width: max-content;
-    background-color: var(--sidenavcolor);
-}
-
-.sidenavbutton {
-    z-index: 40;
-    position: absolute;
-    font-weight: bolder;
-    font-size: 1.5em;
-    left: 182px;
-    top: 62px;
-    padding: .5em;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    background-color: var(--sidenavcolor);
-    cursor: pointer;
-}
-
-.main {
-    margin-left: 300px;
-    margin-top: 20px;
-    margin-right: 20px;
-}
-
-.kwartaal-text {
-    color: #093545;
-    font-weight: bold;
-}
-
-.letterspace {
-    letter-spacing: .2em;
-}
-
-.input-group-addon {
-    padding: 0.4em;
-    background-color: #d7d7d7;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-}
-
-@media only screen and (max-width: 600px) {
-    .sidenav {
-        left: -260px;
-    }
-
-    .sidenavbutton {
-        left: 0;
-    }
-
-    .main {
-        margin-left: 20px;
-    }
 }

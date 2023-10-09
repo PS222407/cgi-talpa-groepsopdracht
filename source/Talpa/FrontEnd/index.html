@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="datepicker.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+
+<body class="body">
+    <header>
+        <nav style="z-index: 20;"
+            class="nav navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow">
+            <div class="container-fluid">
+                <a class="navbar-brand letterspace" href="/" style="color: white;">TALPA</a>
+                <button class="navbar-toggler" style="background-color: white;" type="button" data-bs-toggle="collapse"
+                    data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right" style="display: flex; gap: 1em;">
+                        <li>
+                            <a href="/Account/Profile" style="color: white;">Hello admin!</a>
+                        </li>
+                        <li>
+                            <a id="qsLogoutBtn" href="/Account/Logout" style="color: white;">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="sidenavbutton" id="sidenavbutton" onclick="sidenav()"></div>
+    <script>
+        let sidenavIsVisible = true;
+
+        function handleResize() {
+            if (document.body.clientWidth < 600) {
+                document.getElementById("sidenavbutton").innerText = ">";
+                if (sidenavIsVisible != false) {
+                    sidenav();
+                }
+                sidenavIsVisible = false;
+            } else {
+                document.getElementById("sidenavbutton").innerText = "<";
+                if (sidenavIsVisible != true) {
+                    sidenav();
+                }
+                sidenavIsVisible = true;
+            }
+        }
+        window.addEventListener('resize', handleResize);
+        handleResize();
+
+        function sidenav() {
+            moveSideNav();
+            moveSideNavButton();
+            moveMain();
+
+            sidenavIsVisible = !sidenavIsVisible;
+        }
+        function moveSideNav() {
+            const sidenav = document.getElementById("sidenav");
+            if (!sidenav) {
+                return;
+            }
+            const width = 260;
+            for (let i = 0; i < width; i++) {
+                let pixel = sidenavIsVisible ? i * -1 : i - width;
+                setTimeout(() => {
+                    sidenav.style.left = pixel + "px";
+                }, i);
+            }
+        }
+        function moveSideNavButton() {
+            const sidenavbutton = document.getElementById("sidenavbutton");
+            if (!sidenavbutton) {
+                return;
+            }
+            sidenavbutton.innerText = sidenavIsVisible ? ">" : "<";
+            const width = 215;
+
+            for (let i = width; i >= 0; i--) {
+                let pixel = sidenavIsVisible ? i : width - i;
+                setTimeout(() => {
+                    sidenavbutton.style.left = pixel + "px";
+                }, width - i);
+            }
+        }
+        function moveMain() {
+            const main = document.getElementById("main");
+            if (!main) {
+                return;
+            }
+
+            for (let i = 300; i >= 20; i--) {
+                let pixel = sidenavIsVisible ? i : 300 - i;
+                setTimeout(() => {
+                    main.style.marginLeft = pixel + "px";
+                }, 300 - i);
+            }
+        }
+    </script>
+    <div id="sidenav" class="sidenav" style="position: absolute; padding-top: 60px; top: 0; bottom: 0; z-index: 10;">
+        <div class="pb-3 pt-3 letterspace" style="color: white; font-weight: bold;">UPCOMING</div>
+        <div style="display: flex; flex-direction: column; gap: 2em;">
+            <div>
+                <a href="" class="kwartaal-text letterspace">KWARTAAL 1</a>
+                <div>Ongepland</div>
+            </div>
+            <div>
+                <div>KWARTAAL 2</div>
+                <div>Ongepland</div>
+            </div>
+            <div>
+                <div>KWARTAAL 3</div>
+                <div>Ongepland</div>
+            </div>
+            <div>
+                <div>KWARTAAL 4</div>
+                <div>Ongepland</div>
+            </div>
+        </div>
+    </div>
+
+    <main id="main" class="main">
+        <h1 style="text-align: center;">Titel</h1>
+        <input type="text" class="form-control date" placeholder="Pick the multiple dates">
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script>
+        $('.date').datepicker({
+            multidate: true,
+            format: 'dd-mm-yyyy'
+        });
+    </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
