@@ -4,6 +4,7 @@ using BusinessLogicLayer.Interfaces.Services;
 using BusinessLogicLayer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Talpa.Constants;
 using Talpa.RequestModels;
 using Talpa.ViewModels;
@@ -14,11 +15,13 @@ public class SuggestionController : Controller
 {
     private readonly ISuggestionService _suggestionService;
     private readonly IUserService _userService;
+    private readonly IRestrictionService _restrictionService;
 
-    public SuggestionController(ISuggestionService suggestionService, IUserService userService)
+    public SuggestionController(ISuggestionService suggestionService, IUserService userService, IRestrictionService restrictionService)
     {
         _suggestionService = suggestionService;
         _userService = userService;
+        _restrictionService = restrictionService;
     }
 
     //GET: Outing
@@ -32,11 +35,11 @@ public class SuggestionController : Controller
             List<Suggestion> allSuggestions = _suggestionService.GetAll();
 
             var suggestionViewModels1 = allSuggestions.Select(suggestion =>
-    new SuggestionViewModel(
-        suggestion.Id,
-        suggestion.Name
-    )
-);
+                new SuggestionViewModel(
+                    suggestion.Id,
+                    suggestion.Name
+                )
+            );
             foreach (var suggestion in allSuggestions)
             {
                 if (suggestion.Restrictions == null)
@@ -88,7 +91,15 @@ public class SuggestionController : Controller
     [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     public ActionResult Create()
     {
-        return View();
+        var restrictions = _restrictionService.GetAll();
+        List<SelectListItem> restrictionsOptions = restrictions.Select(restriction => new SelectListItem { Value = restriction.Id.ToString(), Text = restriction.Name, }).ToList();
+
+        SuggestionRequest suggestionRequest = new SuggestionRequest
+        {
+            RestrictionOptions = restrictionsOptions,
+        };
+
+        return View(suggestionRequest);
     }
 
     // POST: Outing/Create
@@ -97,17 +108,13 @@ public class SuggestionController : Controller
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> Create(SuggestionRequest suggestionRequest)
     {
-        suggestionRequest.Restrictions = new List<string>
-        {
-            "allergies voor vis",
-            "allergies voor ei"
-        };
+
         //if (!ModelState.IsValid)
         //{
         //    return View(suggestionRequest);
         //}
 
-        Suggestion suggestion = new() { Name = suggestionRequest.Name, Restrictions = suggestionRequest.Restrictions.Select(restriction => new Restriction { Name = restriction }).ToList() };
+        Suggestion suggestion = new() { Name = suggestionRequest.Name, Restrictions = suggestionRequest.SelectedRestrictionIds.Select(restriction => new Restriction { Name = restriction }).ToList() };
         string id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
         User user = (await _userService.GetById(id))!;
 
@@ -123,12 +130,12 @@ public class SuggestionController : Controller
             return View();
         }
 
-        if (suggestionEntry.Id == null)
-        {
-            TempData["Message"] = "Fout tijdens het aanmaken.";
-            TempData["MessageType"] = "danger";
-            return View();
-        }
+        //if (suggestionEntry.Id == null)
+        //{
+        //    TempData["Message"] = "Fout tijdens het aanmaken.";
+        //    TempData["MessageType"] = "danger";
+        //    return View();
+        //}
 
         TempData["Message"] = "Item succesvol aangemaakt";
         TempData["MessageType"] = "success";
@@ -165,14 +172,14 @@ public class SuggestionController : Controller
             return View();
         }
 
-        Suggestion suggestion = new Suggestion { Id = id, Name = suggestionRequest.Name, Restrictions = suggestionRequest.Restrictions.Select( restriction => new Restriction() { Name = restriction}).ToList()};
-        if (!_suggestionService.Update(suggestion))
-        {
-            TempData["Message"] = "Fout tijdens het opslaan van de data.";
-            TempData["MessageType"] = "danger";
+        //Suggestion suggestion = new Suggestion { Id = id, Name = suggestionRequest.Name, Restrictions = suggestionRequest.Restrictions.Select( restriction => new Restriction() { Name = restriction}).ToList()};
+        //if (!_suggestionService.Update(suggestion))
+        //{
+        //    TempData["Message"] = "Fout tijdens het opslaan van de data.";
+        //    TempData["MessageType"] = "danger";
 
-            return View();
-        }
+        //    return View();
+        //}
 
         TempData["Message"] = "Item succesvol gewijzigd";
         TempData["MessageType"] = "success";
