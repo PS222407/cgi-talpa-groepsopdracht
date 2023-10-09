@@ -1,4 +1,4 @@
-@model Talpa.ViewModels.SuggestionViewModel
+@model Talpa.RequestModels.SuggestionRequest
 
 @{
     ViewData["Title"] = "Edit";
@@ -10,14 +10,19 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" autocomplete=" off">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="SelectedRestrictionIds" class="control-label">Restrictions</label>
+                <select asp-for="SelectedRestrictionIds" asp-items="Model.RestrictionOptions" multiple="multiple" class="form-control js-dynamic-tokenizer"></select>
+                <span asp-validation-for="SelectedRestrictionIds" class="text-danger"></span>
+            </div>
+            <br />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

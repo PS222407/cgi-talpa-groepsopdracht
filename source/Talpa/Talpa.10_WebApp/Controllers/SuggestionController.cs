@@ -37,7 +37,8 @@ public class SuggestionController : Controller
             var suggestionViewModels1 = allSuggestions.Select(suggestion =>
                 new SuggestionViewModel(
                     suggestion.Id,
-                    suggestion.Name
+                    suggestion.Name,
+                    suggestion.Restrictions.Select(restriction => restriction.Name).ToList()
                 )
             );
             foreach (var suggestion in allSuggestions)
@@ -130,12 +131,12 @@ public class SuggestionController : Controller
             return View();
         }
 
-        //if (suggestionEntry.Id == null)
-        //{
-        //    TempData["Message"] = "Fout tijdens het aanmaken.";
-        //    TempData["MessageType"] = "danger";
-        //    return View();
-        //}
+        if (suggestionEntry.Id == null)
+        {
+            TempData["Message"] = "Fout tijdens het aanmaken.";
+            TempData["MessageType"] = "danger";
+            return View();
+        }
 
         TempData["Message"] = "Item succesvol aangemaakt";
         TempData["MessageType"] = "success";
@@ -147,6 +148,9 @@ public class SuggestionController : Controller
     [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     public ActionResult Edit(int id)
     {
+        var restrictions = _restrictionService.GetAll();
+        List<SelectListItem> restrictionsOptions = restrictions.Select(restriction => new SelectListItem { Value = restriction.Id.ToString(), Text = restriction.Name, }).ToList();
+
         Suggestion? suggestion = _suggestionService.GetById(id);
         if (suggestion == null)
         {
@@ -156,9 +160,13 @@ public class SuggestionController : Controller
             return View();
         }
 
-        SuggestionViewModel suggestionViewModel = new SuggestionViewModel(suggestion.Id, suggestion.Name, suggestion.Restrictions.Select(restriction => restriction.Name).ToList());
+        SuggestionRequest suggestionRequest = new SuggestionRequest { 
+            Name = suggestion.Name, 
+            SelectedRestrictionIds = suggestion.Restrictions.Select(restriction => restriction.Id.ToString()).ToList(),
+            RestrictionOptions = restrictionsOptions
+        };
 
-        return View(suggestionViewModel);
+        return View(suggestionRequest);
     }
 
     // POST: Outing/Edit/5
@@ -172,14 +180,14 @@ public class SuggestionController : Controller
             return View();
         }
 
-        //Suggestion suggestion = new Suggestion { Id = id, Name = suggestionRequest.Name, Restrictions = suggestionRequest.Restrictions.Select( restriction => new Restriction() { Name = restriction}).ToList()};
-        //if (!_suggestionService.Update(suggestion))
-        //{
-        //    TempData["Message"] = "Fout tijdens het opslaan van de data.";
-        //    TempData["MessageType"] = "danger";
+        Suggestion suggestion = new Suggestion { Id = id, Name = suggestionRequest.Name, Restrictions = suggestionRequest.SelectedRestrictionIds.Select(restriction => new Restriction() { Name = restriction }).ToList() };
+        if (!_suggestionService.Update(suggestion))
+        {
+            TempData["Message"] = "Fout tijdens het opslaan van de data.";
+            TempData["MessageType"] = "danger";
 
-        //    return View();
-        //}
+            return View();
+        }
 
         TempData["Message"] = "Item succesvol gewijzigd";
         TempData["MessageType"] = "success";
