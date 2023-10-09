@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNetCore.Http.Extensions
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -37,7 +36,7 @@
                     @if (User.IsInRole("Manager"))
                     {
                         <li class="nav-item">
-                            <a asp-controller="Outing" asp-action="Index" class="nav-link" style="color: @(new Uri(Context.Request.GetDisplayUrl()).AbsolutePath.StartsWith("/Outing") ? "white" : "gray")">Uitjes</a>
+                            <a asp-controller="Outing" asp-action="Index" class="nav-link">Uitjes</a>
                         </li>
                     }
                     @if (User.IsInRole("Admin"))
@@ -50,7 +49,7 @@
                     {
                         <li class="nav-item">
                             <a href="" class="nav-link">Scorebord</a>
-                        </li> 
+                        </li>
                     }
                 </ul>
                 @* <partial name="_LoginPartial" /> *@
@@ -96,7 +95,7 @@
 <script>
     $(".js-dynamic-tokenizer").select2({
         tags: true,
-        tokenSeparators: [',', ' ']
+        tokenSeparators: [',']
     });
     $(".js-tokenizer").select2();
 </script>

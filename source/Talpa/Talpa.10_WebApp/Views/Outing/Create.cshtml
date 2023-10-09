@@ -24,9 +24,9 @@
             <div class="form-group">
                 <label class="control-label">Datums</label>
                 <div class="input-group date" id="datepicker">
-                    <input type="text" class="form-control" id="Dates" name="StringDates" placeholder="Selecteer dagen" required="">
+                    <input type="text" class="form-control" id="Dates" name="StringDates" value="@Model.StringDates" placeholder="Selecteer dagen" required="">
                     <span class="input-group-addon">
-                        <i class="glyphicon glyphicon-calendar"></i><span class="count">0</span>
+                        <i class="glyphicon glyphicon-calendar"></i><span class="count">@Model.Dates.Count</span>
                     </span>
                 </div>
             </div>

@@ -194,7 +194,7 @@ public class TeamController : Controller
             return View();
         }
 
-        TeamViewModel teamViewModel = new TeamViewModel { Id = id, Name = team.Name };
+        TeamViewModel teamViewModel = new() { Id = id, Name = team.Name };
 
         return View(teamViewModel);
     }
@@ -202,9 +202,9 @@ public class TeamController : Controller
     // POST: TeamController/Delete/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Destroy(int id)
+    public async Task<ActionResult> Destroy(int id)
     {
-        if (!_teamService.Delete(id))
+        if (!await _teamService.Delete(id))
         {
             TempData["Message"] = "Fout tijdens het verwijderen van de data.";
             TempData["MessageType"] = "danger";

@@ -7,6 +7,8 @@ public class OutingRequest
 {
     private string _stringDates;
     
+    public int Id { get; set; }
+    
     public string Name { get; set; }
 
     public string StringDates
@@ -21,9 +23,9 @@ public class OutingRequest
 
     public List<DateTime> Dates { get; set; } = new();
     
-    public List<string>? SelectedSuggestionIds { get; set; }
-    
-    public List<SelectListItem>? SuggestionOptions { get; set; }
+    public List<string>? SelectedSuggestionIds { get; set; } = new List<string>();
+
+    public List<SelectListItem>? SuggestionOptions { get; set; } = new List<SelectListItem> ();
 
     private List<DateTime> ConvertStringToDates(string value)
     {
