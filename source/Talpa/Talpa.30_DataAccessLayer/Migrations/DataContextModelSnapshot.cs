@@ -3,7 +3,6 @@ using System;
 using DataAccessLayer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,11 +10,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230929221340_CreateDateVotesTable")]
-    partial class CreateDateVotesTable
+    partial class DataContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,11 +36,12 @@ namespace DataAccessLayer.Migrations
 
             modelBuilder.Entity("BusinessLogicLayer.Models.Outing", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("TeamId")
@@ -100,16 +98,11 @@ namespace DataAccessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("OutingId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OutingId");
 
                     b.ToTable("Suggestions");
                 });
@@ -165,6 +158,21 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Teams");
                 });
 
+            modelBuilder.Entity("OutingSuggestion", b =>
+                {
+                    b.Property<int>("OutingId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SuggestionsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OutingId", "SuggestionsId");
+
+                    b.HasIndex("SuggestionsId");
+
+                    b.ToTable("OutingSuggestion");
+                });
+
             modelBuilder.Entity("RestrictionSuggestion", b =>
                 {
                     b.Property<int>("RestrictionsId")
@@ -213,17 +221,6 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Outing");
                 });
 
-            modelBuilder.Entity("BusinessLogicLayer.Models.Suggestion", b =>
-                {
-                    b.HasOne("BusinessLogicLayer.Models.Outing", "Outing")
-                        .WithMany()
-                        .HasForeignKey("OutingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Outing");
-                });
-
             modelBuilder.Entity("BusinessLogicLayer.Models.SuggestionDate", b =>
                 {
                     b.HasOne("BusinessLogicLayer.Models.Suggestion", "Suggestion")
@@ -252,6 +249,21 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Outing");
 
                     b.Navigation("Suggestion");
+                });
+
+            modelBuilder.Entity("OutingSuggestion", b =>
+                {
+                    b.HasOne("BusinessLogicLayer.Models.Outing", null)
+                        .WithMany()
+                        .HasForeignKey("OutingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BusinessLogicLayer.Models.Suggestion", null)
+                        .WithMany()
+                        .HasForeignKey("SuggestionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("RestrictionSuggestion", b =>
