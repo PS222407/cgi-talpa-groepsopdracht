@@ -97,16 +97,11 @@ namespace DataAccessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("OutingId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OutingId");
 
                     b.ToTable("Suggestions");
                 });
@@ -162,6 +157,21 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Teams");
                 });
 
+            modelBuilder.Entity("OutingSuggestion", b =>
+                {
+                    b.Property<int>("OutingsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SuggestionsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OutingsId", "SuggestionsId");
+
+                    b.HasIndex("SuggestionsId");
+
+                    b.ToTable("OutingSuggestion");
+                });
+
             modelBuilder.Entity("RestrictionSuggestion", b =>
                 {
                     b.Property<int>("RestrictionsId")
@@ -210,17 +220,6 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Outing");
                 });
 
-            modelBuilder.Entity("BusinessLogicLayer.Models.Suggestion", b =>
-                {
-                    b.HasOne("BusinessLogicLayer.Models.Outing", "Outing")
-                        .WithMany()
-                        .HasForeignKey("OutingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Outing");
-                });
-
             modelBuilder.Entity("BusinessLogicLayer.Models.SuggestionDate", b =>
                 {
                     b.HasOne("BusinessLogicLayer.Models.Suggestion", "Suggestion")
@@ -249,6 +248,21 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Outing");
 
                     b.Navigation("Suggestion");
+                });
+
+            modelBuilder.Entity("OutingSuggestion", b =>
+                {
+                    b.HasOne("BusinessLogicLayer.Models.Outing", null)
+                        .WithMany()
+                        .HasForeignKey("OutingsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BusinessLogicLayer.Models.Suggestion", null)
+                        .WithMany()
+                        .HasForeignKey("SuggestionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("RestrictionSuggestion", b =>

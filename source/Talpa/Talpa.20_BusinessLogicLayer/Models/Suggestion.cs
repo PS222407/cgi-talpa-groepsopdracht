@@ -6,7 +6,7 @@ public class Suggestion
     
     public string UserId { get; set; }
     
-    public Outing Outing { get; set; }
+    public List<Outing> Outings { get; set; }
 
     public string Name { get; set; }
 
