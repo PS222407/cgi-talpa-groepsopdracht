@@ -67,12 +67,7 @@ public class OutingController : Controller
     [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     public ActionResult Create()
     {
-        OutingRequest outingRequest = new()
-        {
-            SuggestionOptions = GetSuggestionOptions(),
-        };
-
-        return View(outingRequest);
+        return View();
     }
 
     // POST: Outing/Create
@@ -83,7 +78,6 @@ public class OutingController : Controller
     {
         if (!ModelState.IsValid)
         {
-            outingRequest.SuggestionOptions = GetSuggestionOptions();
             return View(outingRequest);
         }
 
@@ -94,7 +88,6 @@ public class OutingController : Controller
         {
             TempData["Message"] = "Je zit nog niet in een Team!";
             TempData["MessageType"] = "danger";
-            outingRequest.SuggestionOptions = GetSuggestionOptions();
             return View(outingRequest);
         }
 
@@ -130,14 +123,13 @@ public class OutingController : Controller
     [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     public ActionResult Edit(int id)
     {
-        //TODO get outing dates
         Outing? outing = _outingService.GetById(id);
         if (outing == null)
         {
             TempData["Message"] = "Er bestaat geen entiteit met dit id.";
             TempData["MessageType"] = "danger";
 
-            return View();
+            return RedirectToAction(nameof(Index));
         }
 
         List<Suggestion> suggestions = _suggestionService.GetAll();
@@ -145,10 +137,9 @@ public class OutingController : Controller
 
         OutingRequest outingRequest = new()
         {
-            Id = outing.Id,
             Name = outing.Name,
             SuggestionOptions = suggestionOptions,
-            SelectedSuggestionIds = new List<string>(), // TODO: Get selected suggestions
+            SelectedSuggestionIds = outing.Suggestions?.Select(s => s.Id.ToString()).ToList(),
             Dates = outing.OutingDates?.Select(od => od.Date).ToList() ?? new List<DateTime>(),
         };
 
@@ -167,7 +158,15 @@ public class OutingController : Controller
             return View(outingRequest);
         }
 
-        Outing outing = new() { Id = id, Name = outingRequest.Name };
+        List<OutingDate> outingDates = outingRequest.Dates.Select(date => new OutingDate { Date = date }).ToList();
+        List<Suggestion> suggestions = _suggestionService.GetByIds(outingRequest.SelectedSuggestionIds?.Select(int.Parse).ToList() ?? new List<int>());
+        Outing outing = new()
+        {
+            Id = id, 
+            Name = outingRequest.Name,
+            OutingDates = outingDates,  
+            Suggestions = suggestions,
+        };
         if (!_outingService.Update(outing))
         {
             TempData["Message"] = "Fout tijdens het opslaan van de data.";

@@ -45,6 +45,14 @@ public class SuggestionRepository : ISuggestionRepository
             .FirstOrDefault(o => o.Id == id);
     }
 
+    public List<Suggestion> GetByIds(List<int> ids)
+    {
+        return _dataContext.Suggestions
+            .Include(s => s.Restrictions)
+            .Where(s => ids.Contains(s.Id))
+            .ToList();
+    }
+
     public List<Suggestion> GetAll()
     {
         return _dataContext.Suggestions

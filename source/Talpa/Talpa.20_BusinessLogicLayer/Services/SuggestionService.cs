@@ -33,6 +33,11 @@ public class SuggestionService : ISuggestionService
         return _suggestionRepository.GetById(id);
     }
 
+    public List<Suggestion> GetByIds(List<int> ids)
+    {
+        return _suggestionRepository.GetByIds(ids);
+    }
+
     public List<Suggestion> GetAll()
     {
         return _suggestionRepository.GetAll();
