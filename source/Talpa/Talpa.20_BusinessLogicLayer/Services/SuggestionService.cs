@@ -37,4 +37,9 @@ public class SuggestionService : ISuggestionService
     {
         return _suggestionRepository.GetAll();
     }
+
+    public List<Suggestion> GetAllBy(string id)
+    {
+        return _suggestionRepository.GetAllBy(id);
+    }
 }

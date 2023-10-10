@@ -52,6 +52,14 @@ public class SuggestionRepository : ISuggestionRepository
             .ToList();
     }
 
+    public List<Suggestion> GetAllBy(string id)
+    {
+        return _dataContext.Suggestions
+            .Include(s => s.Restrictions)
+            .Where(s => s.UserId == id)
+            .ToList();
+    }
+
     public bool Update(Suggestion suggestion)
     {
         Suggestion? suggestionDb = _dataContext.Suggestions
