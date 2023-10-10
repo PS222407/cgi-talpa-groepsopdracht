@@ -45,7 +45,10 @@ public class OutingRepository : IOutingRepository
 
     public bool Update(Outing outing)
     {
-        Outing? outingDb = _dataContext.Outings.Include(o => o.Suggestions).FirstOrDefault(o => o.Id == outing.Id);
+        Outing? outingDb = _dataContext.Outings
+            .Include(o => o.Suggestions)
+            .Include(o => o.OutingDates)
+            .FirstOrDefault(o => o.Id == outing.Id);
         if (outingDb == null)
         {
             return false;
@@ -53,6 +56,7 @@ public class OutingRepository : IOutingRepository
         
         outingDb.Name = outing.Name;
         outingDb.Suggestions = outing.Suggestions;
+        outingDb.OutingDates = outing.OutingDates;
         
         _dataContext.SaveChanges();
         

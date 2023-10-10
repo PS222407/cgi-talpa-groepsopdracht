@@ -7,28 +7,28 @@ public class OutingRequest
 {
     public int Id { get; set; }
     
-    private string _stringDates;
+    private string? _stringDates;
     
-    private List<DateTime> _dates = new();
+    private List<DateTime>? _dates = new();
 
     public string Name { get; set; }
 
-    public string StringDates
+    public string? StringDates
     {
         get => _stringDates;
         set
         {
-            Dates = ConvertStringToDates(value);
+            Dates = value != null ? ConvertStringToDates(value) : null;
             _stringDates = value;
         }
     }
 
-    public List<DateTime> Dates
+    public List<DateTime>? Dates
     {
         get => _dates;
         set
         {
-            _stringDates = string.Join(",", value.Select(date => date.ToString("dd/MM/yyyy")).ToList());
+            _stringDates = value != null ? string.Join(",", value.Select(date => date.ToString("dd/MM/yyyy")).ToList()) : null;
             _dates = value;
         }
     }

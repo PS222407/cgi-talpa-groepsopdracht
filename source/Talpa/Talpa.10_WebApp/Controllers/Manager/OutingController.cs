@@ -9,8 +9,10 @@ using Talpa.Constants;
 using Talpa.RequestModels;
 using Talpa.ViewModels;
 
-namespace Talpa.Controllers;
+namespace Talpa.Controllers.Manager;
 
+[Route("Manager/[controller]/[action]/{id?}")]
+[Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
 public class OutingController : Controller
 {
     private readonly IOutingService _outingService;
@@ -25,6 +27,7 @@ public class OutingController : Controller
     }
 
     // GET: Outing
+    [HttpGet("/Manager/[controller]")]
     public async Task<ActionResult> Index()
     {
         string? id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -48,7 +51,6 @@ public class OutingController : Controller
     }
 
     // GET: Outing/Details/5
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     public ActionResult Details(int id)
     {
         Outing? outing = _outingService.GetById(id);
@@ -64,14 +66,12 @@ public class OutingController : Controller
     }
 
     // GET: Outing/Create
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     public ActionResult Create()
     {
         return View();
     }
 
     // POST: Outing/Create
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> Create(OutingRequest outingRequest)
@@ -120,7 +120,6 @@ public class OutingController : Controller
     }
 
     // GET: Outing/Edit/5
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     public ActionResult Edit(int id)
     {
         Outing? outing = _outingService.GetById(id);
@@ -147,7 +146,6 @@ public class OutingController : Controller
     }
 
     // POST: Outing/Edit/5
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public ActionResult Edit(int id, OutingRequest outingRequest)
@@ -182,7 +180,6 @@ public class OutingController : Controller
     }
 
     // GET: Outing/Delete/5
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     public ActionResult Delete(int id)
     {
         Outing? outing = _outingService.GetById(id);
@@ -200,7 +197,6 @@ public class OutingController : Controller
     }
 
     // POST: Outing/Delete/5
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public ActionResult Destroy(int id)
