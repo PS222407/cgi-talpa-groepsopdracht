@@ -20,3 +20,27 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+:root {
+  --main: #D92A3B;
+  --backgroundcolor: #E5E5E5;
+  --white: #ffffff;
+}
+
+.body {
+  background-color: var(--backgroundcolor);
+  min-height: 100vh;
+}
+
+.nav {
+  background-color: var(--main);
+  color: white;
+}
+
+.nav ul {
+  list-style-type: none;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
