@@ -5,16 +5,22 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<head>
+    <link rel="stylesheet" href="~/css/outingstyle.css">
+</head>
 
-@foreach (OutingViewModel outing in Model)
-{
-    <a asp-action="Details" class="btn btn-primary">
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">@outing.Name</h5>
-                <p class="card-text">@string.Join(", ", @outing.SelectedSuggestionIds)</p>
+<div class="outer-container">
+    @foreach (OutingViewModel outing in Model)
+    {
+        <a class="card-link" style="text-decoration: none; display: flex; justify-content: center; align-items: center; margin: 10px;" href="@Url.Action("Details", "Outing", new { id = outing.Id })" class="card-link">
+            <div class="card" style="background-image: url('https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg');">
+                <div class="card-body">
+                    <h1 class="card-title">
+                        @outing.Name
+                    </h1>
+                </div>
             </div>
-        </div>
-    </a>
-}
+        </a>
+    }
+</div>
+
