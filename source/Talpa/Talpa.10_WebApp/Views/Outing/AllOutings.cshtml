@@ -1,0 +1,20 @@
+﻿@using Talpa.ViewModels
+@model IEnumerable<Talpa.ViewModels.OutingViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@foreach (OutingViewModel outing in Model)
+{
+    <a asp-action="Details" class="btn btn-primary">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">@outing.Name</h5>
+                <p class="card-text">@string.Join(", ", @outing.SelectedSuggestionIds)</p>
+            </div>
+        </div>
+    </a>
+}
