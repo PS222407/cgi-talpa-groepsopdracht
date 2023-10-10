@@ -8,8 +8,12 @@ public interface ISuggestionRepository
 
     public Suggestion? GetById(int id);
     
-    public List<Suggestion> GetAll();
+    public List<Suggestion> GetByIds(List<int> ids);
     
+    public List<Suggestion> GetAll();
+
+    public List<Suggestion> GetAllBy(string id);
+
     public bool Update(Suggestion suggestion);
 
     public bool Delete(int id);

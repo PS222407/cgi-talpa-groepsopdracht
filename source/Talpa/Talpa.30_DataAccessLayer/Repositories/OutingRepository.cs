@@ -32,7 +32,10 @@ public class OutingRepository : IOutingRepository
 
     public Outing? GetById(int id)
     {
-        return _dataContext.Outings.Include(o => o.OutingDates).FirstOrDefault(o => o.Id == id);
+        return _dataContext.Outings
+            .Include(o => o.OutingDates)
+            .Include(o => o.Suggestions)
+            .FirstOrDefault(o => o.Id == id);
     }
 
     public List<Outing> GetAll()
@@ -42,15 +45,18 @@ public class OutingRepository : IOutingRepository
 
     public bool Update(Outing outing)
     {
-        Outing? outingDb = _dataContext.Outings.FirstOrDefault(o => o.Id == outing.Id);
+        Outing? outingDb = _dataContext.Outings.Include(o => o.Suggestions).FirstOrDefault(o => o.Id == outing.Id);
         if (outingDb == null)
         {
             return false;
         }
-
+        
         outingDb.Name = outing.Name;
-
-        return _dataContext.SaveChanges() > 0;
+        outingDb.Suggestions = outing.Suggestions;
+        
+        _dataContext.SaveChanges();
+        
+        return true;
     }
 
     public bool Delete(int id)

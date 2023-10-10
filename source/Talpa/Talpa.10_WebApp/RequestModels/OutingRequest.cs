@@ -5,10 +5,12 @@ namespace Talpa.RequestModels;
 
 public class OutingRequest
 {
-    private string _stringDates;
-    
     public int Id { get; set; }
     
+    private string _stringDates;
+    
+    private List<DateTime> _dates = new();
+
     public string Name { get; set; }
 
     public string StringDates
@@ -21,11 +23,19 @@ public class OutingRequest
         }
     }
 
-    public List<DateTime> Dates { get; set; } = new();
-    
-    public List<string>? SelectedSuggestionIds { get; set; } = new List<string>();
+    public List<DateTime> Dates
+    {
+        get => _dates;
+        set
+        {
+            _stringDates = string.Join(",", value.Select(date => date.ToString("dd/MM/yyyy")).ToList());
+            _dates = value;
+        }
+    }
 
-    public List<SelectListItem>? SuggestionOptions { get; set; } = new List<SelectListItem> ();
+    public List<string>? SelectedSuggestionIds { get; set; } = new();
+
+    public List<SelectListItem>? SuggestionOptions { get; set; } = new();
 
     private List<DateTime> ConvertStringToDates(string value)
     {
