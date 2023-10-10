@@ -1,4 +1,4 @@
-﻿namespace Talpa.Support;
+﻿namespace Talpa_10_WebApp.Support;
 
 public static class SameSiteServiceCollectionExtensions
 {
