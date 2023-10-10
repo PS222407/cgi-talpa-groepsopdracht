@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Security.Claims;
 using BusinessLogicLayer.Exceptions;
 using BusinessLogicLayer.Interfaces.Services;
@@ -10,8 +9,10 @@ using Talpa.Constants;
 using Talpa.RequestModels;
 using Talpa.ViewModels;
 
-namespace Talpa.Controllers;
+namespace Talpa.Controllers.Manager;
 
+[Route("Manager/[controller]/[action]/{id?}")]
+[Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
 public class OutingController : Controller
 {
     private readonly IOutingService _outingService;
@@ -26,10 +27,11 @@ public class OutingController : Controller
     }
 
     // GET: Outing
+    [HttpGet("/Manager/[controller]")]
     public async Task<ActionResult> Index()
     {
         string? id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-        User? user = await _userService.GetById(id);
+        User? user = await _userService.GetById(id!);
 
         if (User.IsInRole(RoleName.Admin))
         {
@@ -49,7 +51,6 @@ public class OutingController : Controller
     }
 
     // GET: Outing/Details/5
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     public ActionResult Details(int id)
     {
         Outing? outing = _outingService.GetById(id);
@@ -65,22 +66,12 @@ public class OutingController : Controller
     }
 
     // GET: Outing/Create
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     public ActionResult Create()
     {
-        List<Suggestion> suggestions = _suggestionService.GetAll();
-        List<SelectListItem> suggestionOptions = suggestions.Select(suggestion => new SelectListItem { Value = suggestion.Id.ToString(), Text = suggestion.Name, }).ToList();
-
-        OutingRequest outingRequest = new()
-        {
-            SuggestionOptions = suggestionOptions
-        };
-        
-        return View(outingRequest);
+        return View();
     }
 
     // POST: Outing/Create
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> Create(OutingRequest outingRequest)
@@ -89,13 +80,20 @@ public class OutingController : Controller
         {
             return View(outingRequest);
         }
-        
-        List<OutingDate> outingDates = outingRequest.Dates.Select(date => new OutingDate { Date = date }).ToList();
-        Outing outing = new() { Name = outingRequest.Name, OutingDates = outingDates };
-        
+
         string id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
         User user = (await _userService.GetById(id))!;
-        
+
+        if (user.TeamId == 0 || user.TeamId == null)
+        {
+            TempData["Message"] = "Je zit nog niet in een Team!";
+            TempData["MessageType"] = "danger";
+            return View(outingRequest);
+        }
+
+        List<OutingDate> outingDates = outingRequest.Dates.Select(date => new OutingDate { Date = date }).ToList();
+        Outing outing = new() { Name = outingRequest.Name, OutingDates = outingDates };
+
         Outing outingEntry;
         try
         {
@@ -107,14 +105,14 @@ public class OutingController : Controller
             TempData["MessageType"] = "danger";
             return View();
         }
-        
+
         if (outingEntry.Id == null)
         {
             TempData["Message"] = "Fout tijdens het aanmaken.";
             TempData["MessageType"] = "danger";
             return View();
         }
-        
+
         TempData["Message"] = "Item succesvol aangemaakt";
         TempData["MessageType"] = "success";
 
@@ -122,7 +120,6 @@ public class OutingController : Controller
     }
 
     // GET: Outing/Edit/5
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     public ActionResult Edit(int id)
     {
         Outing? outing = _outingService.GetById(id);
@@ -131,42 +128,49 @@ public class OutingController : Controller
             TempData["Message"] = "Er bestaat geen entiteit met dit id.";
             TempData["MessageType"] = "danger";
 
-            return View();
+            return RedirectToAction(nameof(Index));
         }
 
         List<Suggestion> suggestions = _suggestionService.GetAll();
         List<SelectListItem> suggestionOptions = suggestions.Select(suggestion => new SelectListItem { Value = suggestion.Id.ToString(), Text = suggestion.Name, }).ToList();
 
-        OutingViewModel outingViewModel = new()
+        OutingRequest outingRequest = new()
         {
-            Id = outing.Id,
             Name = outing.Name,
             SuggestionOptions = suggestionOptions,
-            SelectedSuggestionIds = new List<string>(), // TODO: Get selected suggestions
-            OutingDates = outing.OutingDates,
+            SelectedSuggestionIds = outing.Suggestions?.Select(s => s.Id.ToString()).ToList(),
+            Dates = outing.OutingDates?.Select(od => od.Date).ToList() ?? new List<DateTime>(),
         };
 
-        return View(outingViewModel);
+        return View(outingRequest);
     }
 
     // POST: Outing/Edit/5
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public ActionResult Edit(int id, OutingRequest outingRequest)
     {
         if (!ModelState.IsValid)
         {
-            return View();
+            outingRequest.SuggestionOptions = GetSuggestionOptions();
+            return View(outingRequest);
         }
 
-        Outing outing = new() { Id = id, Name = outingRequest.Name };
+        List<OutingDate> outingDates = outingRequest.Dates.Select(date => new OutingDate { Date = date }).ToList();
+        List<Suggestion> suggestions = _suggestionService.GetByIds(outingRequest.SelectedSuggestionIds?.Select(int.Parse).ToList() ?? new List<int>());
+        Outing outing = new()
+        {
+            Id = id, 
+            Name = outingRequest.Name,
+            OutingDates = outingDates,  
+            Suggestions = suggestions,
+        };
         if (!_outingService.Update(outing))
         {
             TempData["Message"] = "Fout tijdens het opslaan van de data.";
             TempData["MessageType"] = "danger";
-
-            return View();
+            outingRequest.SuggestionOptions = GetSuggestionOptions();
+            return View(outingRequest);
         }
 
         TempData["Message"] = "Item succesvol gewijzigd";
@@ -176,7 +180,6 @@ public class OutingController : Controller
     }
 
     // GET: Outing/Delete/5
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     public ActionResult Delete(int id)
     {
         Outing? outing = _outingService.GetById(id);
@@ -188,13 +191,12 @@ public class OutingController : Controller
             return View();
         }
 
-        OutingViewModel outingViewModel = new OutingViewModel(id, outing.Name);
+        OutingViewModel outingViewModel = new(id, outing.Name);
 
         return View(outingViewModel);
     }
 
     // POST: Outing/Delete/5
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public ActionResult Destroy(int id)
@@ -211,5 +213,11 @@ public class OutingController : Controller
         TempData["MessageType"] = "success";
 
         return RedirectToAction(nameof(Index));
+    }
+
+    private List<SelectListItem> GetSuggestionOptions()
+    {
+        List<Suggestion> suggestions = _suggestionService.GetAll();
+        return suggestions.Select(suggestion => new SelectListItem { Value = suggestion.Id.ToString(), Text = suggestion.Name, }).ToList();
     }
 }

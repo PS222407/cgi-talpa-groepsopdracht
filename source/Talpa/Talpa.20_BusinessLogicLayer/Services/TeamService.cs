@@ -36,9 +36,9 @@ public class TeamService : ITeamService
         return _teamRepository.Update(team);
     }
 
-    public bool Delete(int id)
+    public async Task<bool> Delete(int id)
     {
-        return _teamRepository.Delete(id);
+        return await SyncUsers(id, new List<string>()) && _teamRepository.Delete(id);
     }
 
     public async Task<bool> SyncUsers(int teamId, List<string> userIds)

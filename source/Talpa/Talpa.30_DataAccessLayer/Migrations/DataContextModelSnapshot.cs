@@ -31,16 +31,17 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("OutingDateId");
 
-                    b.ToTable("DateVotes", (string)null);
+                    b.ToTable("DateVotes");
                 });
 
             modelBuilder.Entity("BusinessLogicLayer.Models.Outing", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("TeamId")
@@ -50,7 +51,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("Outings", (string)null);
+                    b.ToTable("Outings");
                 });
 
             modelBuilder.Entity("BusinessLogicLayer.Models.OutingDate", b =>
@@ -69,7 +70,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("OutingId");
 
-                    b.ToTable("OutingDates", (string)null);
+                    b.ToTable("OutingDates");
                 });
 
             modelBuilder.Entity("BusinessLogicLayer.Models.Restriction", b =>
@@ -84,7 +85,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Restrictions", (string)null);
+                    b.ToTable("Restrictions");
                 });
 
             modelBuilder.Entity("BusinessLogicLayer.Models.Suggestion", b =>
@@ -97,18 +98,13 @@ namespace DataAccessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("OutingId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OutingId");
-
-                    b.ToTable("Suggestions", (string)null);
+                    b.ToTable("Suggestions");
                 });
 
             modelBuilder.Entity("BusinessLogicLayer.Models.SuggestionDate", b =>
@@ -127,7 +123,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("SuggestionId");
 
-                    b.ToTable("SuggestionDates", (string)null);
+                    b.ToTable("SuggestionDates");
                 });
 
             modelBuilder.Entity("BusinessLogicLayer.Models.SuggestionVote", b =>
@@ -145,7 +141,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("OutingId");
 
-                    b.ToTable("SuggestionVote", (string)null);
+                    b.ToTable("SuggestionVote");
                 });
 
             modelBuilder.Entity("BusinessLogicLayer.Models.Team", b =>
@@ -159,7 +155,22 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Teams", (string)null);
+                    b.ToTable("Teams");
+                });
+
+            modelBuilder.Entity("OutingSuggestion", b =>
+                {
+                    b.Property<int>("OutingId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SuggestionsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OutingId", "SuggestionsId");
+
+                    b.HasIndex("SuggestionsId");
+
+                    b.ToTable("OutingSuggestion");
                 });
 
             modelBuilder.Entity("RestrictionSuggestion", b =>
@@ -174,7 +185,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("SuggestionsId");
 
-                    b.ToTable("RestrictionSuggestion", (string)null);
+                    b.ToTable("RestrictionSuggestion");
                 });
 
             modelBuilder.Entity("BusinessLogicLayer.Models.DateVote", b =>
@@ -210,17 +221,6 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Outing");
                 });
 
-            modelBuilder.Entity("BusinessLogicLayer.Models.Suggestion", b =>
-                {
-                    b.HasOne("BusinessLogicLayer.Models.Outing", "Outing")
-                        .WithMany()
-                        .HasForeignKey("OutingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Outing");
-                });
-
             modelBuilder.Entity("BusinessLogicLayer.Models.SuggestionDate", b =>
                 {
                     b.HasOne("BusinessLogicLayer.Models.Suggestion", "Suggestion")
@@ -249,6 +249,21 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Outing");
 
                     b.Navigation("Suggestion");
+                });
+
+            modelBuilder.Entity("OutingSuggestion", b =>
+                {
+                    b.HasOne("BusinessLogicLayer.Models.Outing", null)
+                        .WithMany()
+                        .HasForeignKey("OutingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BusinessLogicLayer.Models.Suggestion", null)
+                        .WithMany()
+                        .HasForeignKey("SuggestionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("RestrictionSuggestion", b =>
