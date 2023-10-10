@@ -32,7 +32,7 @@ public class SuggestionController : Controller
 
         if (User.IsInRole(RoleName.Admin))
         {
-            List<Suggestion> allSuggestions = _suggestionService.GetAll();
+            List<Suggestion> allSuggestions = _suggestionService.GetAllBy(id);
 
             List<SuggestionViewModel> suggestionViewModels1 = allSuggestions.Select(suggestion =>
                 new SuggestionViewModel(
@@ -66,7 +66,7 @@ public class SuggestionController : Controller
             return View();
         }
 
-        return View(_suggestionService.GetAll()
+        return View(_suggestionService.GetAllBy(id)
             .Select(suggestion => new SuggestionViewModel(suggestion.Id, suggestion.Name, suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>())));
     }
 
