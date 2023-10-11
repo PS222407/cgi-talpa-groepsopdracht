@@ -1,12 +1,16 @@
 ﻿using BusinessLogicLayer.Interfaces.Services;
 using BusinessLogicLayer.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Talpa_10_WebApp.Constants;
 using Talpa_10_WebApp.RequestModels;
 using Talpa_10_WebApp.ViewModels;
 
-namespace Talpa_10_WebApp.Controllers;
+namespace Talpa_10_WebApp.Controllers.Admin;
 
+[Area("Admin")]
+[Authorize(Roles = $"{RoleName.Admin}")]
 public class TeamController : Controller
 {
     private readonly ITeamService _teamService;

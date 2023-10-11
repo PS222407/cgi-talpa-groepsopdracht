@@ -11,6 +11,7 @@ using Talpa_10_WebApp.ViewModels;
 
 namespace Talpa_10_WebApp.Controllers.Manager;
 
+[Area("Manager")]
 [Route("Manager/[controller]/[action]/{id?}")]
 [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
 public class OutingController : Controller

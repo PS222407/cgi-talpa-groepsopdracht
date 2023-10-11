@@ -30,6 +30,11 @@
       <_ContentIncludedByDefault Remove="Views\Shared\_Layout.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Shared\_LoginPartial.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Shared\_ValidationScriptsPartial.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Suggestion\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Suggestion\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Suggestion\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Suggestion\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Suggestion\Index.cshtml" />
     </ItemGroup>
 
 
@@ -51,16 +56,17 @@
       <AdditionalFiles Include="Views\Shared\_Layout.cshtml" />
       <AdditionalFiles Include="Views\Shared\_LoginPartial.cshtml" />
       <AdditionalFiles Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
-      <AdditionalFiles Include="Views\Suggestion\Create.cshtml" />
-      <AdditionalFiles Include="Views\Suggestion\Delete.cshtml" />
-      <AdditionalFiles Include="Views\Suggestion\Details.cshtml" />
-      <AdditionalFiles Include="Views\Suggestion\Edit.cshtml" />
-      <AdditionalFiles Include="Views\Suggestion\Index.cshtml" />
-      <AdditionalFiles Include="Views\Team\Create.cshtml" />
-      <AdditionalFiles Include="Views\Team\Delete.cshtml" />
-      <AdditionalFiles Include="Views\Team\Details.cshtml" />
-      <AdditionalFiles Include="Views\Team\Edit.cshtml" />
-      <AdditionalFiles Include="Views\Team\Index.cshtml" />
+    </ItemGroup>
+
+
+
+
+
+
+
+
+    <ItemGroup>
+      <Folder Include="Areas\Admin\Views\" />
     </ItemGroup>
 
 

@@ -23,28 +23,40 @@
                     @if (User.IsInRole("Admin"))
                     {
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Team" asp-action="Index" style="@(new Uri(Context.Request.GetDisplayUrl()).AbsolutePath.StartsWith("/Team") ? "color: white !important; text-decoration: underline; font-weight: bold;" : "")">Teams</a>
+                            <a class="nav-link" asp-area="Admin" asp-controller="Team" asp-action="Index" style="@(new Uri(Context.Request.GetDisplayUrl()).AbsolutePath.StartsWith("/Admin/Team") ? "color: white !important; text-decoration: underline; font-weight: bold;" : "")">
+                                Teams
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link">Scorebord</a>
+                            <a href="" class="nav-link">
+                                Scorebord
+                            </a>
                         </li>
                     }
                     @if (User.IsInRole("Manager"))
                     {
                         <li class="nav-item">
-                            <a asp-controller="Outing" asp-action="Index" class="nav-link" style="@(new Uri(Context.Request.GetDisplayUrl()).AbsolutePath.StartsWith("/Manager/Outing") ? "color: white !important; text-decoration: underline; font-weight: bold;" : "")">Beheer uitjes</a>
+                            <a asp-area="Manager" asp-controller="Outing" asp-action="Index" class="nav-link" style="@(new Uri(Context.Request.GetDisplayUrl()).AbsolutePath.StartsWith("/Manager/Outing") ? "color: white !important; text-decoration: underline; font-weight: bold;" : "")">
+                                Beheer uitjes
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link">Scorebord</a>
+                            <a href="" class="nav-link">
+                                Scorebord
+                            </a>
                         </li>
                     }
                     @if (User.IsInRole("Employee"))
                     {
                         <li class="nav-item">
-                            <a href="" class="nav-link">Te plannen uitjes</a>
+                            <a asp-area="" asp-controller="Outing" asp-action="Index" class="nav-link" style="@(new Uri(Context.Request.GetDisplayUrl()).AbsolutePath.StartsWith("/Outing") ? "color: white !important; text-decoration: underline; font-weight: bold;" : "")">
+                                Te plannen uitjes
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link">Suggesties</a>
+                            <a asp-area="" asp-controller="Suggestion" asp-action="Index" class="nav-link" style="@(new Uri(Context.Request.GetDisplayUrl()).AbsolutePath.StartsWith("/Suggestion") ? "color: white !important; text-decoration: underline; font-weight: bold;" : "")">
+                                Suggesties
+                            </a>
                         </li>
                     }
                 </ul>

@@ -25,7 +25,7 @@ public class OutingController : Controller
 
         if (User.IsInRole(RoleName.Admin))  
         {
-            return View("AllOutings", _outingService.GetAll().Select(outing => new OutingViewModel(outing.Id, outing.Name)).ToList());
+            return View(_outingService.GetAll().Select(outing => new OutingViewModel(outing.Id, outing.Name)).ToList());
         }
 
         int? teamId = user?.TeamId;
@@ -34,9 +34,9 @@ public class OutingController : Controller
             TempData["Message"] = "Je bent niet toegewezen aan een team.";
             TempData["MessageType"] = "danger";
 
-            return View("AllOutings");
+            return View();
         }
 
-        return View("AllOutings", _outingService.GetAllFromTeam((int)teamId).Select(outing => new OutingViewModel(outing.Id, outing.Name)).ToList());
+        return View(_outingService.GetAllFromTeam((int)teamId).Select(outing => new OutingViewModel(outing.Id, outing.Name)).ToList());
     }
 }
