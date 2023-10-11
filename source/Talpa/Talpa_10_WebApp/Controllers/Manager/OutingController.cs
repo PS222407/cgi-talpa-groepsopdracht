@@ -25,28 +25,6 @@ public class OutingController : Controller
         _userService = userService;
         _suggestionService = suggestionService;
     }
-
-    public async Task<ActionResult> AllOutings()
-    {
-        string? id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-        User? user = await _userService.GetById(id);
-
-        if (User.IsInRole(RoleName.Admin))  
-        {
-            return View(_outingService.GetAll().Select(outing => new OutingViewModel(outing.Id, outing.Name)).ToList());
-        }
-
-        int? teamId = user?.TeamId;
-        if (teamId == null)
-        {
-            TempData["Message"] = "Je bent niet toegewezen aan een team.";
-            TempData["MessageType"] = "danger";
-
-            return View();
-        }
-
-        return View(_outingService.GetAllFromTeam((int)teamId).Select(outing => new OutingViewModel(outing.Id, outing.Name)).ToList());
-    }
     
     // GET: Outing
     [HttpGet("/Manager/[controller]")]
