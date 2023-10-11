@@ -1,3 +1,0 @@
-Data Source=(LocalDb);Server=127.0.0.1;Port=3306;Database=Talpa;User ID=root;Password=;
-
-Server=(localdb)\mssqllocaldb;Database=aspnet-Talpa-76777350-1442-4b36-98f3-46012034a360;Trusted_Connection=True;MultipleActiveResultSets=true
