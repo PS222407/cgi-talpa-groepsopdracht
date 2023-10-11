@@ -67,6 +67,37 @@
 
     <ItemGroup>
       <Folder Include="Areas\Admin\Views\" />
+      <Folder Include="wwwroot\flags\" />
+    </ItemGroup>
+
+
+
+
+    <ItemGroup>
+      <EmbeddedResource Update="Resources\Views\Shared\_Layout.nl-NL.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>_Layour.nl-NL.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Resources\Views\Shared\_Layout.en-US.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>_Layout.en-US.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+
+
+
+    <ItemGroup>
+      <Compile Update="Resources\Views\Shared\_Layout.nl-NL.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>_Layout.nl-NL.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Resources\Views\Shared\_Layout.en-US.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>_Layout.en-US.resx</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 

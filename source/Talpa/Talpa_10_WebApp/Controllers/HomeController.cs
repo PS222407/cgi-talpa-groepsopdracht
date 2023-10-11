@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Talpa_10_WebApp.ViewModels;
 
@@ -18,6 +19,25 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         return View();
+    }
+
+    [HttpGet("SetLocale")]
+    public ActionResult SetLocale(string culture)
+    {
+        try
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(100) }
+            );
+        }
+        catch (Exception e)
+        {
+            return Json(new { success = false });
+        }
+
+        return Json(new { success = true });
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

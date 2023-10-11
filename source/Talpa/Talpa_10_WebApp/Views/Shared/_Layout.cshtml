@@ -1,4 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Http.Extensions
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,12 +26,12 @@
                     {
                         <li class="nav-item">
                             <a class="nav-link" asp-area="Admin" asp-controller="Team" asp-action="Index" style="@(new Uri(Context.Request.GetDisplayUrl()).AbsolutePath.StartsWith("/Admin/Team") ? "color: white !important; text-decoration: underline; font-weight: bold;" : "")">
-                                Teams
+                                @Localizer["Teams"]
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="" class="nav-link">
-                                Scorebord
+                                @Localizer["Scoreboard"]
                             </a>
                         </li>
                     }
@@ -37,12 +39,12 @@
                     {
                         <li class="nav-item">
                             <a asp-area="Manager" asp-controller="Outing" asp-action="Index" class="nav-link" style="@(new Uri(Context.Request.GetDisplayUrl()).AbsolutePath.StartsWith("/Manager/Outing") ? "color: white !important; text-decoration: underline; font-weight: bold;" : "")">
-                                Beheer uitjes
+                                @Localizer["ManageOutings"]
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="" class="nav-link">
-                                Scorebord
+                                @Localizer["Scoreboard"]
                             </a>
                         </li>
                     }
@@ -50,12 +52,12 @@
                     {
                         <li class="nav-item">
                             <a asp-area="" asp-controller="Outing" asp-action="Index" class="nav-link" style="@(new Uri(Context.Request.GetDisplayUrl()).AbsolutePath.StartsWith("/Outing") ? "color: white !important; text-decoration: underline; font-weight: bold;" : "")">
-                                Te plannen uitjes
+                                @Localizer["OutingsToPlan"]
                             </a>
                         </li>
                         <li class="nav-item">
                             <a asp-area="" asp-controller="Suggestion" asp-action="Index" class="nav-link" style="@(new Uri(Context.Request.GetDisplayUrl()).AbsolutePath.StartsWith("/Suggestion") ? "color: white !important; text-decoration: underline; font-weight: bold;" : "")">
-                                Suggesties
+                                @Localizer["Suggestions"]
                             </a>
                         </li>
                     }
@@ -68,13 +70,17 @@
                             <a asp-controller="Account" asp-action="Profile" style="color: white">Hallo @User.Identity.Name!</a>
                         </li>
                         <li>
-                            <a id="qsLogoutBtn" asp-controller="Account" asp-action="Logout" style="color: white">Logout</a>
+                            <a id="qsLogoutBtn" asp-controller="Account" asp-action="Logout" style="color: white">
+                                @Localizer["Logout"]
+                            </a>
                         </li>
                     }
                     else
                     {
                         <li>
-                            <a id="qsLoginBtn" asp-controller="Account" asp-action="Login" style="color: white">Login</a>
+                            <a id="qsLoginBtn" asp-controller="Account" asp-action="Login" style="color: white">
+                                @Localizer["Login"]
+                            </a>
                         </li>
                     }
                 </ul>
@@ -93,6 +99,19 @@
     }
 
     @RenderBody()
+
+    <button onclick="setCultureCookie()">Click to change to EN</button>
+    
+    <select class="js-example-templating" style="width: 150px">
+        <option value="us">English</option>
+        <option value="nl">Nederlands</option>
+    </select> 
+
+    <script>
+    function setCultureCookie() {
+      alert("set lang");
+    }
+    </script>
 </main>
 
 @* SELECT2 *@
@@ -106,6 +125,21 @@
         tokenSeparators: [',']
     });
     $(".js-tokenizer").select2();
+    
+    function formatState (state) {
+      if (!state.id) {
+        return state.text;
+      }
+      const baseUrl = "";
+      
+      return $(
+        '<span><img width="35px" src="flags/' + state.element.value.toLowerCase() + '.svg" class="img-flag" /> ' + state.text + '</span>'
+      );
+    }
+    
+    $(".js-example-templating").select2({
+      templateResult: formatState
+    });
 </script>
 
 @* DATEPICKER *@
