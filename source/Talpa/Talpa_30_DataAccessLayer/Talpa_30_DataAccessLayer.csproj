@@ -25,7 +25,7 @@
 
 
     <ItemGroup>
-      <ProjectReference Include="..\Talpa.20_BusinessLogicLayer\Talpa.20_BusinessLogicLayer.csproj" />
+      <ProjectReference Include="..\Talpa_20_BusinessLogicLayer\Talpa_20_BusinessLogicLayer.csproj" />
     </ItemGroup>
 
 

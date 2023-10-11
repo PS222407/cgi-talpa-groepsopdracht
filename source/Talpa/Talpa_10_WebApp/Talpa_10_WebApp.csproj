@@ -18,8 +18,8 @@
 
 
     <ItemGroup>
-      <ProjectReference Include="..\Talpa.20_BusinessLogicLayer\Talpa.20_BusinessLogicLayer.csproj" />
-      <ProjectReference Include="..\Talpa.30_DataAccessLayer\Talpa.30_DataAccessLayer.csproj" />
+      <ProjectReference Include="..\Talpa_20_BusinessLogicLayer\Talpa_20_BusinessLogicLayer.csproj" />
+      <ProjectReference Include="..\Talpa_30_DataAccessLayer\Talpa_30_DataAccessLayer.csproj" />
     </ItemGroup>
 
 
