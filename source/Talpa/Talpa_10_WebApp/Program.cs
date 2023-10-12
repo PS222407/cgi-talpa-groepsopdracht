@@ -93,11 +93,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapAreaControllerRoute(
-    name: "MyAreaAdmin",
+    name: "Admin",
     areaName: "Admin",
     pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
 app.MapAreaControllerRoute(
-    name: "MyAreaManager",
+    name: "Manager",
     areaName: "Manager",
     pattern: "Manager/{controller=Home}/{action=Index}/{id?}");
 app.MapControllerRoute(

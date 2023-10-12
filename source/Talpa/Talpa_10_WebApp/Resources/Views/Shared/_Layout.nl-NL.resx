@@ -40,4 +40,7 @@
     <data name="Login" xml:space="preserve">
         <value>Log in</value>
     </data>
+    <data name="Hello" xml:space="preserve">
+        <value>Hallo</value>
+    </data>
 </root>

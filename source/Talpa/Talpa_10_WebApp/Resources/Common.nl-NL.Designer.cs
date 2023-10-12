@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Talpa_10_WebApp.Resources.Views.Shared {
+namespace Talpa_10_WebApp.Resources {
     using System;
     
     
@@ -21,14 +21,14 @@ namespace Talpa_10_WebApp.Resources.Views.Shared {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class _Layout_nl_NL {
+    internal class Common_nl_NL {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal _Layout_nl_NL() {
+        internal Common_nl_NL() {
         }
         
         /// <summary>
@@ -38,7 +38,7 @@ namespace Talpa_10_WebApp.Resources.Views.Shared {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Talpa_10_WebApp.Resources.Views.Shared._Layout.nl-NL", typeof(_Layout_nl_NL).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Talpa_10_WebApp.Resources.Common.nl-NL", typeof(Common_nl_NL).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -60,74 +60,20 @@ namespace Talpa_10_WebApp.Resources.Views.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hallo.
+        ///   Looks up a localized string similar to Glas.
         /// </summary>
-        internal static string Hello {
+        internal static string Glass {
             get {
-                return ResourceManager.GetString("Hello", resourceCulture);
+                return ResourceManager.GetString("Glass", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Log in.
+        ///   Looks up a localized string similar to Muis.
         /// </summary>
-        internal static string Login {
+        internal static string Mouse {
             get {
-                return ResourceManager.GetString("Login", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Uitloggen.
-        /// </summary>
-        internal static string Logout {
-            get {
-                return ResourceManager.GetString("Logout", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Beheer uitjes.
-        /// </summary>
-        internal static string ManageOutings {
-            get {
-                return ResourceManager.GetString("ManageOutings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Te plannen uitjes.
-        /// </summary>
-        internal static string OutingsToPlan {
-            get {
-                return ResourceManager.GetString("OutingsToPlan", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Scorebord.
-        /// </summary>
-        internal static string Scoreboard {
-            get {
-                return ResourceManager.GetString("Scoreboard", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Suggesties.
-        /// </summary>
-        internal static string Suggestions {
-            get {
-                return ResourceManager.GetString("Suggestions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Teams.
-        /// </summary>
-        internal static string Teams {
-            get {
-                return ResourceManager.GetString("Teams", resourceCulture);
+                return ResourceManager.GetString("Mouse", resourceCulture);
             }
         }
     }
