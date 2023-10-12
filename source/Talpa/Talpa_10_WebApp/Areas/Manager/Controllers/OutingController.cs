@@ -26,7 +26,7 @@ public class OutingController : Controller
         _userService = userService;
         _suggestionService = suggestionService;
     }
-    
+
     // GET: Outing
     [HttpGet("/Manager/[controller]")]
     public async Task<ActionResult> Index()
@@ -161,9 +161,9 @@ public class OutingController : Controller
         List<Suggestion> suggestions = _suggestionService.GetByIds(outingRequest.SelectedSuggestionIds?.Select(int.Parse).ToList() ?? new List<int>());
         Outing outing = new()
         {
-            Id = id, 
+            Id = id,
             Name = outingRequest.Name,
-            OutingDates = outingDates,  
+            OutingDates = outingDates,
             Suggestions = suggestions,
         };
         if (!_outingService.Update(outing))

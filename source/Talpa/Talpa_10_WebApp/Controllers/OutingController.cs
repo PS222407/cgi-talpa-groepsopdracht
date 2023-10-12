@@ -11,19 +11,19 @@ public class OutingController : Controller
 {
     private readonly IOutingService _outingService;
     private readonly IUserService _userService;
-    
+
     public OutingController(IOutingService outingService, IUserService userService)
     {
         _outingService = outingService;
         _userService = userService;
     }
-    
+
     public async Task<ActionResult> Index()
     {
         string? id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
         User? user = await _userService.GetById(id);
 
-        if (User.IsInRole(RoleName.Admin))  
+        if (User.IsInRole(RoleName.Admin))
         {
             return View(_outingService.GetAll().Select(outing => new OutingViewModel(outing.Id, outing.Name)).ToList());
         }

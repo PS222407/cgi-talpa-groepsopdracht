@@ -2,10 +2,10 @@
 
 public class SuggestionViewModel
 {
-    public int? Id { get;  set; }
+    public int? Id { get; set; }
 
     public string Name { get; set; }
-    
+
     public List<string> Restrictions { get; set; }
 
     public SuggestionViewModel(int? id, string name, List<string> restrictions)

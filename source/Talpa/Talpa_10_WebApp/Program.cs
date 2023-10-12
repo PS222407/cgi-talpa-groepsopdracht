@@ -51,7 +51,8 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
-    CultureInfo[] supportedCultures = {
+    CultureInfo[] supportedCultures =
+    {
         new("nl-NL"),
         new("en-US"),
     };

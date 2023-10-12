@@ -1,17 +1,17 @@
 @using System.Globalization
 
 <div style="display: flex">
-    @if(CultureInfo.CurrentCulture.ToString() == "en-US")
+    @if (CultureInfo.CurrentCulture.ToString() == "en-US")
     {
-        <img src="~/flags/us.svg" width="35px" />
+        <img src="~/flags/us.svg" width="35px"/>
     }
     else
     {
-        <img src="~/flags/nl.svg" width="35px" />
+        <img src="~/flags/nl.svg" width="35px"/>
     }
     <form action="@Url.Action("SetLocale", "Home")" method="get">
         <select name="locale" onchange="this.form.submit()" class="js-example-templating" style="width: 150px">
-            @if(CultureInfo.CurrentCulture.ToString() == "en-US")
+            @if (CultureInfo.CurrentCulture.ToString() == "en-US")
             {
                 <option value="us" selected="selected">English</option>
                 <option value="nl">Nederlands</option>
