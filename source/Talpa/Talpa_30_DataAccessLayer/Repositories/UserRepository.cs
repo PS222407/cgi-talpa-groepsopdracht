@@ -24,14 +24,16 @@ public class UserRepository : Repository, IUserRepository
         string status = response.Content.ReadAsStringAsync().Result;
         UserDto? user = JsonSerializer.Deserialize<UserDto>(status);
 
-        return user != null ? new User
-        {
-            Id = user.user_id,
-            Email = user.email,
-            Name = user.name,
-            NickName = user.nickname,
-            TeamId = user.user_metadata.teamId,
-        } : null;
+        return user != null
+            ? new User
+            {
+                Id = user.user_id,
+                Email = user.email,
+                Name = user.name,
+                NickName = user.nickname,
+                TeamId = user.user_metadata.teamId,
+            }
+            : null;
     }
 
     public async Task<List<User>?> GetAll()
@@ -88,8 +90,8 @@ public class UserRepository : Repository, IUserRepository
         {
             user_metadata = new
             {
-                teamId = teamId
-            }
+                teamId = teamId,
+            },
         };
         string jsonData = JsonSerializer.Serialize(patchData);
 
@@ -100,7 +102,7 @@ public class UserRepository : Repository, IUserRepository
 
         HttpRequestMessage request = new(HttpMethod.Patch, url)
         {
-            Content = new StringContent(jsonData, Encoding.UTF8, "application/json")
+            Content = new StringContent(jsonData, Encoding.UTF8, "application/json"),
         };
 
         HttpResponseMessage response = await httpClient.SendAsync(request);

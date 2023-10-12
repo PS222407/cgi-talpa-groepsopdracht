@@ -1,4 +1,4 @@
-using BusinessLogicLayer.Exceptions;
+﻿using BusinessLogicLayer.Exceptions;
 using DataAccessLayer.Data;
 using BusinessLogicLayer.Models;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -10,7 +10,7 @@ namespace DataAccessLayer.Repositories;
 public class OutingRepository : IOutingRepository
 {
     private readonly DataContext _dataContext;
-    
+
     public OutingRepository(DataContext dbContext)
     {
         _dataContext = dbContext;
@@ -22,7 +22,7 @@ public class OutingRepository : IOutingRepository
         {
             throw new TeamNotFoundException($"There is no existing team with id {teamId}");
         }
-        
+
         outing.TeamId = teamId;
         EntityEntry<Outing> entry = _dataContext.Add(outing);
         _dataContext.SaveChanges();
@@ -53,13 +53,13 @@ public class OutingRepository : IOutingRepository
         {
             return false;
         }
-        
+
         outingDb.Name = outing.Name;
         outingDb.Suggestions = outing.Suggestions;
         outingDb.OutingDates = outing.OutingDates;
-        
+
         _dataContext.SaveChanges();
-        
+
         return true;
     }
 

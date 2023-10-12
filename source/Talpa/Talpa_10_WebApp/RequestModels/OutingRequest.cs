@@ -6,9 +6,9 @@ namespace Talpa_10_WebApp.RequestModels;
 public class OutingRequest
 {
     public int Id { get; set; }
-    
+
     private string? _stringDates;
-    
+
     private List<DateTime>? _dates = new();
 
     public string Name { get; set; }

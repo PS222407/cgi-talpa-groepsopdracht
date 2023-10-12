@@ -22,22 +22,29 @@ public class HomeController : Controller
     }
 
     [HttpGet("SetLocale")]
-    public ActionResult SetLocale(string culture)
+    public ActionResult SetLocale(string locale)
     {
         try
         {
+            locale = locale switch
+            {
+                "nl" => "nl-NL",
+                "us" => "en-US",
+                _ => locale,
+            };
+
             Response.Cookies.Append(
                 CookieRequestCultureProvider.DefaultCookieName,
-                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(locale)),
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(100) }
             );
         }
         catch (Exception e)
         {
-            return Json(new { success = false });
+            return Redirect(Request.Headers.Referer.ToString());
         }
 
-        return Json(new { success = true });
+        return Redirect(Request.Headers.Referer.ToString());
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
