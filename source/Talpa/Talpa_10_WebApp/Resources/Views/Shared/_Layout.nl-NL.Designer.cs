@@ -60,6 +60,15 @@ namespace Talpa_10_WebApp.Resources.Views.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hallo.
+        /// </summary>
+        internal static string Hello {
+            get {
+                return ResourceManager.GetString("Hello", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log in.
         /// </summary>
         internal static string Login {

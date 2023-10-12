@@ -13,7 +13,7 @@ public static class JwtService
 
         try
         {
-            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
+            JwtSecurityTokenHandler handler = new();
             JwtSecurityToken jwtToken = handler.ReadJwtToken(token);
 
             if (jwtToken.ValidTo != DateTime.MinValue)

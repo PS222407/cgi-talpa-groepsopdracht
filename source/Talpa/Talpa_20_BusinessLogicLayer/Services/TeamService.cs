@@ -7,9 +7,9 @@ namespace BusinessLogicLayer.Services;
 public class TeamService : ITeamService
 {
     private readonly ITeamRepository _teamRepository;
-    
+
     private readonly IUserRepository _userRepository;
-    
+
     public TeamService(ITeamRepository teamRepository, IUserRepository userRepository)
     {
         _teamRepository = teamRepository;
@@ -22,7 +22,7 @@ public class TeamService : ITeamService
     }
 
     public Team? GetById(int id)
-    {        
+    {
         return _teamRepository.GetById(id);
     }
 
@@ -46,7 +46,7 @@ public class TeamService : ITeamService
         List<string> oldUserIds = (await _userRepository.GetByTeam(teamId))?.Select(u => u.Id).ToList() ?? new List<string>();
         List<string> userIdsToRemove = oldUserIds.Except(userIds).ToList();
         List<string> newUserIds = userIds.Except(oldUserIds).ToList();
-        
+
         return await AttachUsers(teamId, newUserIds) && await DetachUsers(userIdsToRemove);
     }
 

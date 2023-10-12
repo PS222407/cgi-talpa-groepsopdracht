@@ -7,7 +7,7 @@ namespace BusinessLogicLayer.Services;
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
-    
+
     public UserService(IUserRepository userRepository)
     {
         _userRepository = userRepository;
@@ -17,7 +17,7 @@ public class UserService : IUserService
     {
         return await _userRepository.GetById(id);
     }
-    
+
     public async Task<List<User>?> GetAll()
     {
         return await _userRepository.GetAll();

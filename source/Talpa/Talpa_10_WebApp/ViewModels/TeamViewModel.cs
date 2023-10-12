@@ -9,8 +9,8 @@ public class TeamViewModel
     public string? Name { get; set; }
 
     public List<UserViewModel>? Users { get; set; }
-    
+
     public List<string>? SelectedUserIds { get; set; }
-    
+
     public List<SelectListItem>? UserOptions { get; set; }
 }

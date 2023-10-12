@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Remove="Interfaces\IUserService.cs" />
+        <Compile Remove="Interfaces\IUserService.cs"/>
     </ItemGroup>
 
 

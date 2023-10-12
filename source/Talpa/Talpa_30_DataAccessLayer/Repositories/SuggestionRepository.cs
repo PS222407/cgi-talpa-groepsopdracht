@@ -1,4 +1,4 @@
-using BusinessLogicLayer.Exceptions;
+﻿using BusinessLogicLayer.Exceptions;
 using DataAccessLayer.Data;
 using BusinessLogicLayer.Models;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -36,7 +36,6 @@ public class SuggestionRepository : ISuggestionRepository
 
         return entry.Entity;
     }
-
 
     public Suggestion? GetById(int id)
     {

@@ -1,4 +1,4 @@
-namespace DataAccessLayer.Dtos;
+﻿namespace DataAccessLayer.Dtos;
 
 public class UserMetaData
 {

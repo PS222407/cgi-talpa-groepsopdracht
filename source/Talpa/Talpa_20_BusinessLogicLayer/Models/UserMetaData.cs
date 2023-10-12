@@ -1,4 +1,4 @@
-namespace BusinessLogicLayer.Models;
+﻿namespace BusinessLogicLayer.Models;
 
 public class UserMetaData
 {

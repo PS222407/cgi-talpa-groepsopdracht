@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Http.Extensions
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,12 +63,12 @@
                         </li>
                     }
                 </ul>
-                @* <partial name="_LoginPartial" /> *@
                 <ul class="nav navbar-nav navbar-right" style="display: flex; gap: 2em">
+                    <partial name="_CulturePartial"/>
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li>
-                            <a asp-controller="Account" asp-action="Profile" style="color: white">Hallo @User.Identity.Name!</a>
+                            <a asp-controller="Account" asp-action="Profile" style="color: white">@Localizer["Hello"] @User.Identity.Name!</a>
                         </li>
                         <li>
                             <a id="qsLogoutBtn" asp-controller="Account" asp-action="Logout" style="color: white">
@@ -99,19 +100,6 @@
     }
 
     @RenderBody()
-
-    <button onclick="setCultureCookie()">Click to change to EN</button>
-    
-    <select class="js-example-templating" style="width: 150px">
-        <option value="us">English</option>
-        <option value="nl">Nederlands</option>
-    </select> 
-
-    <script>
-    function setCultureCookie() {
-      alert("set lang");
-    }
-    </script>
 </main>
 
 @* SELECT2 *@
@@ -130,10 +118,9 @@
       if (!state.id) {
         return state.text;
       }
-      const baseUrl = "";
       
       return $(
-        '<span><img width="35px" src="flags/' + state.element.value.toLowerCase() + '.svg" class="img-flag" /> ' + state.text + '</span>'
+        '<span><img width="35px" src="/flags/' + state.element.value.toLowerCase() + '.svg" class="img-flag" /> ' + state.text + '</span>'
       );
     }
     
@@ -170,7 +157,7 @@
 @* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
-@await RenderSectionAsync("Scripts", required: false)
+@await RenderSectionAsync("Scripts", false)
 
 </body>
 

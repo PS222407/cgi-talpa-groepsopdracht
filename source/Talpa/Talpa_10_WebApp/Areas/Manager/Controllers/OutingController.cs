@@ -1,4 +1,4 @@
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using BusinessLogicLayer.Exceptions;
 using BusinessLogicLayer.Interfaces.Services;
 using BusinessLogicLayer.Models;
@@ -17,7 +17,9 @@ namespace Talpa_10_WebApp.Controllers.Manager;
 public class OutingController : Controller
 {
     private readonly IOutingService _outingService;
+
     private readonly IUserService _userService;
+
     private readonly ISuggestionService _suggestionService;
 
     public OutingController(IOutingService outingService, IUserService userService, ISuggestionService suggestionService)
@@ -26,7 +28,7 @@ public class OutingController : Controller
         _userService = userService;
         _suggestionService = suggestionService;
     }
-    
+
     // GET: Outing
     [HttpGet("/Manager/[controller]")]
     public async Task<ActionResult> Index()
@@ -133,7 +135,7 @@ public class OutingController : Controller
         }
 
         List<Suggestion> suggestions = _suggestionService.GetAll();
-        List<SelectListItem> suggestionOptions = suggestions.Select(suggestion => new SelectListItem { Value = suggestion.Id.ToString(), Text = suggestion.Name, }).ToList();
+        List<SelectListItem> suggestionOptions = suggestions.Select(suggestion => new SelectListItem { Value = suggestion.Id.ToString(), Text = suggestion.Name }).ToList();
 
         OutingRequest outingRequest = new()
         {
@@ -161,9 +163,9 @@ public class OutingController : Controller
         List<Suggestion> suggestions = _suggestionService.GetByIds(outingRequest.SelectedSuggestionIds?.Select(int.Parse).ToList() ?? new List<int>());
         Outing outing = new()
         {
-            Id = id, 
+            Id = id,
             Name = outingRequest.Name,
-            OutingDates = outingDates,  
+            OutingDates = outingDates,
             Suggestions = suggestions,
         };
         if (!_outingService.Update(outing))
@@ -219,6 +221,6 @@ public class OutingController : Controller
     private List<SelectListItem> GetSuggestionOptions()
     {
         List<Suggestion> suggestions = _suggestionService.GetAll();
-        return suggestions.Select(suggestion => new SelectListItem { Value = suggestion.Id.ToString(), Text = suggestion.Name, }).ToList();
+        return suggestions.Select(suggestion => new SelectListItem { Value = suggestion.Id.ToString(), Text = suggestion.Name }).ToList();
     }
 }

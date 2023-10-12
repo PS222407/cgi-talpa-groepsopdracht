@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 using Auth0.AspNetCore.Authentication;
 using BusinessLogicLayer.Interfaces.Repositories;
 using BusinessLogicLayer.Interfaces.Services;
@@ -51,7 +51,8 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
-    CultureInfo[] supportedCultures = {
+    CultureInfo[] supportedCultures =
+    {
         new("nl-NL"),
         new("en-US"),
     };
@@ -93,16 +94,16 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapAreaControllerRoute(
-    name: "MyAreaAdmin",
-    areaName: "Admin",
-    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+    "Admin",
+    "Admin",
+    "Admin/{controller=Home}/{action=Index}/{id?}");
 app.MapAreaControllerRoute(
-    name: "MyAreaManager",
-    areaName: "Manager",
-    pattern: "Manager/{controller=Home}/{action=Index}/{id?}");
+    "Manager",
+    "Manager",
+    "Manager/{controller=Home}/{action=Index}/{id?}");
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    "default",
+    "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.Run();

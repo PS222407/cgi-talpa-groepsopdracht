@@ -65,7 +65,7 @@ public class AccountController : Controller
         {
             Name = User.Identity?.Name,
             EmailAddress = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
-            ProfileImage = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value
+            ProfileImage = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value,
         });
     }
 
