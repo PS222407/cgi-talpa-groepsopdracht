@@ -30,7 +30,7 @@ public class HomeController : Controller
             {
                 "nl" => "nl-NL",
                 "us" => "en-US",
-                _ => locale
+                _ => locale,
             };
 
             Response.Cookies.Append(

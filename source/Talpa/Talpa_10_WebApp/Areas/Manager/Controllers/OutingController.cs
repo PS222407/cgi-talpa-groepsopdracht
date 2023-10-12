@@ -17,7 +17,9 @@ namespace Talpa_10_WebApp.Controllers.Manager;
 public class OutingController : Controller
 {
     private readonly IOutingService _outingService;
+
     private readonly IUserService _userService;
+
     private readonly ISuggestionService _suggestionService;
 
     public OutingController(IOutingService outingService, IUserService userService, ISuggestionService suggestionService)
@@ -133,7 +135,7 @@ public class OutingController : Controller
         }
 
         List<Suggestion> suggestions = _suggestionService.GetAll();
-        List<SelectListItem> suggestionOptions = suggestions.Select(suggestion => new SelectListItem { Value = suggestion.Id.ToString(), Text = suggestion.Name, }).ToList();
+        List<SelectListItem> suggestionOptions = suggestions.Select(suggestion => new SelectListItem { Value = suggestion.Id.ToString(), Text = suggestion.Name }).ToList();
 
         OutingRequest outingRequest = new()
         {
@@ -219,6 +221,6 @@ public class OutingController : Controller
     private List<SelectListItem> GetSuggestionOptions()
     {
         List<Suggestion> suggestions = _suggestionService.GetAll();
-        return suggestions.Select(suggestion => new SelectListItem { Value = suggestion.Id.ToString(), Text = suggestion.Name, }).ToList();
+        return suggestions.Select(suggestion => new SelectListItem { Value = suggestion.Id.ToString(), Text = suggestion.Name }).ToList();
     }
 }

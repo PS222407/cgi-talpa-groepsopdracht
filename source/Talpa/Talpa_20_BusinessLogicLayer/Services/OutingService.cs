@@ -6,7 +6,6 @@ namespace BusinessLogicLayer.Services;
 
 public class OutingService : IOutingService
 {
-
     private readonly IOutingRepository _outingRepository;
 
     public OutingService(IOutingRepository outingRepository)

@@ -14,7 +14,9 @@ namespace Talpa_10_WebApp.Controllers;
 public class SuggestionController : Controller
 {
     private readonly ISuggestionService _suggestionService;
+
     private readonly IUserService _userService;
+
     private readonly IRestrictionService _restrictionService;
 
     public SuggestionController(ISuggestionService suggestionService, IUserService userService, IRestrictionService restrictionService)
@@ -91,9 +93,9 @@ public class SuggestionController : Controller
     public ActionResult Create()
     {
         List<Restriction> restrictions = _restrictionService.GetAll();
-        List<SelectListItem> restrictionsOptions = restrictions.Select(restriction => new SelectListItem { Value = restriction.Id.ToString(), Text = restriction.Name, }).ToList();
+        List<SelectListItem> restrictionsOptions = restrictions.Select(restriction => new SelectListItem { Value = restriction.Id.ToString(), Text = restriction.Name }).ToList();
 
-        SuggestionRequest suggestionRequest = new SuggestionRequest
+        SuggestionRequest suggestionRequest = new()
         {
             RestrictionOptions = restrictionsOptions,
         };
@@ -147,7 +149,7 @@ public class SuggestionController : Controller
     public ActionResult Edit(int id)
     {
         List<Restriction> restrictions = _restrictionService.GetAll();
-        List<SelectListItem> restrictionsOptions = restrictions.Select(restriction => new SelectListItem { Value = restriction.Id.ToString(), Text = restriction.Name, }).ToList();
+        List<SelectListItem> restrictionsOptions = restrictions.Select(restriction => new SelectListItem { Value = restriction.Id.ToString(), Text = restriction.Name }).ToList();
 
         Suggestion? suggestion = _suggestionService.GetById(id);
         if (suggestion == null)
@@ -162,7 +164,7 @@ public class SuggestionController : Controller
         {
             Name = suggestion.Name,
             SelectedRestrictionIds = suggestion.Restrictions?.Select(restriction => restriction.Id.ToString()).ToList(),
-            RestrictionOptions = restrictionsOptions
+            RestrictionOptions = restrictionsOptions,
         };
 
         return View(suggestionRequest);

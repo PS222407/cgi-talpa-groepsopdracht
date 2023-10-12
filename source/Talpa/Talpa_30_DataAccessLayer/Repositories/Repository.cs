@@ -7,7 +7,7 @@ namespace DataAccessLayer.Repositories;
 public class Repository
 {
     private readonly string _clientId;
-    
+
     private readonly string _clientSecret;
 
     protected Repository(string clientId, string clientSecret)
@@ -23,21 +23,21 @@ public class Repository
         {
             return Auth0.AccessToken;
         }
-        
-        using HttpClient httpClient = new HttpClient();
-        
+
+        using HttpClient httpClient = new();
+
         string url = $"https://{Auth0.Domain}{Auth0.OauthTokenEndpoint}";
         string audience = $"https://{Auth0.Domain}/api/v2/";
-        
-        var postData = new FormUrlEncodedContent(new[]
+
+        FormUrlEncodedContent? postData = new(new[]
         {
             new KeyValuePair<string, string>("grant_type", "client_credentials"),
             new KeyValuePair<string, string>("client_id", _clientId),
             new KeyValuePair<string, string>("client_secret", _clientSecret),
-            new KeyValuePair<string, string>("audience", audience)
+            new KeyValuePair<string, string>("audience", audience),
         });
         postData.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
-    
+
         HttpResponseMessage response = await httpClient.PostAsync(url, postData);
         string status = response.Content.ReadAsStringAsync().Result;
         Token? token = JsonSerializer.Deserialize<Token>(status);

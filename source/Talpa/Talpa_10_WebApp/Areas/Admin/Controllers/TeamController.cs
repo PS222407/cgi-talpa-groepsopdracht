@@ -14,6 +14,7 @@ namespace Talpa_10_WebApp.Controllers.Admin;
 public class TeamController : Controller
 {
     private readonly ITeamService _teamService;
+
     private readonly IUserService _userService;
 
     public TeamController(ITeamService teamService, IUserService userService)
@@ -46,7 +47,7 @@ public class TeamController : Controller
     // GET: TeamController/Create
     public async Task<ActionResult> Create()
     {
-        List<UserViewModel> userViewModels = new List<UserViewModel>();
+        List<UserViewModel> userViewModels = new();
         List<User>? users = await _userService.GetAll();
         if (users != null)
         {
@@ -114,7 +115,7 @@ public class TeamController : Controller
     // GET: TeamController/Edit/5
     public async Task<ActionResult> Edit(int id)
     {
-        List<UserViewModel> userViewModels = new List<UserViewModel>();
+        List<UserViewModel> userViewModels = new();
         List<User>? users = await _userService.GetAll();
         if (users != null)
         {

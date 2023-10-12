@@ -10,6 +10,7 @@ namespace Talpa_10_WebApp.Controllers;
 public class OutingController : Controller
 {
     private readonly IOutingService _outingService;
+
     private readonly IUserService _userService;
 
     public OutingController(IOutingService outingService, IUserService userService)

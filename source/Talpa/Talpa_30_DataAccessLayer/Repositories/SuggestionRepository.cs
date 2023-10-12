@@ -37,7 +37,6 @@ public class SuggestionRepository : ISuggestionRepository
         return entry.Entity;
     }
 
-
     public Suggestion? GetById(int id)
     {
         return _dataContext.Suggestions

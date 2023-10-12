@@ -94,16 +94,16 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapAreaControllerRoute(
-    name: "Admin",
-    areaName: "Admin",
-    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+    "Admin",
+    "Admin",
+    "Admin/{controller=Home}/{action=Index}/{id?}");
 app.MapAreaControllerRoute(
-    name: "Manager",
-    areaName: "Manager",
-    pattern: "Manager/{controller=Home}/{action=Index}/{id?}");
+    "Manager",
+    "Manager",
+    "Manager/{controller=Home}/{action=Index}/{id?}");
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    "default",
+    "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.Run();
