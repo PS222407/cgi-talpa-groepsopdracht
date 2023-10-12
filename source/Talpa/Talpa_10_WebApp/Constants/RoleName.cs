@@ -1,4 +1,4 @@
-namespace Talpa_10_WebApp.Constants;
+﻿namespace Talpa_10_WebApp.Constants;
 
 public class RoleName
 {

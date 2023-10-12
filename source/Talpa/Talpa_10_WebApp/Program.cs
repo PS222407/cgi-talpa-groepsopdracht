@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 using Auth0.AspNetCore.Authentication;
 using BusinessLogicLayer.Interfaces.Repositories;
 using BusinessLogicLayer.Interfaces.Services;

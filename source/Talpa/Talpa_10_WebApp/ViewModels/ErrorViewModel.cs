@@ -1,4 +1,4 @@
-namespace Talpa_10_WebApp.ViewModels;
+﻿namespace Talpa_10_WebApp.ViewModels;
 
 public class ErrorViewModel
 {
