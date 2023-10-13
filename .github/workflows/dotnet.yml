@@ -21,11 +21,11 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      working-directory: ../source/talpa
+      working-directory: source/Talpa
       run: dotnet restore
     - name: Build
-      working-directory: ../source/talpa
+      working-directory: source/Talpa
       run: dotnet build --no-restore
     - name: Test
-      working-directory: ../source/talpa
+      working-directory: source/Talpa
       run: dotnet test --no-build --verbosity normal
