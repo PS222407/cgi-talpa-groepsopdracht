@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
+using Talpa_10_WebApp.Translations;
 using Talpa_10_WebApp.ViewModels;
 
 namespace Talpa_10_WebApp.Controllers;
@@ -9,15 +11,20 @@ namespace Talpa_10_WebApp.Controllers;
 [Authorize]
 public class HomeController : Controller
 {
+    private readonly IStringLocalizer<Shared> _localizer;
+    
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, IStringLocalizer<Shared> localizer)
     {
         _logger = logger;
+        _localizer = localizer;
     }
 
     public IActionResult Index()
     {
+        string frogTranslated = new Shared(_localizer).Get("Frog");
+        
         return View();
     }
 
