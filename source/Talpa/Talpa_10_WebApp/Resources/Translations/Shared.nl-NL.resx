@@ -64,4 +64,10 @@
     <data name="Employee" xml:space="preserve">
         <value>Werknemer</value>
     </data>
+    <data name="Max3SuggestionError" xml:space="preserve">
+        <value>Max. 3 suggestions can be chosen!</value>
+    </data>
+    <data name="Required" xml:space="preserve">
+        <value>VERPLICCHT</value>
+    </data>
 </root>

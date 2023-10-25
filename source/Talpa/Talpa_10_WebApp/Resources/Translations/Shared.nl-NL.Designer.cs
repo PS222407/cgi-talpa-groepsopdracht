@@ -150,11 +150,29 @@ namespace Talpa_10_WebApp.Resources.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Max. 3 suggestions can be chosen!.
+        /// </summary>
+        internal static string Max3SuggestionError {
+            get {
+                return ResourceManager.GetString("Max3SuggestionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Te plannen uitjes.
         /// </summary>
         internal static string OutingsToPlan {
             get {
                 return ResourceManager.GetString("OutingsToPlan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VERPLICCHT.
+        /// </summary>
+        internal static string Required {
+            get {
+                return ResourceManager.GetString("Required", resourceCulture);
             }
         }
         

@@ -29,7 +29,7 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseMySql(
         connectionString,
         new MySqlServerVersion(new Version(10, 4, 22)), // Edit this to your SQL server version.
-        mySqlOptions => mySqlOptions.MigrationsAssembly("Talpa.30_DataAccessLayer")
+        mySqlOptions => mySqlOptions.MigrationsAssembly("Talpa_30_DataAccessLayer")
     ));
 
 builder.Services.AddScoped<DataContext>();
@@ -40,7 +40,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<DataContext>();
 
 builder.Services.AddControllersWithViews()
-    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
+    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+    .AddDataAnnotationsLocalization();
 
 builder.Services.AddAuth0WebAppAuthentication(options =>
 {
