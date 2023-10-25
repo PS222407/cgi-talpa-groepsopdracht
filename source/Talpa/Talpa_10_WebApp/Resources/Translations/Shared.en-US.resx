@@ -147,4 +147,10 @@
     <data name="Error white attaching users" xml:space="preserve">
         <value>Error white attaching users</value>
     </data>
+    <data name="Restrictions" xml:space="preserve">
+        <value>Restrictions</value>
+    </data>
+    <data name="Suggestion" xml:space="preserve">
+        <value>Suggestion</value>
+    </data>
 </root>

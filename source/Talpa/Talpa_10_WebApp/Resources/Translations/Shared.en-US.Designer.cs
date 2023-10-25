@@ -357,6 +357,15 @@ namespace Talpa_10_WebApp.Resources.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restrictions.
+        /// </summary>
+        internal static string Restrictions {
+            get {
+                return ResourceManager.GetString("Restrictions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         internal static string Save {
@@ -380,6 +389,15 @@ namespace Talpa_10_WebApp.Resources.Translations {
         internal static string SelectDays {
             get {
                 return ResourceManager.GetString("SelectDays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Suggestion.
+        /// </summary>
+        internal static string Suggestion {
+            get {
+                return ResourceManager.GetString("Suggestion", resourceCulture);
             }
         }
         

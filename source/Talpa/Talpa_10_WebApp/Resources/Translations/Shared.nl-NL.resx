@@ -150,4 +150,10 @@ Er is een fout opgetreden bij het verwerken van uw verzoek</value>
     <data name="Error white attaching users" xml:space="preserve">
         <value>Fout tijdens het koppelen van de gebruikers</value>
     </data>
+    <data name="Restrictions" xml:space="preserve">
+        <value>Beperkingen</value>
+    </data>
+    <data name="Suggestion" xml:space="preserve">
+        <value>Suggestie</value>
+    </data>
 </root>

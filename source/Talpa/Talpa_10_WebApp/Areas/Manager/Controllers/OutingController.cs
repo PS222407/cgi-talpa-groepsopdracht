@@ -11,7 +11,7 @@ using Talpa_10_WebApp.RequestModels;
 using Talpa_10_WebApp.Translations;
 using Talpa_10_WebApp.ViewModels;
 
-namespace Talpa_10_WebApp.Controllers.Manager;
+namespace Talpa_10_WebApp.Areas.Manager.Controllers;
 
 [Area("Manager")]
 [Route("Manager/[controller]/[action]/{id?}")]
