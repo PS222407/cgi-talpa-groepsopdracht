@@ -2,7 +2,9 @@
 using BusinessLogicLayer.Interfaces.Services;
 using BusinessLogicLayer.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Talpa_10_WebApp.Constants;
+using Talpa_10_WebApp.Translations;
 using Talpa_10_WebApp.ViewModels;
 
 namespace Talpa_10_WebApp.Controllers;
@@ -12,11 +14,14 @@ public class OutingController : Controller
     private readonly IOutingService _outingService;
 
     private readonly IUserService _userService;
+    
+    private readonly Shared _localizer;
 
-    public OutingController(IOutingService outingService, IUserService userService)
+    public OutingController(IOutingService outingService, IUserService userService, IStringLocalizer<Shared> localizer)
     {
         _outingService = outingService;
         _userService = userService;
+        _localizer = new Shared(localizer);
     }
 
     public async Task<ActionResult> Index()
@@ -32,7 +37,7 @@ public class OutingController : Controller
         int? teamId = user?.TeamId;
         if (teamId == null)
         {
-            TempData["Message"] = "Je bent niet toegewezen aan een team.";
+            TempData["Message"] = _localizer.Get("You are not assigned to a team");
             TempData["MessageType"] = "danger";
 
             return View();
@@ -48,7 +53,7 @@ public class OutingController : Controller
         
         if (outing == null)
         {
-            TempData["Message"] = "Dit uitje bestaat niet.";
+            TempData["Message"] = _localizer.Get("Outing does not exist");
             TempData["MessageType"] = "danger";
 
             return RedirectToAction("Index");

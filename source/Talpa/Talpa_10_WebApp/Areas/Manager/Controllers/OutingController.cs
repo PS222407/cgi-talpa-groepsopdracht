@@ -5,8 +5,10 @@ using BusinessLogicLayer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Localization;
 using Talpa_10_WebApp.Constants;
 using Talpa_10_WebApp.RequestModels;
+using Talpa_10_WebApp.Translations;
 using Talpa_10_WebApp.ViewModels;
 
 namespace Talpa_10_WebApp.Controllers.Manager;
@@ -22,11 +24,14 @@ public class OutingController : Controller
 
     private readonly ISuggestionService _suggestionService;
 
-    public OutingController(IOutingService outingService, IUserService userService, ISuggestionService suggestionService)
+    private readonly Shared _localizer;
+    
+    public OutingController(IOutingService outingService, IUserService userService, ISuggestionService suggestionService, IStringLocalizer<Shared> localizer)
     {
         _outingService = outingService;
         _userService = userService;
         _suggestionService = suggestionService;
+        _localizer = new Shared(localizer);
     }
 
     // GET: Outing
@@ -44,7 +49,7 @@ public class OutingController : Controller
         int? teamId = user?.TeamId;
         if (teamId == null)
         {
-            TempData["Message"] = "Je bent niet toegewezen aan een team.";
+            TempData["Message"] = _localizer.Get("You are not assigned to a team");
             TempData["MessageType"] = "danger";
 
             return View();
@@ -59,7 +64,7 @@ public class OutingController : Controller
         Outing? outing = _outingService.GetById(id);
         if (outing == null)
         {
-            TempData["Message"] = "Er bestaat geen entiteit met dit id.";
+            TempData["Message"] = _localizer.Get("No entity found with this id");
             TempData["MessageType"] = "danger";
 
             return View();
@@ -89,7 +94,7 @@ public class OutingController : Controller
 
         if (user.TeamId == 0 || user.TeamId == null)
         {
-            TempData["Message"] = "Je zit nog niet in een Team!";
+            TempData["Message"] = _localizer.Get("You are not assigned to a team");
             TempData["MessageType"] = "danger";
             return View(outingRequest);
         }
@@ -102,21 +107,21 @@ public class OutingController : Controller
         {
             outingEntry = _outingService.Create(outing, (int)user.TeamId!);
         }
-        catch (TeamNotFoundException e)
+        catch (TeamNotFoundException)
         {
-            TempData["Message"] = "Je bent niet gekoppeld aan een geldig team.";
+            TempData["Message"] = _localizer.Get("You are not assigned to a team");
             TempData["MessageType"] = "danger";
             return View();
         }
 
         if (outingEntry.Id == null)
         {
-            TempData["Message"] = "Fout tijdens het aanmaken.";
+            TempData["Message"] = _localizer.Get("Error while deleting");
             TempData["MessageType"] = "danger";
             return View();
         }
 
-        TempData["Message"] = "Item succesvol aangemaakt";
+        TempData["Message"] = _localizer.Get("Item successfully created");
         TempData["MessageType"] = "success";
 
         return RedirectToAction(nameof(Index));
@@ -128,7 +133,7 @@ public class OutingController : Controller
         Outing? outing = _outingService.GetById(id);
         if (outing == null)
         {
-            TempData["Message"] = "Er bestaat geen entiteit met dit id.";
+            TempData["Message"] = _localizer.Get("No entity found with this id");
             TempData["MessageType"] = "danger";
 
             return RedirectToAction(nameof(Index));
@@ -170,13 +175,13 @@ public class OutingController : Controller
         };
         if (!_outingService.Update(outing))
         {
-            TempData["Message"] = "Fout tijdens het opslaan van de data.";
+            TempData["Message"] = _localizer.Get("Error while creating");
             TempData["MessageType"] = "danger";
             outingRequest.SuggestionOptions = GetSuggestionOptions();
             return View(outingRequest);
         }
 
-        TempData["Message"] = "Item succesvol gewijzigd";
+        TempData["Message"] = _localizer.Get("Item successfully updated");
         TempData["MessageType"] = "success";
 
         return RedirectToAction(nameof(Index));
@@ -188,7 +193,7 @@ public class OutingController : Controller
         Outing? outing = _outingService.GetById(id);
         if (outing == null)
         {
-            TempData["Message"] = "Er Er bestaat geen entiteit met dit id.";
+            TempData["Message"] = _localizer.Get("No entity found with this id");
             TempData["MessageType"] = "danger";
 
             return View();
@@ -206,13 +211,13 @@ public class OutingController : Controller
     {
         if (!_outingService.Delete(id))
         {
-            TempData["Message"] = "Fout tijdens het verwijderen van de data.";
+            TempData["Message"] = _localizer.Get("Error while deleting");
             TempData["MessageType"] = "danger";
 
             return View("Delete");
         }
 
-        TempData["Message"] = "Item succesvol verwijderd";
+        TempData["Message"] = _localizer.Get("Item successfully deleted");
         TempData["MessageType"] = "success";
 
         return RedirectToAction(nameof(Index));

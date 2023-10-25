@@ -117,4 +117,34 @@
     <data name="An error occurred while processing your request" xml:space="preserve">
         <value>An error occurred while processing your request</value>
     </data>
+    <data name="You are not assigned to a team" xml:space="preserve">
+        <value>You are not assigned to a team</value>
+    </data>
+    <data name="Outing does not exist" xml:space="preserve">
+        <value>Outing does not exist</value>
+    </data>
+    <data name="No entity found with this id" xml:space="preserve">
+        <value>No entity found with this id</value>
+    </data>
+    <data name="Error while creating" xml:space="preserve">
+        <value>Error while creating</value>
+    </data>
+    <data name="Item successfully created" xml:space="preserve">
+        <value>Item successfully created</value>
+    </data>
+    <data name="Error while updating" xml:space="preserve">
+        <value>Error while updating</value>
+    </data>
+    <data name="Item successfully updated" xml:space="preserve">
+        <value>Item successfully updated</value>
+    </data>
+    <data name="Item successfully deleted" xml:space="preserve">
+        <value>Item successfully deleted</value>
+    </data>
+    <data name="Error while deleting" xml:space="preserve">
+        <value>Error while deleting</value>
+    </data>
+    <data name="Error white attaching users" xml:space="preserve">
+        <value>Error white attaching users</value>
+    </data>
 </root>
