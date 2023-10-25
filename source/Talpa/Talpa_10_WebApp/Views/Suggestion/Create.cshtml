@@ -1,12 +1,16 @@
+@using Talpa_10_WebApp.Translations
+@using Microsoft.Extensions.Localization
 @model Talpa_10_WebApp.RequestModels.SuggestionRequest
+@inject IStringLocalizer<Shared> StringLocalizer
 
 @{
-    ViewData["Title"] = "Create";
+    Shared SharedLocalizer = new(StringLocalizer);
+    ViewData["Title"] = SharedLocalizer.Get("Create");
 }
 
-<h1>Create</h1>
+<h1>@SharedLocalizer.Get("Create")</h1>
 
-<h4>Suggestion</h4>
+<h4>@SharedLocalizer.Get("Suggestion")</h4>
 <hr/>
 <div class="row">
     <div class="col-md-4">
@@ -18,18 +22,18 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SelectedRestrictionIds" class="control-label">Restrictions</label>
+                <label asp-for="SelectedRestrictionIds" class="control-label">@SharedLocalizer.Get("Restrictions")</label>
                 <select asp-for="SelectedRestrictionIds" asp-items="Model.RestrictionOptions" multiple="multiple" class="form-control js-dynamic-tokenizer"></select>
                 <span asp-validation-for="SelectedRestrictionIds" class="text-danger"></span>
             </div>
             <br/>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary"/>
+                <input type="submit" value="@SharedLocalizer.Get("Create")" class="btn btn-primary"/>
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">@SharedLocalizer.Get("BackToList")</a>
 </div>
