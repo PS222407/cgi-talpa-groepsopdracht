@@ -15,9 +15,8 @@ public class HomeController : Controller
     
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger, IStringLocalizer<Shared> localizer)
+    public HomeController(IStringLocalizer<Shared> localizer)
     {
-        _logger = logger;
         _localizer = localizer;
     }
 

@@ -177,6 +177,42 @@ namespace Talpa_10_WebApp.Resources.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error while creating.
+        /// </summary>
+        internal static string Error_while_creating {
+            get {
+                return ResourceManager.GetString("Error while creating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error while deleting.
+        /// </summary>
+        internal static string Error_while_deleting {
+            get {
+                return ResourceManager.GetString("Error while deleting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error while updating.
+        /// </summary>
+        internal static string Error_while_updating {
+            get {
+                return ResourceManager.GetString("Error while updating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error white attaching users.
+        /// </summary>
+        internal static string Error_white_attaching_users {
+            get {
+                return ResourceManager.GetString("Error white attaching users", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Froggy.
         /// </summary>
         internal static string Frog {
@@ -209,6 +245,33 @@ namespace Talpa_10_WebApp.Resources.Translations {
         internal static string Index {
             get {
                 return ResourceManager.GetString("Index", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item successfully created.
+        /// </summary>
+        internal static string Item_successfully_created {
+            get {
+                return ResourceManager.GetString("Item successfully created", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item successfully deleted.
+        /// </summary>
+        internal static string Item_successfully_deleted {
+            get {
+                return ResourceManager.GetString("Item successfully deleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item successfully updated.
+        /// </summary>
+        internal static string Item_successfully_updated {
+            get {
+                return ResourceManager.GetString("Item successfully updated", resourceCulture);
             }
         }
         
@@ -249,6 +312,15 @@ namespace Talpa_10_WebApp.Resources.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No entity found with this id.
+        /// </summary>
+        internal static string No_entity_found_with_this_id {
+            get {
+                return ResourceManager.GetString("No entity found with this id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No users selected.
         /// </summary>
         internal static string No_users_selected {
@@ -263,6 +335,15 @@ namespace Talpa_10_WebApp.Resources.Translations {
         internal static string Outing {
             get {
                 return ResourceManager.GetString("Outing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outing does not exist.
+        /// </summary>
+        internal static string Outing_does_not_exist {
+            get {
+                return ResourceManager.GetString("Outing does not exist", resourceCulture);
             }
         }
         
@@ -344,6 +425,15 @@ namespace Talpa_10_WebApp.Resources.Translations {
         internal static string Welcome {
             get {
                 return ResourceManager.GetString("Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are not assigned to a team.
+        /// </summary>
+        internal static string You_are_not_assigned_to_a_team {
+            get {
+                return ResourceManager.GetString("You are not assigned to a team", resourceCulture);
             }
         }
         

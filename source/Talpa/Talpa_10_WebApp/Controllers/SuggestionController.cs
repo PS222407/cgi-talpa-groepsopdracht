@@ -5,8 +5,10 @@ using BusinessLogicLayer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Localization;
 using Talpa_10_WebApp.Constants;
 using Talpa_10_WebApp.RequestModels;
+using Talpa_10_WebApp.Translations;
 using Talpa_10_WebApp.ViewModels;
 
 namespace Talpa_10_WebApp.Controllers;
@@ -19,11 +21,14 @@ public class SuggestionController : Controller
 
     private readonly IRestrictionService _restrictionService;
 
-    public SuggestionController(ISuggestionService suggestionService, IUserService userService, IRestrictionService restrictionService)
+    private readonly Shared _localizer;
+
+    public SuggestionController(ISuggestionService suggestionService, IUserService userService, IRestrictionService restrictionService, IStringLocalizer<Shared> localizer)
     {
         _suggestionService = suggestionService;
         _userService = userService;
         _restrictionService = restrictionService;
+        _localizer = new Shared(localizer);
     }
 
     //GET: Outing
@@ -62,7 +67,7 @@ public class SuggestionController : Controller
         int? teamId = user?.TeamId;
         if (teamId == null)
         {
-            TempData["Message"] = "Je bent niet toegewezen aan een team.";
+            TempData["Message"] = _localizer.Get("You are not assigned to a team");
             TempData["MessageType"] = "danger";
 
             return View();
@@ -79,7 +84,7 @@ public class SuggestionController : Controller
         Suggestion? suggestion = _suggestionService.GetById(id);
         if (suggestion == null)
         {
-            TempData["Message"] = "Er bestaat geen entiteit met dit id.";
+            TempData["Message"] = _localizer.Get("No entity found with this id");
             TempData["MessageType"] = "danger";
 
             return View();
@@ -124,21 +129,21 @@ public class SuggestionController : Controller
         {
             suggestionEntry = _suggestionService.Create(suggestion, user.Id);
         }
-        catch (TeamNotFoundException e)
+        catch (TeamNotFoundException)
         {
-            TempData["Message"] = "Je bent niet gekoppeld aan een geldig team.";
+            TempData["Message"] = _localizer.Get("You are not assigned to a team");
             TempData["MessageType"] = "danger";
             return View();
         }
 
         if (suggestionEntry.Id == null)
         {
-            TempData["Message"] = "Fout tijdens het aanmaken.";
+            TempData["Message"] = _localizer.Get("Error while creating");
             TempData["MessageType"] = "danger";
             return View();
         }
 
-        TempData["Message"] = "Item succesvol aangemaakt";
+        TempData["Message"] = _localizer.Get("Item successfully created");
         TempData["MessageType"] = "success";
 
         return RedirectToAction(nameof(Index));
@@ -154,7 +159,7 @@ public class SuggestionController : Controller
         Suggestion? suggestion = _suggestionService.GetById(id);
         if (suggestion == null)
         {
-            TempData["Message"] = "Er bestaat geen entiteit met dit id.";
+            TempData["Message"] = _localizer.Get("No entity found with this id");
             TempData["MessageType"] = "danger";
 
             return View();
@@ -185,13 +190,13 @@ public class SuggestionController : Controller
             { Id = id, Name = suggestionRequest.Name, Restrictions = suggestionRequest.SelectedRestrictionIds?.Select(restriction => new Restriction { Name = restriction }).ToList() };
         if (!_suggestionService.Update(suggestion))
         {
-            TempData["Message"] = "Fout tijdens het opslaan van de data.";
+            TempData["Message"] = _localizer.Get("Error while updating");
             TempData["MessageType"] = "danger";
 
             return View();
         }
 
-        TempData["Message"] = "Item succesvol gewijzigd";
+        TempData["Message"] = _localizer.Get("Item successfully updated");
         TempData["MessageType"] = "success";
 
         return RedirectToAction(nameof(Index));
@@ -204,7 +209,7 @@ public class SuggestionController : Controller
         Suggestion? suggestion = _suggestionService.GetById(id);
         if (suggestion == null)
         {
-            TempData["Message"] = "Er Er bestaat geen entiteit met dit id.";
+            TempData["Message"] = _localizer.Get("No entity found with this id");
             TempData["MessageType"] = "danger";
 
             return View();
@@ -223,13 +228,13 @@ public class SuggestionController : Controller
     {
         if (!_suggestionService.Delete(id))
         {
-            TempData["Message"] = "Fout tijdens het verwijderen van de data.";
+            TempData["Message"] = _localizer.Get("Error while deleting");
             TempData["MessageType"] = "danger";
 
             return View("Delete");
         }
 
-        TempData["Message"] = "Item succesvol verwijderd";
+        TempData["Message"] = _localizer.Get("Item successfully deleted");
         TempData["MessageType"] = "success";
 
         return RedirectToAction(nameof(Index));

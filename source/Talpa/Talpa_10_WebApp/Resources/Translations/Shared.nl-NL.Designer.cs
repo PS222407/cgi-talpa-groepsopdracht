@@ -178,6 +178,42 @@ namespace Talpa_10_WebApp.Resources.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fout tijdens het aanmaken.
+        /// </summary>
+        internal static string Error_while_creating {
+            get {
+                return ResourceManager.GetString("Error while creating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fout tijdens het verwijderen.
+        /// </summary>
+        internal static string Error_while_deleting {
+            get {
+                return ResourceManager.GetString("Error while deleting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fout tijdens het wijzigen.
+        /// </summary>
+        internal static string Error_while_updating {
+            get {
+                return ResourceManager.GetString("Error while updating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fout tijdens het koppelen van de gebruikers.
+        /// </summary>
+        internal static string Error_white_attaching_users {
+            get {
+                return ResourceManager.GetString("Error white attaching users", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kikker.
         /// </summary>
         internal static string Frog {
@@ -210,6 +246,33 @@ namespace Talpa_10_WebApp.Resources.Translations {
         internal static string Index {
             get {
                 return ResourceManager.GetString("Index", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item succesvol aangemaakt.
+        /// </summary>
+        internal static string Item_successfully_created {
+            get {
+                return ResourceManager.GetString("Item successfully created", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item successvol verwijderd.
+        /// </summary>
+        internal static string Item_successfully_deleted {
+            get {
+                return ResourceManager.GetString("Item successfully deleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item succesvol gewijzigd.
+        /// </summary>
+        internal static string Item_successfully_updated {
+            get {
+                return ResourceManager.GetString("Item successfully updated", resourceCulture);
             }
         }
         
@@ -250,6 +313,15 @@ namespace Talpa_10_WebApp.Resources.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Er bestaat geen entiteit met dit id.
+        /// </summary>
+        internal static string No_entity_found_with_this_id {
+            get {
+                return ResourceManager.GetString("No entity found with this id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Geen gebruikers geselecteerd.
         /// </summary>
         internal static string No_users_selected {
@@ -264,6 +336,15 @@ namespace Talpa_10_WebApp.Resources.Translations {
         internal static string Outing {
             get {
                 return ResourceManager.GetString("Outing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dit uitje bestaat niet.
+        /// </summary>
+        internal static string Outing_does_not_exist {
+            get {
+                return ResourceManager.GetString("Outing does not exist", resourceCulture);
             }
         }
         
@@ -345,6 +426,15 @@ namespace Talpa_10_WebApp.Resources.Translations {
         internal static string Welcome {
             get {
                 return ResourceManager.GetString("Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Je bent niet aan een team toegewezen.
+        /// </summary>
+        internal static string You_are_not_assigned_to_a_team {
+            get {
+                return ResourceManager.GetString("You are not assigned to a team", resourceCulture);
             }
         }
         
