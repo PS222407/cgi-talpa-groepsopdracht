@@ -78,14 +78,6 @@
             <Generator>ResXFileCodeGenerator</Generator>
             <LastGenOutput>Common.nl-NL.Designer.cs</LastGenOutput>
         </EmbeddedResource>
-        <EmbeddedResource Update="Resources\Common.en-US.resx">
-            <Generator>ResXFileCodeGenerator</Generator>
-            <LastGenOutput>Common.en-US.Designer.cs</LastGenOutput>
-        </EmbeddedResource>
-        <EmbeddedResource Update="Resources\Common.nl-NL.resx">
-            <Generator>ResXFileCodeGenerator</Generator>
-            <LastGenOutput>Common.nl-NL.Designer.cs</LastGenOutput>
-        </EmbeddedResource>
         <EmbeddedResource Update="Resources\Translations\Shared.en-US.resx">
           <Generator>ResXFileCodeGenerator</Generator>
           <LastGenOutput>Shared.en-US.Designer.cs</LastGenOutput>
@@ -107,16 +99,6 @@
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
             <DependentUpon>_Layout.en-US.resx</DependentUpon>
-        </Compile>
-        <Compile Update="Resources\Common.en-US.Designer.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>Common.en-US.resx</DependentUpon>
-        </Compile>
-        <Compile Update="Resources\Common.nl-NL.Designer.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>Common.nl-NL.resx</DependentUpon>
         </Compile>
         <Compile Update="Resources\Translations\Shared.en-US.Designer.cs">
           <DesignTime>True</DesignTime>
