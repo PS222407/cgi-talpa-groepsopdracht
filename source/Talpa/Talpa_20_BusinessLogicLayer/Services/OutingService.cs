@@ -30,6 +30,10 @@ public class OutingService : IOutingService
 
     public bool Update(Outing outing)
     {
+        if(outing.Suggestions?.Count > 3)
+        {
+            return false;
+        }
         return _outingRepository.Update(outing);
     }
 
