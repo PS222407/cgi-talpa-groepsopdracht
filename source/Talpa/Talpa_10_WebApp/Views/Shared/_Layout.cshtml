@@ -113,6 +113,7 @@
         tokenSeparators: [',']
     });
     $(".js-tokenizer").select2();
+    $(".js-tokenizer-max3").select2({ maximumSelectionLength: 3 });
     
     function formatState (state) {
       if (!state.id) {

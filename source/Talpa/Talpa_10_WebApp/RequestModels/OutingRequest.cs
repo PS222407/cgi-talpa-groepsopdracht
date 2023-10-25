@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Talpa_10_WebApp.Validations;
 
 namespace Talpa_10_WebApp.RequestModels;
 
@@ -33,6 +34,7 @@ public class OutingRequest
         }
     }
 
+    [SuggestionCount]
     public List<string>? SelectedSuggestionIds { get; set; } = new();
 
     public List<SelectListItem>? SuggestionOptions { get; set; } = new();
