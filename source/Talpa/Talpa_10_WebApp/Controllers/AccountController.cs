@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Talpa_10_WebApp.ViewModels;
 
 namespace Talpa_10_WebApp.Controllers;
 
@@ -21,8 +20,10 @@ public class AccountController : Controller
 
     public async Task Login()
     {
+        bool appIsInProduction = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production";
+        string callbackUrl = Url.Action(nameof(LoginHook), null, null, appIsInProduction ? "https" : "http")!;
         AuthenticationProperties authenticationProperties = new LoginAuthenticationPropertiesBuilder()
-            .WithRedirectUri(Url.Action(nameof(LoginHook))!)
+            .WithRedirectUri(callbackUrl)
             .Build();
 
         await HttpContext.ChallengeAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
