@@ -5,6 +5,7 @@ using BusinessLogicLayer.Interfaces.Services;
 using BusinessLogicLayer.Services;
 using DataAccessLayer.Data;
 using DataAccessLayer.Repositories;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -83,6 +84,11 @@ else
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseCookiePolicy();
+
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedProto
+});
 
 app.UseRouting();
 
