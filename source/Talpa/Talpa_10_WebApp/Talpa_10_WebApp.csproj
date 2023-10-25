@@ -42,10 +42,6 @@
         <AdditionalFiles Include="Views\Account\Profile.cshtml"/>
         <AdditionalFiles Include="Views\Home\Index.cshtml"/>
         <AdditionalFiles Include="Views\Home\Privacy.cshtml"/>
-        <AdditionalFiles Include="Views\Outing\Create.cshtml"/>
-        <AdditionalFiles Include="Views\Outing\Delete.cshtml"/>
-        <AdditionalFiles Include="Views\Outing\Details.cshtml"/>
-        <AdditionalFiles Include="Views\Outing\Edit.cshtml"/>
         <AdditionalFiles Include="Views\Outing\Index.cshtml"/>
         <AdditionalFiles Include="Views\Shared\Error.cshtml"/>
         <AdditionalFiles Include="Views\Shared\_CookieConsentPartial.cshtml"/>

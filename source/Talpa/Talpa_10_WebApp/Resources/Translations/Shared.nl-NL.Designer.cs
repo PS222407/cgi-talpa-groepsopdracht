@@ -60,6 +60,15 @@ namespace Talpa_10_WebApp.Resources.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toegang geweigerd.
+        /// </summary>
+        internal static string Access_Denied {
+            get {
+                return ResourceManager.GetString("Access Denied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Admin.
         /// </summary>
         internal static string Admin {
@@ -69,11 +78,93 @@ namespace Talpa_10_WebApp.Resources.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 
+        ///Er is een fout opgetreden bij het verwerken van uw verzoek.
+        /// </summary>
+        internal static string An_error_occurred_while_processing_your_request {
+            get {
+                return ResourceManager.GetString("An error occurred while processing your request", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weet je zeker dat je dit wilt verwijderen?.
+        /// </summary>
+        internal static string Are_you_sure_you_want_to_delete_this_ {
+            get {
+                return ResourceManager.GetString("Are you sure you want to delete this?", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terug naar overzicht.
+        /// </summary>
+        internal static string BackToList {
+            get {
+                return ResourceManager.GetString("BackToList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aanmaken.
+        /// </summary>
+        internal static string Create {
+            get {
+                return ResourceManager.GetString("Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nieuwe Aaanmaken.
+        /// </summary>
+        internal static string Create_New {
+            get {
+                return ResourceManager.GetString("Create New", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datums.
+        /// </summary>
+        internal static string Dates {
+            get {
+                return ResourceManager.GetString("Dates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verwijder.
+        /// </summary>
+        internal static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Beschrijving.
         /// </summary>
         internal static string Description {
             get {
                 return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        internal static string Details {
+            get {
+                return ResourceManager.GetString("Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wijzig.
+        /// </summary>
+        internal static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
             }
         }
         
@@ -101,6 +192,15 @@ namespace Talpa_10_WebApp.Resources.Translations {
         internal static string Hello {
             get {
                 return ResourceManager.GetString("Hello", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home Pagina.
+        /// </summary>
+        internal static string Homepage {
+            get {
+                return ResourceManager.GetString("Homepage", resourceCulture);
             }
         }
         
@@ -150,11 +250,20 @@ namespace Talpa_10_WebApp.Resources.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Max. 3 suggestions can be chosen!.
+        ///   Looks up a localized string similar to Geen gebruikers geselecteerd.
         /// </summary>
-        internal static string Max3SuggestionError {
+        internal static string No_users_selected {
             get {
-                return ResourceManager.GetString("Max3SuggestionError", resourceCulture);
+                return ResourceManager.GetString("No users selected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uitje.
+        /// </summary>
+        internal static string Outing {
+            get {
+                return ResourceManager.GetString("Outing", resourceCulture);
             }
         }
         
@@ -168,11 +277,11 @@ namespace Talpa_10_WebApp.Resources.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to VERPLICCHT.
+        ///   Looks up a localized string similar to Opslaan.
         /// </summary>
-        internal static string Required {
+        internal static string Save {
             get {
-                return ResourceManager.GetString("Required", resourceCulture);
+                return ResourceManager.GetString("Save", resourceCulture);
             }
         }
         
@@ -186,11 +295,29 @@ namespace Talpa_10_WebApp.Resources.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Selecteer dagen.
+        /// </summary>
+        internal static string SelectDays {
+            get {
+                return ResourceManager.GetString("SelectDays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Suggesties.
         /// </summary>
         internal static string Suggestions {
             get {
                 return ResourceManager.GetString("Suggestions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Team.
+        /// </summary>
+        internal static string Team {
+            get {
+                return ResourceManager.GetString("Team", resourceCulture);
             }
         }
         
@@ -204,11 +331,30 @@ namespace Talpa_10_WebApp.Resources.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gebruikers.
+        /// </summary>
+        internal static string Users {
+            get {
+                return ResourceManager.GetString("Users", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Welkom bij TALPA!.
         /// </summary>
         internal static string Welcome {
             get {
                 return ResourceManager.GetString("Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///U heeft geen toegang tot deze bron.
+        /// </summary>
+        internal static string You_do_not_have_access_to_this_resource {
+            get {
+                return ResourceManager.GetString("You do not have access to this resource", resourceCulture);
             }
         }
     }

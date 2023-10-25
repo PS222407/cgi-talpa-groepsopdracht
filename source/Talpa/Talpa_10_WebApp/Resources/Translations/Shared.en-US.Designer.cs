@@ -60,6 +60,15 @@ namespace Talpa_10_WebApp.Resources.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Access Denied.
+        /// </summary>
+        internal static string Access_Denied {
+            get {
+                return ResourceManager.GetString("Access Denied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Admin.
         /// </summary>
         internal static string Admin {
@@ -69,11 +78,92 @@ namespace Talpa_10_WebApp.Resources.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error occurred while processing your request.
+        /// </summary>
+        internal static string An_error_occurred_while_processing_your_request {
+            get {
+                return ResourceManager.GetString("An error occurred while processing your request", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this?.
+        /// </summary>
+        internal static string Are_you_sure_you_want_to_delete_this_ {
+            get {
+                return ResourceManager.GetString("Are you sure you want to delete this?", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back to list.
+        /// </summary>
+        internal static string BackToList {
+            get {
+                return ResourceManager.GetString("BackToList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create.
+        /// </summary>
+        internal static string Create {
+            get {
+                return ResourceManager.GetString("Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create New.
+        /// </summary>
+        internal static string Create_New {
+            get {
+                return ResourceManager.GetString("Create New", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dates.
+        /// </summary>
+        internal static string Dates {
+            get {
+                return ResourceManager.GetString("Dates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        internal static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         internal static string Description {
             get {
                 return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        internal static string Details {
+            get {
+                return ResourceManager.GetString("Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        internal static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
             }
         }
         
@@ -101,6 +191,15 @@ namespace Talpa_10_WebApp.Resources.Translations {
         internal static string Hello {
             get {
                 return ResourceManager.GetString("Hello", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home Page.
+        /// </summary>
+        internal static string Homepage {
+            get {
+                return ResourceManager.GetString("Homepage", resourceCulture);
             }
         }
         
@@ -150,11 +249,20 @@ namespace Talpa_10_WebApp.Resources.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Er kunnen maximaal 3 suggesties worden gekozen!.
+        ///   Looks up a localized string similar to No users selected.
         /// </summary>
-        internal static string Max3SuggestionError {
+        internal static string No_users_selected {
             get {
-                return ResourceManager.GetString("Max3SuggestionError", resourceCulture);
+                return ResourceManager.GetString("No users selected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outing.
+        /// </summary>
+        internal static string Outing {
+            get {
+                return ResourceManager.GetString("Outing", resourceCulture);
             }
         }
         
@@ -168,11 +276,11 @@ namespace Talpa_10_WebApp.Resources.Translations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to REQUIREDDD.
+        ///   Looks up a localized string similar to Save.
         /// </summary>
-        internal static string Required {
+        internal static string Save {
             get {
-                return ResourceManager.GetString("Required", resourceCulture);
+                return ResourceManager.GetString("Save", resourceCulture);
             }
         }
         
@@ -186,11 +294,29 @@ namespace Talpa_10_WebApp.Resources.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select Days.
+        /// </summary>
+        internal static string SelectDays {
+            get {
+                return ResourceManager.GetString("SelectDays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Suggestions.
         /// </summary>
         internal static string Suggestions {
             get {
                 return ResourceManager.GetString("Suggestions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Team.
+        /// </summary>
+        internal static string Team {
+            get {
+                return ResourceManager.GetString("Team", resourceCulture);
             }
         }
         
@@ -204,11 +330,29 @@ namespace Talpa_10_WebApp.Resources.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Users.
+        /// </summary>
+        internal static string Users {
+            get {
+                return ResourceManager.GetString("Users", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Welcome to TALPA!.
         /// </summary>
         internal static string Welcome {
             get {
                 return ResourceManager.GetString("Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You do not have access to this resource.
+        /// </summary>
+        internal static string You_do_not_have_access_to_this_resource {
+            get {
+                return ResourceManager.GetString("You do not have access to this resource", resourceCulture);
             }
         }
     }
