@@ -1,4 +1,4 @@
-@model Talpa_10_WebApp.RequestModels.OutingRequest
+﻿@model Talpa_10_WebApp.RequestModels.OutingRequest
 
 @{
     Layout = "_Layout";
@@ -21,7 +21,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="SelectedSuggestionIds" class="control-label">Suggesties</label>
-                <select asp-for="SelectedSuggestionIds" asp-items="Model.SuggestionOptions" multiple="multiple" class="form-control js-tokenizer"></select>
+                <select asp-for="SelectedSuggestionIds" asp-items="Model.SuggestionOptions" multiple="multiple" class="form-control js-tokenizer-max3"></select>
                 <span asp-validation-for="SelectedSuggestionIds" class="text-danger"></span>
             </div>
             <div class="form-group">
