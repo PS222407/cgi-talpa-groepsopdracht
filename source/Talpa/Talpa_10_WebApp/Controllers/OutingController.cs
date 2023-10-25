@@ -40,4 +40,27 @@ public class OutingController : Controller
 
         return View(_outingService.GetAllFromTeam((int)teamId).Select(outing => new OutingViewModel(outing.Id, outing.Name)).ToList());
     }
+
+    [HttpGet("Outing/Details/{id:int}")]
+    public ActionResult ChooseSuggestion(int id)
+    {
+        Outing? outing = _outingService.GetById(id);
+        
+        if (outing == null)
+        {
+            TempData["Message"] = "Dit uitje bestaat niet.";
+            TempData["MessageType"] = "danger";
+
+            return RedirectToAction("Index");
+        }
+
+        OutingViewModel outingViewModel = new()
+        {
+            Id = outing.Id,
+            Name = outing.Name,
+            Suggestions = outing.Suggestions,
+        };
+        
+        return View(outingViewModel);
+    }
 }

@@ -21,4 +21,47 @@
     <data name="Frog" xml:space="preserve">
         <value>Kikker</value>
     </data>
+    <data name="Teams" xml:space="preserve">
+        <value>Teams</value>
+    </data>
+    <data name="ManageOutings" xml:space="preserve">
+        <value>Beheer uitjes</value>
+    </data>
+    <data name="Scoreboard" xml:space="preserve">
+        <value>Scorebord</value>
+    </data>
+    <data name="OutingsToPlan" xml:space="preserve">
+        <value>Te plannen uitjes</value>
+        <comment>OutingsToPlan</comment>
+    </data>
+    <data name="Suggestions" xml:space="preserve">
+        <value>Suggesties</value>
+    </data>
+    <data name="Logout" xml:space="preserve">
+        <value>Uitloggen</value>
+    </data>
+    <data name="Login" xml:space="preserve">
+        <value>Log in</value>
+    </data>
+    <data name="Hello" xml:space="preserve">
+        <value>Hallo</value>
+    </data>
+    <data name="Welcome" xml:space="preserve">  
+        <value>Welkom bij TALPA!</value>
+    </data>
+    <data name="Description" xml:space="preserve">
+        <value>Beschrijving</value>
+    </data>
+    <data name="Index" xml:space="preserve">
+        <value>Overzicht</value>
+    </data>
+    <data name="Manager" xml:space="preserve">
+        <value>Manager</value>
+    </data>
+    <data name="Admin" xml:space="preserve">
+        <value>Admin</value>
+    </data>
+    <data name="Employee" xml:space="preserve">
+        <value>Werknemer</value>
+    </data>
 </root>
