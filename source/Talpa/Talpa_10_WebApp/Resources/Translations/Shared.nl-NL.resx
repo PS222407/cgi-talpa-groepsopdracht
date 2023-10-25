@@ -64,4 +64,60 @@
     <data name="Employee" xml:space="preserve">
         <value>Werknemer</value>
     </data>
+    <data name="Homepage" xml:space="preserve">
+        <value>Home Pagina</value>
+    </data>
+    <data name="Create New" xml:space="preserve">
+        <value>Nieuwe Aaanmaken</value>
+    </data>
+    <data name="Edit" xml:space="preserve">
+        <value>Wijzig</value>
+    </data>
+    <data name="Details" xml:space="preserve">
+        <value>Details</value>
+    </data>
+    <data name="Delete" xml:space="preserve">
+        <value>Verwijder</value>
+    </data>
+    <data name="Outing" xml:space="preserve">
+        <value>Uitje</value>
+    </data>
+    <data name="Dates" xml:space="preserve">
+        <value>Datums</value>
+    </data>
+    <data name="SelectDays" xml:space="preserve">
+        <value>Selecteer dagen</value>
+    </data>
+    <data name="Save" xml:space="preserve">
+        <value>Opslaan</value>
+    </data>
+    <data name="BackToList" xml:space="preserve">
+        <value>Terug naar overzicht</value>
+    </data>
+    <data name="Are you sure you want to delete this?" xml:space="preserve">
+        <value>Weet je zeker dat je dit wilt verwijderen?</value>
+    </data>
+    <data name="Team" xml:space="preserve">
+        <value>Team</value>
+    </data>
+    <data name="Users" xml:space="preserve">
+        <value>Gebruikers</value>
+    </data>
+    <data name="No users selected" xml:space="preserve">
+        <value>Geen gebruikers geselecteerd</value>
+    </data>
+    <data name="Create" xml:space="preserve">
+        <value>Aanmaken</value>
+    </data>
+    <data name="Access Denied" xml:space="preserve">
+        <value>Toegang geweigerd</value>
+    </data>
+    <data name="You do not have access to this resource" xml:space="preserve">
+        <value>
+U heeft geen toegang tot deze bron</value>
+    </data>
+    <data name="An error occurred while processing your request" xml:space="preserve">
+        <value>
+Er is een fout opgetreden bij het verwerken van uw verzoek</value>
+    </data>
 </root>

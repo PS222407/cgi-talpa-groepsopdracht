@@ -1,13 +1,17 @@
-﻿@model Talpa_10_WebApp.RequestModels.OutingRequest
+﻿@using Talpa_10_WebApp.Translations
+@using Microsoft.Extensions.Localization
+@model Talpa_10_WebApp.RequestModels.OutingRequest
+@inject IStringLocalizer<Shared> StringLocalizer
 
 @{
+    Shared SharedLocalizer = new(StringLocalizer);
     Layout = "_Layout";
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = SharedLocalizer.Get("Edit");
 }
 
-<h1>Edit</h1>
+<h1>@SharedLocalizer.Get("Edit")</h1>
 
-<h4>Outing</h4>
+<h4>@SharedLocalizer.Get("Outing")</h4>
 <hr/>
 <div class="row">
     <div class="col-md-4">
@@ -20,26 +24,26 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SelectedSuggestionIds" class="control-label">Suggesties</label>
+                <label asp-for="SelectedSuggestionIds" class="control-label">@SharedLocalizer.Get("Suggestions")</label>
                 <select asp-for="SelectedSuggestionIds" asp-items="Model.SuggestionOptions" multiple="multiple" class="form-control js-tokenizer-max3"></select>
                 <span asp-validation-for="SelectedSuggestionIds" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Datums</label>
+                <label class="control-label">@SharedLocalizer.Get("Dates")</label>
                 <div class="input-group date" id="datepicker">
-                    <input type="text" class="form-control" id="Dates" name="StringDates" value="@Model.StringDates" placeholder="Selecteer dagen" required="">
+                    <input type="text" class="form-control" id="Dates" name="StringDates" value="@Model.StringDates" placeholder="@SharedLocalizer.Get("SelectDays")" required="">
                     <span class="input-group-addon">
                         <i class="glyphicon glyphicon-calendar"></i><span class="count">@Model.Dates.Count</span>
                     </span>
                 </div>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary"/>
+                <input type="submit" value="@SharedLocalizer.Get("Save")" class="btn btn-primary"/>
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">@SharedLocalizer.Get("BackToList")</a>
 </div>

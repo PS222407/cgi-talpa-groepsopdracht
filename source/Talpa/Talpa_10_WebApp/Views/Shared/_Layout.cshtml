@@ -23,26 +23,20 @@
     <nav style="z-index: 20;" class="nav navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow">
         <div class="container-fluid">
             <a class="navbar-brand letterspace" style="color: white;" asp-area="" asp-controller="Home" asp-action="Index">TALPA</a>
-            <button class="navbar-toggler" style="background-color: white;" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" style="background-color: white;" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    @if (User.IsInRole("Admin"))
+                    @if (User.IsInRole(RoleName.Admin))
                     {
                         <li class="nav-item">
                             <a class="nav-link" asp-area="Admin" asp-controller="Team" asp-action="Index" style="@(new Uri(Context.Request.GetDisplayUrl()).AbsolutePath.StartsWith("/Admin/Team") ? "color: white !important; text-decoration: underline; font-weight: bold;" : "")">
                                 @SharedLocalizer.Get("Teams")
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link">
-                                @SharedLocalizer.Get("Scoreboard")
-                            </a>
-                        </li>
                     }
-                    @if (User.IsInRole("Manager"))
+                    @if (User.IsInRole(RoleName.Admin) || User.IsInRole(RoleName.Manager))
                     {
                         <li class="nav-item">
                             <a asp-area="Manager" asp-controller="Outing" asp-action="Index" class="nav-link" style="@(new Uri(Context.Request.GetDisplayUrl()).AbsolutePath.StartsWith("/Manager/Outing") ? "color: white !important; text-decoration: underline; font-weight: bold;" : "")">
@@ -55,7 +49,7 @@
                             </a>
                         </li>
                     }
-                    @if (User.IsInRole("Employee"))
+                    @if (User.IsInRole(RoleName.Admin) || User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Employee))
                     {
                         <li class="nav-item">
                             <a asp-area="" asp-controller="Outing" asp-action="Index" class="nav-link" style="@(new Uri(Context.Request.GetDisplayUrl()).AbsolutePath.StartsWith("/Outing") ? "color: white !important; text-decoration: underline; font-weight: bold;" : "")">
@@ -74,7 +68,7 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li>
-                            <a asp-controller="Account" asp-action="Profile" style="color: white">@SharedLocalizer.Get("Hello") @User.Identity.Name!</a>
+                            <a style="color: white">@SharedLocalizer.Get("Hello") @User.Identity.Name!</a>
                         </li>
                         <li>
                             <a id="qsLogoutBtn" asp-controller="Account" asp-action="Logout" style="color: white">
@@ -97,7 +91,6 @@
 </header>
 
 <main class="main" id="main">
-    <h2>@ViewData["Title"]</h2>
     @if (TempData.ContainsKey("Message"))
     {
         <div class="alert alert-@(TempData["MessageType"])">

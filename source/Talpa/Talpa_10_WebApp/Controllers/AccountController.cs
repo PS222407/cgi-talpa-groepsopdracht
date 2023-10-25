@@ -58,29 +58,29 @@ public class AccountController : Controller
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
     }
 
-    [Authorize]
-    public IActionResult Profile()
-    {
-        return View(new UserViewModel
-        {
-            Name = User.Identity?.Name,
-            EmailAddress = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
-            ProfileImage = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value,
-        });
-    }
+    // [Authorize]
+    // public IActionResult Profile()
+    // {
+    //     return View(new UserViewModel
+    //     {
+    //         Name = User.Identity?.Name,
+    //         EmailAddress = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
+    //         ProfileImage = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value,
+    //     });
+    // }
 
-    [Authorize]
-    public IActionResult Claims()
-    {
-        string? roles = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
-
-        foreach (Claim claim in User.Claims)
-        {
-            Claim a = claim;
-        }
-
-        return View();
-    }
+    // [Authorize]
+    // public IActionResult Claims()
+    // {
+    //     string? roles = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+    //
+    //     foreach (Claim claim in User.Claims)
+    //     {
+    //         Claim a = claim;
+    //     }
+    //
+    //     return View();
+    // }
 
     public IActionResult AccessDenied()
     {
