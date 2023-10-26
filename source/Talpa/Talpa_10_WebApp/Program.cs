@@ -14,7 +14,13 @@ using Talpa_10_WebApp.Support;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<IUserRepository>(_ => new UserRepository(builder.Configuration["Auth0:ClientId"], builder.Configuration["Auth0:ClientSecret"], builder.Configuration["Auth0:Domain"]));
+builder.Services.AddScoped<IUserRepository>(_ => new UserRepository(
+    builder.Configuration["Auth0:ClientId"],
+    builder.Configuration["Auth0:ClientSecret"],
+    builder.Configuration["Auth0:Domain"],
+    builder.Configuration["Auth0:ApiClientId"],
+    builder.Configuration["Auth0:ApiClientSecret"]
+    ));
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IOutingService, OutingService>();
 builder.Services.AddScoped<IOutingRepository, OutingRepository>();

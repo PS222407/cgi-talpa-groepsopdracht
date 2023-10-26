@@ -11,7 +11,7 @@ public class UserRepository : Repository, IUserRepository
 {
     private readonly string _baseUrl;
 
-    public UserRepository(string clientId, string clientSecret, string domain) : base(clientId, clientSecret, domain)
+    public UserRepository(string clientId, string clientSecret, string domain, string apiClientId, string apiClientSecret) : base(clientId, clientSecret, domain, apiClientId, apiClientSecret)
     {
         _baseUrl = $"https://{domain}/api/v2";
     }
@@ -34,7 +34,7 @@ public class UserRepository : Repository, IUserRepository
                 Email = user.email,
                 Name = user.name,
                 NickName = user.nickname,
-                TeamId = user.user_metadata.teamId,
+                TeamId = user.user_metadata?.teamId,
             }
             : null;
     }
