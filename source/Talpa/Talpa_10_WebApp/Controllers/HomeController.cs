@@ -8,7 +8,7 @@ using Talpa_10_WebApp.ViewModels;
 
 namespace Talpa_10_WebApp.Controllers;
 
-// [Authorize]
+[Authorize]
 public class HomeController : Controller
 {
     private readonly IStringLocalizer<Shared> _localizer;
