@@ -6,8 +6,11 @@ namespace Talpa_10_WebApp.Validations
     public class SuggestionCount : ValidationAttribute
     {
 
-        public string GetErrorMessage() =>
+        public string GetErrorMessageMax() =>
         $"Er kunnen maximaal 3 suggesties worden gekozen!";
+
+        public string GetErrorMessageMin() =>
+        $"Er moet minimaal 1 suggestie worden gekozen!";
 
         protected override ValidationResult? IsValid(
         object? value, ValidationContext validationContext)
@@ -16,7 +19,11 @@ namespace Talpa_10_WebApp.Validations
 
             if (outingRequest.SelectedSuggestionIds?.Count > 3)
             {
-                return new ValidationResult(GetErrorMessage());
+                return new ValidationResult(GetErrorMessageMax());
+            }
+            if (outingRequest.SelectedSuggestionIds?.Count < 1)
+            {
+                return new ValidationResult(GetErrorMessageMin());
             }
 
             return ValidationResult.Success;
