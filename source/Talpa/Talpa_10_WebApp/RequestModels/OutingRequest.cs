@@ -34,7 +34,7 @@ public class OutingRequest
         }
     }
 
-    [SuggestionCount]
+    [SuggestionCount(ErrorMessage = "You can only select 3 suggestions.")]
     public List<string>? SelectedSuggestionIds { get; set; } = new();
 
     public List<SelectListItem>? SuggestionOptions { get; set; } = new();

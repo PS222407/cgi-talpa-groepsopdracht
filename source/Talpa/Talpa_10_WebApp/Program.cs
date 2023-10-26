@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Talpa_10_WebApp.Support;
+using Talpa_10_WebApp.Translations;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -51,7 +52,9 @@ builder.Services.AddControllersWithViews()
     {
         opts.ResourcesPath = "Resources";
     })
-    .AddDataAnnotationsLocalization();
+    .AddDataAnnotationsLocalization(options => {
+        options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedValidation));
+    });
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {

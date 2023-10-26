@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Talpa_10_WebApp.Resources.Models {
+namespace Talpa_10_WebApp.Resources.Translations {
     using System;
     
     
@@ -21,14 +21,14 @@ namespace Talpa_10_WebApp.Resources.Models {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class TestModel_nl_NL {
+    internal class SharedValidation_nl_NL {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal TestModel_nl_NL() {
+        internal SharedValidation_nl_NL() {
         }
         
         /// <summary>
@@ -38,7 +38,7 @@ namespace Talpa_10_WebApp.Resources.Models {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Talpa_10_WebApp.Resources.Models.TestModel.nl-NL", typeof(TestModel_nl_NL).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Talpa_10_WebApp.Resources.Translations.SharedValidation.nl-NL", typeof(SharedValidation_nl_NL).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -60,11 +60,11 @@ namespace Talpa_10_WebApp.Resources.Models {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to joa.
+        ///   Looks up a localized string similar to Je kan maar 3 suggesties selecteren.
         /// </summary>
-        internal static string The_Name_field_is_required_ {
+        internal static string You_can_only_select_3_suggestions_ {
             get {
-                return ResourceManager.GetString("The Name field is required.", resourceCulture);
+                return ResourceManager.GetString("You can only select 3 suggestions.", resourceCulture);
             }
         }
     }

@@ -90,6 +90,14 @@
           <Generator>ResXFileCodeGenerator</Generator>
           <LastGenOutput>TestModel.en-US.Designer.cs</LastGenOutput>
         </EmbeddedResource>
+        <EmbeddedResource Update="Resources\Translations\SharedValidation.nl-NL.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>SharedValidation.nl-NL.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\Translations\SharedValidation.en-US.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>SharedValidation.en-US.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
     </ItemGroup>
 
 
@@ -123,6 +131,16 @@
           <DesignTime>True</DesignTime>
           <AutoGen>True</AutoGen>
           <DependentUpon>TestModel.en-US.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Resources\Translations\SharedValidation.nl-NL.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>SharedValidation.nl-NL.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Resources\Translations\SharedValidation.en-US.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>SharedValidation.en-US.resx</DependentUpon>
         </Compile>
     </ItemGroup>
 
