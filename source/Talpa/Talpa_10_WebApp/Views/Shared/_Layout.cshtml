@@ -83,7 +83,7 @@
                                     <div class="role">Employee</div>
                                 }
                             </div>
-                            <a id="qsLogoutBtn" asp-controller="Account" asp-action="Logout" style="color: white">
+                            <a id="qsLogoutBtn" asp-area="" asp-controller="Account" asp-action="Logout" style="color: white">
                                 @SharedLocalizer["Logout"]
                             </a>
                         </li>
@@ -91,7 +91,7 @@
                     else
                     {
                         <li>
-                            <a id="qsLoginBtn" asp-controller="Account" asp-action="Login" style="color: white">
+                            <a id="qsLoginBtn" asp-area="" asp-controller="Account" asp-action="Login" style="color: white">
                                 @SharedLocalizer["Login"]
                             </a>
                         </li>
