@@ -3,11 +3,13 @@ using BusinessLogicLayer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Localization;
 using Talpa_10_WebApp.Constants;
 using Talpa_10_WebApp.RequestModels;
+using Talpa_10_WebApp.Translations;
 using Talpa_10_WebApp.ViewModels;
 
-namespace Talpa_10_WebApp.Controllers.Admin;
+namespace Talpa_10_WebApp.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [Authorize(Roles = $"{RoleName.Admin}")]
@@ -16,11 +18,14 @@ public class TeamController : Controller
     private readonly ITeamService _teamService;
 
     private readonly IUserService _userService;
+    
+    private readonly Shared _localizer;
 
-    public TeamController(ITeamService teamService, IUserService userService)
+    public TeamController(ITeamService teamService, IUserService userService, IStringLocalizer<Shared> localizer)
     {
         _teamService = teamService;
         _userService = userService;
+        _localizer = new Shared(localizer);
     }
 
     public ActionResult Index()
@@ -35,7 +40,7 @@ public class TeamController : Controller
         Team? team = _teamService.GetById(id);
         if (team == null)
         {
-            TempData["Message"] = "Er bestaat geen entiteit met dit id.";
+            TempData["Message"] = _localizer.Get("No entity found with this id");
             TempData["MessageType"] = "danger";
 
             return View();
@@ -84,7 +89,7 @@ public class TeamController : Controller
         Team teamEntry = _teamService.Create(team);
         if (teamEntry.Id == null)
         {
-            TempData["Message"] = "Fout tijdens het aanmaken.";
+            TempData["Message"] = _localizer.Get("Error while creating");
             TempData["MessageType"] = "danger";
             return View(new TeamViewModel
             {
@@ -96,7 +101,7 @@ public class TeamController : Controller
 
         if (!await _teamService.AttachUsers(teamEntry.Id ?? -1, teamRequest.SelectedUserIds ?? new List<string>()))
         {
-            TempData["Message"] = "Fout tijdens het koppelen van de gebruikers.";
+            TempData["Message"] = _localizer.Get("Error white attaching users");
             TempData["MessageType"] = "danger";
             return View(new TeamViewModel
             {
@@ -106,7 +111,7 @@ public class TeamController : Controller
             });
         }
 
-        TempData["Message"] = "Item succesvol aangemaakt";
+        TempData["Message"] = _localizer.Get("Item successfully created");
         TempData["MessageType"] = "success";
 
         return RedirectToAction(nameof(Index));
@@ -125,7 +130,7 @@ public class TeamController : Controller
         Team? team = _teamService.GetById(id);
         if (team == null)
         {
-            TempData["Message"] = "Er bestaat geen entiteit met dit id.";
+            TempData["Message"] = _localizer.Get("No entity found with this id");
             TempData["MessageType"] = "danger";
 
             return View();
@@ -163,7 +168,7 @@ public class TeamController : Controller
         Team team = new() { Id = id, Name = teamRequest.Name };
         if (!_teamService.Update(team))
         {
-            TempData["Message"] = "Fout tijdens het opslaan van de data.";
+            TempData["Message"] = _localizer.Get("Error while creating");
             TempData["MessageType"] = "danger";
 
             return View();
@@ -171,7 +176,7 @@ public class TeamController : Controller
 
         if (!await _teamService.SyncUsers(team.Id ?? -1, teamRequest.SelectedUserIds ?? new List<string>()))
         {
-            TempData["Message"] = "Fout tijdens het koppelen van de gebruikers.";
+            TempData["Message"] = _localizer.Get("Error white attaching users");
             TempData["MessageType"] = "danger";
             return View(new TeamViewModel
             {
@@ -181,7 +186,7 @@ public class TeamController : Controller
             });
         }
 
-        TempData["Message"] = "Item succesvol gewijzigd";
+        TempData["Message"] = _localizer.Get("Item successfully updated");
         TempData["MessageType"] = "success";
 
         return RedirectToAction(nameof(Index));
@@ -193,7 +198,7 @@ public class TeamController : Controller
         Team? team = _teamService.GetById(id);
         if (team == null)
         {
-            TempData["Message"] = "Er Er bestaat geen entiteit met dit id.";
+            TempData["Message"] = _localizer.Get("No entity found with this id");
             TempData["MessageType"] = "danger";
 
             return View();
@@ -211,13 +216,13 @@ public class TeamController : Controller
     {
         if (!await _teamService.Delete(id))
         {
-            TempData["Message"] = "Fout tijdens het verwijderen van de data.";
+            TempData["Message"] = _localizer.Get("Error while deleting");
             TempData["MessageType"] = "danger";
 
             return View("Delete");
         }
 
-        TempData["Message"] = "Item succesvol verwijderd";
+        TempData["Message"] = _localizer.Get("Item successfully deleted");
         TempData["MessageType"] = "success";
 
         return RedirectToAction(nameof(Index));

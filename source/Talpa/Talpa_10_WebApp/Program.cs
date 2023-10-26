@@ -5,6 +5,7 @@ using BusinessLogicLayer.Interfaces.Services;
 using BusinessLogicLayer.Services;
 using DataAccessLayer.Data;
 using DataAccessLayer.Repositories;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -29,7 +30,7 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseMySql(
         connectionString,
         new MySqlServerVersion(new Version(10, 4, 22)), // Edit this to your SQL server version.
-        mySqlOptions => mySqlOptions.MigrationsAssembly("Talpa.30_DataAccessLayer")
+        mySqlOptions => mySqlOptions.MigrationsAssembly("Talpa_30_DataAccessLayer")
     ));
 
 builder.Services.AddScoped<DataContext>();
@@ -40,7 +41,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<DataContext>();
 
 builder.Services.AddControllersWithViews()
-    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
+    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+    .AddDataAnnotationsLocalization();
 
 builder.Services.AddAuth0WebAppAuthentication(options =>
 {
@@ -82,6 +84,11 @@ else
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseCookiePolicy();
+
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedProto
+});
 
 app.UseRouting();
 

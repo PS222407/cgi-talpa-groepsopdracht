@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Talpa_10_WebApp.ViewModels;
 
 namespace Talpa_10_WebApp.Controllers;
 
@@ -21,8 +20,10 @@ public class AccountController : Controller
 
     public async Task Login()
     {
+        bool appIsInProduction = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production";
+        string callbackUrl = Url.Action(nameof(LoginHook), null, null, "http")!;
         AuthenticationProperties authenticationProperties = new LoginAuthenticationPropertiesBuilder()
-            .WithRedirectUri(Url.Action(nameof(LoginHook))!)
+            .WithRedirectUri(callbackUrl)
             .Build();
 
         await HttpContext.ChallengeAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
@@ -58,29 +59,29 @@ public class AccountController : Controller
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
     }
 
-    [Authorize]
-    public IActionResult Profile()
-    {
-        return View(new UserViewModel
-        {
-            Name = User.Identity?.Name,
-            EmailAddress = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
-            ProfileImage = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value,
-        });
-    }
+    // [Authorize]
+    // public IActionResult Profile()
+    // {
+    //     return View(new UserViewModel
+    //     {
+    //         Name = User.Identity?.Name,
+    //         EmailAddress = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
+    //         ProfileImage = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value,
+    //     });
+    // }
 
-    [Authorize]
-    public IActionResult Claims()
-    {
-        string? roles = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
-
-        foreach (Claim claim in User.Claims)
-        {
-            Claim a = claim;
-        }
-
-        return View();
-    }
+    // [Authorize]
+    // public IActionResult Claims()
+    // {
+    //     string? roles = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+    //
+    //     foreach (Claim claim in User.Claims)
+    //     {
+    //         Claim a = claim;
+    //     }
+    //
+    //     return View();
+    // }
 
     public IActionResult AccessDenied()
     {

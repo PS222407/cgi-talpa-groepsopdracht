@@ -1,10 +1,15 @@
-﻿@model Talpa_10_WebApp.ViewModels.ErrorViewModel
+﻿@using Talpa_10_WebApp.Translations
+@using Microsoft.Extensions.Localization
+@model Talpa_10_WebApp.ViewModels.ErrorViewModel
+@inject IStringLocalizer<Shared> StringLocalizer
+
 @{
+    Shared SharedLocalizer = new(StringLocalizer);
     ViewData["Title"] = "Error";
 }
 
 <h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<h2 class="text-danger">@SharedLocalizer.Get("An error occurred while processing your request").</h2>
 
 @if (Model.ShowRequestId)
 {

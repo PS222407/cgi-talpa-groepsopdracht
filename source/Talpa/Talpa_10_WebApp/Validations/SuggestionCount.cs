@@ -26,7 +26,6 @@ namespace Talpa_10_WebApp.Validations
                 return new ValidationResult(GetErrorMessageMin());
             }
 
-            return ValidationResult.Success;
-        }
+        return ValidationResult.Success;
     }
 }
