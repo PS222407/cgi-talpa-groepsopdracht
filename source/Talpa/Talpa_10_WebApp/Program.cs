@@ -39,10 +39,6 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<DataContext>();
 
-builder.Services.AddControllersWithViews()
-    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-    .AddDataAnnotationsLocalization();
-
 builder.Services.AddAuth0WebAppAuthentication(options =>
 {
     options.Domain = builder.Configuration["Auth0:Domain"];
@@ -50,6 +46,13 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
 });
 
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.AddControllersWithViews()
+    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, opts =>
+    {
+        opts.ResourcesPath = "Resources";
+    })
+    .AddDataAnnotationsLocalization();
+
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     CultureInfo[] supportedCultures =

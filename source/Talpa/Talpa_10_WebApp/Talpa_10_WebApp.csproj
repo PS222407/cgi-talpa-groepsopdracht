@@ -82,6 +82,14 @@
           <Generator>ResXFileCodeGenerator</Generator>
           <LastGenOutput>Shared.nl-NL.Designer.cs</LastGenOutput>
         </EmbeddedResource>
+        <EmbeddedResource Update="Resources\Models\TestModel.nl-NL.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>TestModel.nl-NL.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Resources\Models\TestModel.en-US.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>TestModel.en-US.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
     </ItemGroup>
 
 
@@ -105,6 +113,16 @@
           <DesignTime>True</DesignTime>
           <AutoGen>True</AutoGen>
           <DependentUpon>Shared.nl-NL.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Resources\Models\TestModel.nl-NL.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>TestModel.nl-NL.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Resources\Models\TestModel.en-US.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>TestModel.en-US.resx</DependentUpon>
         </Compile>
     </ItemGroup>
 
