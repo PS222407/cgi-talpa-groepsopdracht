@@ -60,6 +60,24 @@ namespace Talpa_10_WebApp.Resources.Translations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Name field is required..
+        /// </summary>
+        internal static string The_Name_field_is_required_ {
+            get {
+                return ResourceManager.GetString("The Name field is required.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You can only select 3 suggestions..
         /// </summary>
         internal static string You_can_only_select_3_suggestions_ {

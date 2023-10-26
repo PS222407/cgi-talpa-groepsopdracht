@@ -21,4 +21,10 @@
     <data name="You can only select 3 suggestions." xml:space="preserve">
         <value>You can only select 3 suggestions.</value>
     </data>
+    <data name="The Name field is required." xml:space="preserve">
+        <value>The Name field is required.</value>
+    </data>
+    <data name="Name" xml:space="preserve">
+        <value>Name</value>
+    </data>
 </root>

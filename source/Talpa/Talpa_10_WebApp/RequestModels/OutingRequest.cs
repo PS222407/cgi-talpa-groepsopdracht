@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Talpa_10_WebApp.Validations;
 
@@ -12,6 +13,8 @@ public class OutingRequest
 
     private List<DateTime>? _dates = new();
 
+    [Required(ErrorMessage = "The Name field is required.")]
+    [Display(Name = "Name")]
     public string Name { get; set; }
 
     public string? StringDates
