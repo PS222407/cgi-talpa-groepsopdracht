@@ -139,22 +139,24 @@
 <script type="text/javascript" src="~/datepicker/bootstrap.min.js"></script>
 @* ENDDATEPICKER *@
 
-<script>
-    $(document).ready(function() {
-        $('#datepicker').datepicker({
-                format: "dd/mm/yy",
+    <script>
+        $(document).ready(function () {
+            var selectedDatesInput = $('#selectedDates');
+
+            $('#datepicker').datepicker({
+                format: "dd/mm/yyyy",
                 weekStart: 1,
                 startView: 1,
                 maxViewMode: 2,
                 clearBtn: true,
                 multidate: true,
-                multidateSeparator: " - ",
-                forceParse: false,
-        }).on('changeDate', function(e) {
-            $(this).find('.input-group-addon .count').text(' ' + e.dates.length);
+                multidateSeparator: ",",
+                forceParse: false
+            }).on('changeDate', function (e) {
+                selectedDatesInput.val(e.dates.join(','));
+            });
         });
-    });
-</script>
+    </script>
 
 
 <partial name="_CookieConsentPartial"/>
