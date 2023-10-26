@@ -1,8 +1,13 @@
+@using Talpa_10_WebApp.Translations
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Shared> StringLocalizer
+
 @{
-    ViewData["Title"] = "Access Denied";
+    Shared SharedLocalizer = new(StringLocalizer);
+    ViewData["Title"] = SharedLocalizer.Get("Access Denied");
 }
 
 <header>
-    <h1 class="text-danger">Access Denied.</h1>
-    <p class="text-danger">You do not have access to this resource.</p>
+    <h1 class="text-danger">@SharedLocalizer.Get("Access Denied")</h1>
+    <p class="text-danger">@SharedLocalizer.Get("You do not have access to this resource")</p>
 </header>
