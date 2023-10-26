@@ -33,6 +33,7 @@
         <_ContentIncludedByDefault Remove="Views\Suggestion\Details.cshtml"/>
         <_ContentIncludedByDefault Remove="Views\Suggestion\Edit.cshtml"/>
         <_ContentIncludedByDefault Remove="Views\Suggestion\Index.cshtml"/>
+        <_ContentIncludedByDefault Remove="Views\Test\Create.cshtml" />
     </ItemGroup>
 
 
