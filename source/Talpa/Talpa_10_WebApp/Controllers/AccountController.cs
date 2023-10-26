@@ -21,7 +21,7 @@ public class AccountController : Controller
     public async Task Login()
     {
         bool appIsInProduction = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production";
-        string callbackUrl = Url.Action(nameof(LoginHook), null, null, appIsInProduction ? "https" : "http")!;
+        string callbackUrl = Url.Action(nameof(LoginHook), null, null, "http")!;
         AuthenticationProperties authenticationProperties = new LoginAuthenticationPropertiesBuilder()
             .WithRedirectUri(callbackUrl)
             .Build();

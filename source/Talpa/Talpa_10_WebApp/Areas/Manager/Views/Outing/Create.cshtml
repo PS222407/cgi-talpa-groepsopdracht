@@ -1,4 +1,4 @@
-@using Talpa_10_WebApp.Translations
+﻿@using Talpa_10_WebApp.Translations
 @using Microsoft.Extensions.Localization
 @model Talpa_10_WebApp.RequestModels.OutingRequest
 @inject IStringLocalizer<Shared> StringLocalizer
@@ -23,11 +23,10 @@
 
             <div class="form-group">
                 <label class="control-label">@SharedLocalizer.Get("Dates")</label>
-                <div class="input-group date" id="datepicker">
-                    <input type="text" class="form-control" id="Dates" name="StringDates" value="@Model?.StringDates" placeholder="@SharedLocalizer.Get("SelectDays")" required="">
-                    <span class="input-group-addon">
-                        <i class="glyphicon glyphicon-calendar"></i><span class="count">0</span>
-                    </span>
+                <div class="input-group date">
+                    <div id="datepicker">
+                    <input type="hidden" class="form-control" id="Dates" name="StringDates" value="@Model?.StringDates" placeholder="@SharedLocalizer.Get("SelectDays")" required="">
+                    </div>
                 </div>
             </div>
 
