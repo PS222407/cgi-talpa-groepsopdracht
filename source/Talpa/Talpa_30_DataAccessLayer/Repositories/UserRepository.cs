@@ -9,15 +9,18 @@ namespace DataAccessLayer.Repositories;
 
 public class UserRepository : Repository, IUserRepository
 {
-    public UserRepository(string clientId, string clientSecret) : base(clientId, clientSecret)
+    private readonly string _baseUrl;
+
+    public UserRepository(string clientId, string clientSecret, string domain, string apiClientId, string apiClientSecret) : base(clientId, clientSecret, domain, apiClientId, apiClientSecret)
     {
+        _baseUrl = $"https://{domain}/api/v2";
     }
 
     public async Task<User?> GetById(string id)
     {
         using HttpClient httpClient = new();
 
-        string url = $"{Auth0.BaseUrl}{Auth0.GetUserEndpoint}/{id}";
+        string url = $"{_baseUrl}{Auth0.GetUserEndpoint}/{id}";
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await GetAccessToken());
 
         HttpResponseMessage response = await httpClient.GetAsync(url);
@@ -31,7 +34,7 @@ public class UserRepository : Repository, IUserRepository
                 Email = user.email,
                 Name = user.name,
                 NickName = user.nickname,
-                TeamId = user.user_metadata.teamId,
+                TeamId = user.user_metadata?.teamId,
             }
             : null;
     }
@@ -40,7 +43,7 @@ public class UserRepository : Repository, IUserRepository
     {
         using HttpClient httpClient = new();
 
-        string url = $"{Auth0.BaseUrl}{Auth0.GetUserEndpoint}";
+        string url = $"{_baseUrl}{Auth0.GetUserEndpoint}";
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await GetAccessToken());
 
         HttpResponseMessage response = await httpClient.GetAsync(url);
@@ -61,7 +64,7 @@ public class UserRepository : Repository, IUserRepository
     {
         using HttpClient httpClient = new();
 
-        string url = $"{Auth0.BaseUrl}{Auth0.GetUserEndpoint}/{id}/roles";
+        string url = $"{_baseUrl}{Auth0.GetUserEndpoint}/{id}/roles";
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await GetAccessToken());
 
         HttpResponseMessage response = await httpClient.GetAsync(url);
@@ -97,7 +100,7 @@ public class UserRepository : Repository, IUserRepository
 
         using HttpClient httpClient = new();
 
-        string url = $"{Auth0.BaseUrl}{Auth0.GetUserEndpoint}/{userId}";
+        string url = $"{_baseUrl}{Auth0.GetUserEndpoint}/{userId}";
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await GetAccessToken());
 
         HttpRequestMessage request = new(HttpMethod.Patch, url)
@@ -118,7 +121,7 @@ public class UserRepository : Repository, IUserRepository
         string searchEngineVersion = "v3";
         string encodedSearchQuery = Uri.EscapeDataString(searchQuery);
 
-        string url = $"{Auth0.BaseUrl}{Auth0.GetUserEndpoint}?q={encodedSearchQuery}&search_engine={searchEngineVersion}";
+        string url = $"{_baseUrl}{Auth0.GetUserEndpoint}?q={encodedSearchQuery}&search_engine={searchEngineVersion}";
 
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await GetAccessToken());
 

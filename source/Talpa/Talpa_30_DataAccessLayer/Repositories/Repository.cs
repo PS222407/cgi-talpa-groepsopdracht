@@ -1,19 +1,23 @@
-﻿using System.Net.Http.Headers;
+﻿using System.Net;
+using System.Net.Http.Headers;
 using System.Text.Json;
-using BusinessLogicLayer.Models;
+using BusinessLogicLayer.Exceptions;
 
 namespace DataAccessLayer.Repositories;
 
 public class Repository
 {
-    private readonly string _clientId;
+    private readonly string _domain;
 
-    private readonly string _clientSecret;
+    private readonly string _apiClientId;
 
-    protected Repository(string clientId, string clientSecret)
+    private readonly string _apiClientSecret;
+
+    protected Repository(string clientId, string clientSecret, string domain, string apiClientId, string apiClientSecret)
     {
-        _clientId = clientId;
-        _clientSecret = clientSecret;
+        _domain = domain;
+        _apiClientId = apiClientId;
+        _apiClientSecret = apiClientSecret;
     }
 
     protected async Task<string?> GetAccessToken()
@@ -26,19 +30,24 @@ public class Repository
 
         using HttpClient httpClient = new();
 
-        string url = $"https://{Auth0.Domain}{Auth0.OauthTokenEndpoint}";
-        string audience = $"https://{Auth0.Domain}/api/v2/";
+        string url = $"https://{_domain}{Auth0.OauthTokenEndpoint}";
+        string audience = $"https://{_domain}/api/v2/";
 
         FormUrlEncodedContent? postData = new(new[]
         {
             new KeyValuePair<string, string>("grant_type", "client_credentials"),
-            new KeyValuePair<string, string>("client_id", _clientId),
-            new KeyValuePair<string, string>("client_secret", _clientSecret),
+            new KeyValuePair<string, string>("client_id", _apiClientId),
+            new KeyValuePair<string, string>("client_secret", _apiClientSecret),
             new KeyValuePair<string, string>("audience", audience),
         });
         postData.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
 
         HttpResponseMessage response = await httpClient.PostAsync(url, postData);
+        if (response.StatusCode == HttpStatusCode.Forbidden)
+        {
+            throw new Auth0ForbiddenException();
+        }
+        
         string status = response.Content.ReadAsStringAsync().Result;
         Token? token = JsonSerializer.Deserialize<Token>(status);
         Auth0.AccessToken = token?.access_token;
