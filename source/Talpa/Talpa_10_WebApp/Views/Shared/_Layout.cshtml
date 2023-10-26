@@ -1,12 +1,8 @@
-﻿@using Microsoft.AspNetCore.Http.Extensions
-@using Microsoft.Extensions.Localization
+@using Microsoft.AspNetCore.Http.Extensions
+@using Microsoft.AspNetCore.Mvc.Localization
 @using Talpa_10_WebApp.Constants
 @using Talpa_10_WebApp.Translations
-@inject IStringLocalizer<Shared> StringLocalizer
-
-@{
-    Shared SharedLocalizer = new(StringLocalizer);
-}
+@inject IHtmlLocalizer<Shared> SharedLocalizer
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,11 +13,14 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/css/outingstyle.css" asp-append-version="true"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca&family=Roboto:wght@100;200;300;400&display=swap" rel="stylesheet">
 </head>
 <body>
 <header>
     <nav style="z-index: 20;" class="nav navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow">
-        <div class="container-fluid">
+        <div class="container-navbar">
             <a class="navbar-brand letterspace" style="color: white;" asp-area="" asp-controller="Home" asp-action="Index">TALPA</a>
             <button class="navbar-toggler" style="background-color: white;" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -32,7 +31,7 @@
                     {
                         <li class="nav-item">
                             <a class="nav-link" asp-area="Admin" asp-controller="Team" asp-action="Index" style="@(new Uri(Context.Request.GetDisplayUrl()).AbsolutePath.StartsWith("/Admin/Team") ? "color: white !important; text-decoration: underline; font-weight: bold;" : "")">
-                                @SharedLocalizer.Get("Teams")
+                                @SharedLocalizer["Teams"]
                             </a>
                         </li>
                     }
@@ -40,12 +39,12 @@
                     {
                         <li class="nav-item">
                             <a asp-area="Manager" asp-controller="Outing" asp-action="Index" class="nav-link" style="@(new Uri(Context.Request.GetDisplayUrl()).AbsolutePath.StartsWith("/Manager/Outing") ? "color: white !important; text-decoration: underline; font-weight: bold;" : "")">
-                                @SharedLocalizer.Get("ManageOutings")
+                                @SharedLocalizer["ManageOutings"]
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="" class="nav-link">
-                                @SharedLocalizer.Get("Scoreboard")
+                                @SharedLocalizer["Scoreboard"]
                             </a>
                         </li>
                     }
@@ -53,26 +52,38 @@
                     {
                         <li class="nav-item">
                             <a asp-area="" asp-controller="Outing" asp-action="Index" class="nav-link" style="@(new Uri(Context.Request.GetDisplayUrl()).AbsolutePath.StartsWith("/Outing") ? "color: white !important; text-decoration: underline; font-weight: bold;" : "")">
-                                @SharedLocalizer.Get("OutingsToPlan")
+                                @SharedLocalizer["OutingsToPlan"]
                             </a>
                         </li>
                         <li class="nav-item">
                             <a asp-area="" asp-controller="Suggestion" asp-action="Index" class="nav-link" style="@(new Uri(Context.Request.GetDisplayUrl()).AbsolutePath.StartsWith("/Suggestion") ? "color: white !important; text-decoration: underline; font-weight: bold;" : "")">
-                                @SharedLocalizer.Get("Suggestions")
+                                @SharedLocalizer["Suggestions"]
                             </a>
                         </li>
                     }
                 </ul>
-                <ul class="nav navbar-nav navbar-right" style="display: flex; gap: 2em">
+                <ul class="nav navbar-nav navbar-right" style="display: flex; column-gap: 2em; align-items: center; flex-wrap: wrap-reverse">
                     <partial name="_CulturePartial"/>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li>
-                            <a style="color: white">@SharedLocalizer.Get("Hello") @User.Identity.Name!</a>
-                        </li>
-                        <li>
+                        <li style="display: flex; column-gap: 1em; align-items: center;">
+                            <div style="color: white">
+                                <div>@User.Identity.Name</div>
+                                @if (User.IsInRole(RoleName.Admin))
+                                {
+                                    <div class="role">Admin</div>
+                                }
+                                else if (User.IsInRole(RoleName.Manager))
+                                {
+                                    <div class="role">Manager</div>
+                                }
+                                else if (User.IsInRole(RoleName.Employee))
+                                {
+                                    <div class="role">Employee</div>
+                                }
+                            </div>
                             <a id="qsLogoutBtn" asp-controller="Account" asp-action="Logout" style="color: white">
-                                @SharedLocalizer.Get("Logout")
+                                @SharedLocalizer["Logout"]
                             </a>
                         </li>
                     }
@@ -80,7 +91,7 @@
                     {
                         <li>
                             <a id="qsLoginBtn" asp-controller="Account" asp-action="Login" style="color: white">
-                                @SharedLocalizer.Get("Login")
+                                @SharedLocalizer["Login"]
                             </a>
                         </li>
                     }
@@ -151,7 +162,6 @@
         });
     });
 </script>
-
 
 <partial name="_CookieConsentPartial"/>
 @* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@

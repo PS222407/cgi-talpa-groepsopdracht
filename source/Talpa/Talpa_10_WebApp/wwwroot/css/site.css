@@ -1,10 +1,10 @@
 html {
-    font-size: 14px;
+    /*font-size: 14px;*/
 }
 
 @media (min-width: 768px) {
     html {
-        font-size: 16px;
+        /*font-size: 16px;*/
     }
 }
 
@@ -39,8 +39,73 @@ body {
 
 .nav ul {
     list-style-type: none;
+    margin-top: 2px !important;
+    display: flex;
+    flex-wrap: wrap;
+    width: fit-content;
+    row-gap: .5em;
 }
 
 .nav-link {
-    color: rgba(255, 255, 255, 0.7) !important;
+    border:none;
+    position: relative;
+    font-family: 'Lexend Deca', sans-serif !important;
+    font-weight: 100 !important;
+    /*font-size: 20px !important;*/
+    padding: 0 !important;
+    margin-right: 2rem !important;
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+    color: #ffffff !important;
+}
+a.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0px;
+    height: 2px;
+    left: 50%;
+    bottom:0;
+    background-color: #F58A07;
+    transition: all ease-in-out .3s;
+}
+
+a.nav-link:hover::after {
+    width: 70%;
+    left: 15%;
+}
+
+a.nav-link:hover {
+    color: #1A181B !important;
+}
+.container-navbar {
+    width: 100%;
+    padding-right: 1em;
+    padding-left: 1em;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    flex-wrap: inherit;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar-brand {
+    /*font-size: 36px !important;*/
+    letter-spacing: 10px !important;
+    font-family: 'Lexend Deca', sans-serif !important;
+    font-weight: 400 !important;
+    margin-right: 40px !important;
+    padding: 0 !important;
+}
+
+li a {
+    text-decoration: none !important;
+    font-family: 'Lexend Deca', sans-serif !important;
+    font-weight: 100 !important;
+    font-size: 14px !important;
+}
+
+.role {
+    color: #2B2118 !important;
+    margin-top: -5px !important;
 }
