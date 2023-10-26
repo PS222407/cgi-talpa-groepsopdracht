@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Talpa_10_WebApp.Support;
+using Talpa_10_WebApp.Translations;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -40,10 +41,6 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<DataContext>();
 
-builder.Services.AddControllersWithViews()
-    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-    .AddDataAnnotationsLocalization();
-
 builder.Services.AddAuth0WebAppAuthentication(options =>
 {
     options.Domain = builder.Configuration["Auth0:Domain"];
@@ -51,6 +48,15 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
 });
 
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.AddControllersWithViews()
+    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, opts =>
+    {
+        opts.ResourcesPath = "Resources";
+    })
+    .AddDataAnnotationsLocalization(options => {
+        options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedValidation));
+    });
+
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     CultureInfo[] supportedCultures =
