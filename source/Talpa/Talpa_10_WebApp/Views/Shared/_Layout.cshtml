@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/css/outingstyle.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/datepicker.css" asp-append-version="true" />
 </head>
 <body>
 <header>
@@ -141,11 +142,14 @@
 <script>
     $(document).ready(function() {
         $('#datepicker').datepicker({
-            multidate: true,
-            format: "dd/mm/yyyy",
-            daysOfWeekHighlighted: "0,6",
-            language: 'en',
-            weekStart: 1,
+                format: "dd/mm/yy",
+                weekStart: 1,
+                startView: 1,
+                maxViewMode: 2,
+                clearBtn: true,
+                multidate: true,
+                multidateSeparator: " - ",
+                forceParse: false,
         }).on('changeDate', function(e) {
             $(this).find('.input-group-addon .count').text(' ' + e.dates.length);
         });
