@@ -1,6 +1,5 @@
 ﻿using System.Net.Http.Headers;
 using System.Text.Json;
-using BusinessLogicLayer.Models;
 
 namespace DataAccessLayer.Repositories;
 
@@ -10,10 +9,13 @@ public class Repository
 
     private readonly string _clientSecret;
 
-    protected Repository(string clientId, string clientSecret)
+    private readonly string _domain;
+
+    protected Repository(string clientId, string clientSecret, string domain)
     {
         _clientId = clientId;
         _clientSecret = clientSecret;
+        _domain = domain;
     }
 
     protected async Task<string?> GetAccessToken()
@@ -26,8 +28,8 @@ public class Repository
 
         using HttpClient httpClient = new();
 
-        string url = $"https://{Auth0.Domain}{Auth0.OauthTokenEndpoint}";
-        string audience = $"https://{Auth0.Domain}/api/v2/";
+        string url = $"https://{_domain}{Auth0.OauthTokenEndpoint}";
+        string audience = $"https://{_domain}/api/v2/";
 
         FormUrlEncodedContent? postData = new(new[]
         {
