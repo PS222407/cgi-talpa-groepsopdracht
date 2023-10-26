@@ -1,15 +1,11 @@
-﻿@using Microsoft.Extensions.Localization
-@using Talpa_10_WebApp.Translations
-@inject IStringLocalizer<Shared> StringLocalizer
+﻿@using Talpa_10_WebApp.Translations
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<Shared> SharedLocalizer
 
 @{
-    Shared SharedLocalizer = new(StringLocalizer);
-}
-
-@{
-    ViewData["Title"] = SharedLocalizer.Get("Homepage");
+    ViewData["Title"] = SharedLocalizer["Homepage"];
 }
 
 <div class="text-center">
-    <h1 class="display-4">@SharedLocalizer.Get("Welcome")</h1>
+    <h1 class="display-4">@SharedLocalizer["Welcome"]</h1>
 </div>
