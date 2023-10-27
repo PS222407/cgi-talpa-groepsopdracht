@@ -40,7 +40,7 @@ public class OutingController : Controller
             TempData["Message"] = _localizer.Get("You are not assigned to a team");
             TempData["MessageType"] = "danger";
 
-            return View();
+            return View(new List<OutingViewModel>());
         }
 
         return View(_outingService.GetAllFromTeam((int)teamId).Select(outing => new OutingViewModel(outing.Id, outing.Name)).ToList());

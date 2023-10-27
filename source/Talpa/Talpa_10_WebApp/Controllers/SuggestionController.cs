@@ -31,7 +31,6 @@ public class SuggestionController : Controller
         _localizer = new Shared(localizer);
     }
 
-    //GET: Outing
     public async Task<ActionResult> Index()
     {
         string? id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -40,19 +39,6 @@ public class SuggestionController : Controller
         if (User.IsInRole(RoleName.Admin))
         {
             List<Suggestion> allSuggestions = _suggestionService.GetAllBy(id);
-
-            List<SuggestionViewModel> suggestionViewModels1 = allSuggestions.Select(suggestion =>
-                new SuggestionViewModel(
-                    suggestion.Id,
-                    suggestion.Name,
-                    suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>()
-                )
-            ).ToList();
-            if (allSuggestions.Any(suggestion => suggestion.Restrictions == null))
-            {
-                return View(suggestionViewModels1);
-            }
-
             List<SuggestionViewModel> suggestionViewModels = allSuggestions.Select(suggestion =>
                 new SuggestionViewModel(
                     suggestion.Id,
@@ -70,14 +56,16 @@ public class SuggestionController : Controller
             TempData["Message"] = _localizer.Get("You are not assigned to a team");
             TempData["MessageType"] = "danger";
 
-            return View();
+            return View(new List<SuggestionViewModel>());
         }
 
         return View(_suggestionService.GetAllBy(id)
-            .Select(suggestion => new SuggestionViewModel(suggestion.Id, suggestion.Name, suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>())));
+            .Select(suggestion => new SuggestionViewModel(
+                suggestion.Id,
+                suggestion.Name,
+                suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>())));
     }
 
-    //GET: Outing/Details/5
     [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     public ActionResult Details(int id)
     {
@@ -93,7 +81,6 @@ public class SuggestionController : Controller
         return View(new SuggestionViewModel(suggestion.Id, suggestion.Name, suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>()));
     }
 
-    // GET: Outing/Create
     [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     public ActionResult Create()
     {
@@ -108,7 +95,6 @@ public class SuggestionController : Controller
         return View(suggestionRequest);
     }
 
-    // POST: Outing/Create
     [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
     [HttpPost]
     [ValidateAntiForgeryToken]

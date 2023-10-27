@@ -72,15 +72,15 @@
                                 <div>@User.Identity.Name</div>
                                 @if (User.IsInRole(RoleName.Admin))
                                 {
-                                    <div class="role">Admin</div>
+                                    <div class="role">@SharedLocalizer["Admin"]</div>
                                 }
                                 else if (User.IsInRole(RoleName.Manager))
                                 {
-                                    <div class="role">Manager</div>
+                                    <div class="role">@SharedLocalizer["Manager"]</div>
                                 }
                                 else if (User.IsInRole(RoleName.Employee))
                                 {
-                                    <div class="role">Employee</div>
+                                    <div class="role">@SharedLocalizer["Employee"]</div>
                                 }
                             </div>
                             <a id="qsLogoutBtn" asp-area="" asp-controller="Account" asp-action="Logout" style="color: white">
