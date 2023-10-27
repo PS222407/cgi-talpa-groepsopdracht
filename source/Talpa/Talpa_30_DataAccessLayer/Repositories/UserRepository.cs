@@ -47,8 +47,8 @@ public class UserRepository : Repository, IUserRepository
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await GetAccessToken());
 
         HttpResponseMessage response = await httpClient.GetAsync(url);
-        string status = response.Content.ReadAsStringAsync().Result;
-        List<UserDto>? userDtos = JsonSerializer.Deserialize<List<UserDto>>(status);
+        string jsonResponse = response.Content.ReadAsStringAsync().Result;
+        List<UserDto>? userDtos = JsonSerializer.Deserialize<List<UserDto>>(jsonResponse);
 
         return userDtos?.Select(u => new User
         {
@@ -56,7 +56,8 @@ public class UserRepository : Repository, IUserRepository
             Email = u.email,
             Name = u.name,
             NickName = u.nickname,
-            TeamId = u.user_metadata.teamId,
+            // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
+            TeamId = u.user_metadata?.teamId,
         }).ToList();
     }
 
