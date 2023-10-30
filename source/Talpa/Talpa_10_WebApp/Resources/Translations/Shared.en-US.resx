@@ -165,4 +165,7 @@
     <data name="choose your desired outing" xml:space="preserve">
         <value>Choose your desired outing</value>
     </data>
+    <data name="Next" xml:space="preserve">
+        <value>Next</value>
+    </data>
 </root>

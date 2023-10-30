@@ -31,8 +31,8 @@
                 </label>
             }
         </div>
-        <div class="form-group mt-3">
-            <input type="submit" value="@SharedLocalizer["Vote"]" class="btn btn-primary"/>
+        <div class="form-group mt-3" style="width: fit-content; margin-left: auto">
+            <input type="submit" value="@SharedLocalizer["Vote"]" class="px-4 py-2" style="background-color: #D92A3B; font-size: 1.3em; border: none; color: white; border-radius: 5px" />
         </div>
     </form>
 </div>
@@ -44,7 +44,7 @@
 	checkboxes.forEach((checkbox, checkboxIndex) => {
 		checkbox.addEventListener('change', function () {
 			if (this.checked) {
-				cards[checkboxIndex].style.backgroundColor = '#19C271';
+				cards[checkboxIndex].style.backgroundColor = '#008A61';
 				cards[checkboxIndex].style.color = 'white';
 			} else {
 				cards[checkboxIndex].style.backgroundColor = '#EBEBEB';

@@ -168,4 +168,7 @@ Er is een fout opgetreden bij het verwerken van uw verzoek</value>
     <data name="choose your desired outing" xml:space="preserve">
         <value>Kies uw gewenste uitje</value>
     </data>
+    <data name="Next" xml:space="preserve">
+        <value>Volgende</value>
+    </data>
 </root>
