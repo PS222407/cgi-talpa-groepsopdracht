@@ -1,6 +1,6 @@
 ﻿@using Talpa_10_WebApp.Translations
 @using Microsoft.Extensions.Localization
-@using BusinessLogicLayer.Models
+@using Talpa_10_WebApp.ViewModels
 @model Talpa_10_WebApp.ViewModels.OutingViewModel
 @inject IStringLocalizer<Shared> StringLocalizer
 
@@ -10,7 +10,7 @@
 }
 
 <div class="outer-container">
-    @foreach (Suggestion suggestion in Model.Suggestions)
+    @foreach (SuggestionViewModel suggestion in Model.Suggestions)
     {
         <label for="@suggestion.Id">@suggestion.Name</label>
         <input type="checkbox" id="@suggestion.Id" value="@suggestion.Id" />

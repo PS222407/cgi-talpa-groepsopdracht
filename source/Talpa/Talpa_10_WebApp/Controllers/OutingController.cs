@@ -15,7 +15,7 @@ public class OutingController : Controller
     private readonly IOutingService _outingService;
 
     private readonly IUserService _userService;
-    
+
     private readonly Shared _localizer;
 
     public OutingController(IOutingService outingService, IUserService userService, IStringLocalizer<Shared> localizer)
@@ -51,7 +51,7 @@ public class OutingController : Controller
     public ActionResult ChooseSuggestion(int id)
     {
         Outing? outing = _outingService.GetById(id);
-        
+
         if (outing == null)
         {
             TempData["Message"] = _localizer.Get("Outing does not exist");
@@ -60,13 +60,23 @@ public class OutingController : Controller
             return RedirectToAction("Index");
         }
 
+        List<SuggestionViewModel> suggestionViewModels = new();
+        foreach (Suggestion suggestion in outing.Suggestions ?? new List<Suggestion>())
+        {
+            suggestionViewModels.Add(new SuggestionViewModel
+            {
+                Name = suggestion.Name,
+                Restrictions = suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>(),
+            });
+        }
+
         OutingViewModel outingViewModel = new()
         {
             Id = outing.Id,
             Name = outing.Name,
-            Suggestions = outing.Suggestions,
+            Suggestions = suggestionViewModels,
         };
-        
+
         return View(outingViewModel);
     }
 
