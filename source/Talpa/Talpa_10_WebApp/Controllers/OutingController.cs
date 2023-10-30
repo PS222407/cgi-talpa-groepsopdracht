@@ -1,9 +1,11 @@
-﻿using System.Security.Claims;
+﻿using System.Globalization;
+using System.Security.Claims;
 using BusinessLogicLayer.Interfaces.Services;
 using BusinessLogicLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Talpa_10_WebApp.Constants;
+using Talpa_10_WebApp.RequestModels;
 using Talpa_10_WebApp.Translations;
 using Talpa_10_WebApp.ViewModels;
 
@@ -14,7 +16,7 @@ public class OutingController : Controller
     private readonly IOutingService _outingService;
 
     private readonly IUserService _userService;
-    
+
     private readonly Shared _localizer;
 
     public OutingController(IOutingService outingService, IUserService userService, IStringLocalizer<Shared> localizer)
@@ -46,26 +48,72 @@ public class OutingController : Controller
         return View(_outingService.GetAllFromTeam((int)teamId).Select(outing => new OutingViewModel(outing.Id, outing.Name)).ToList());
     }
 
-    [HttpGet("Outing/Details/{id:int}")]
-    public ActionResult ChooseSuggestion(int id)
+    [HttpGet("Outing/{id:int}/VoteSuggestion")]
+    public ActionResult VoteSuggestion(int id)
     {
         Outing? outing = _outingService.GetById(id);
-        
         if (outing == null)
         {
             TempData["Message"] = _localizer.Get("Outing does not exist");
             TempData["MessageType"] = "danger";
 
-            return RedirectToAction("Index");
+            return View();
         }
 
-        OutingViewModel outingViewModel = new()
+        List<SuggestionViewModel>? suggestionViewModels = outing.Suggestions?.Select(suggestion => new SuggestionViewModel
         {
-            Id = outing.Id,
-            Name = outing.Name,
-            Suggestions = outing.Suggestions,
-        };
-        
-        return View(outingViewModel);
+            Id = suggestion.Id,
+            Name = suggestion.Name,
+            Restrictions = suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>()
+        }).ToList();
+
+        return View(new VoteSuggestionRequest
+        {
+            OutingId = id,
+            OutingName = outing.Name,
+            Suggestions = suggestionViewModels,
+        });
+    }
+
+    [HttpPost("Outing/{id:int}/VoteDate")]
+    public ActionResult VoteDate(int id, VoteSuggestionRequest voteSuggestionRequest)
+    {
+        Outing? outing = _outingService.GetById(id);
+        if (outing == null)
+        {
+            TempData["Message"] = _localizer.Get("Outing does not exist");
+            TempData["MessageType"] = "danger";
+
+            return View();
+        }
+
+        List<Checkbox> checkboxes = outing.OutingDates?.Select(outingDate => new Checkbox
+        {
+            Id = outingDate.Id,
+            Name = outingDate.Date.ToString("dddd d MMMM yyyy", CultureInfo.CurrentCulture),
+            IsSelected = false,
+        }).ToList() ?? new List<Checkbox>();
+
+        return View(new VoteDateRequest
+        {
+            OutingId = id,
+            OutingName = outing.Name,
+            SuggestionId = voteSuggestionRequest.SuggestionId,
+            OutingDates = outing.OutingDates ?? new List<OutingDate>(),
+            Checkboxes = checkboxes,
+        });
+    }
+
+    [HttpPost("Outing/{id:int}/StoreVote")]
+    public ActionResult StoreVote(int id, VoteDateRequest voteDateRequest)
+    {
+        //TODO: save to database
+        var a = voteDateRequest.VotedOutingDates;
+        var b = voteDateRequest.SuggestionId;
+
+        TempData["Message"] = _localizer.Get("Item successfully created");
+        TempData["MessageType"] = "success";
+
+        return RedirectToAction(nameof(Index));
     }
 }

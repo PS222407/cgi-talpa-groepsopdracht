@@ -1,0 +1,55 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Talpa_10_WebApp.Translations
+@model Talpa_10_WebApp.RequestModels.VoteDateRequest
+@inject IHtmlLocalizer<Shared> SharedLocalizer
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = SharedLocalizer["Detail"];
+    ViewData["DisableMainContainer"] = "True";
+}
+
+<div class="vote-header">
+    <div class="vote-header-item active">@Model.OutingName</div>
+    <div class="vote-header-item active">@SharedLocalizer["What"]</div>
+    <div class="vote-header-item active">@SharedLocalizer["When"]</div>
+</div>
+
+<div class="container">
+    <h1 class="text-center my-5" style="text-transform: uppercase; font-size: 2rem">@SharedLocalizer["choose your desired dates"]</h1>
+
+    <form asp-action="StoreVote" asp-route-id="@Model.OutingId">
+        <div class="vote-date-container">
+            @for (int i = 0; i < Model.Checkboxes.Count; i++)
+            {
+                <label style="text-decoration: none;">
+                    <input asp-for="Checkboxes[i].Id" type="hidden" />
+                    <input asp-for="Checkboxes[i].IsSelected" type="checkbox" style="display: none" class="vote-date-checkbox" />
+                    <div class="vote-date-card" style="border-radius: 15px; background-color: #EBEBEB; padding: 2em">
+                        @Model.Checkboxes[i].Name
+                    </div>
+                </label>
+            }
+        </div>
+        <div class="form-group mt-3" style="width: fit-content; margin-left: auto">
+            <input type="submit" value="@SharedLocalizer["Vote"]" class="px-4 py-2" style="background-color: #D92A3B; font-size: 1.3em; border: none; color: white; border-radius: 5px" />
+        </div>
+    </form>
+</div>
+
+<script>
+	const checkboxes = document.querySelectorAll('.vote-date-checkbox');
+	const cards = document.querySelectorAll('.vote-date-card');
+
+	checkboxes.forEach((checkbox, checkboxIndex) => {
+		checkbox.addEventListener('change', function () {
+			if (this.checked) {
+				cards[checkboxIndex].style.backgroundColor = '#008A61';
+				cards[checkboxIndex].style.color = 'white';
+			} else {
+				cards[checkboxIndex].style.backgroundColor = '#EBEBEB';
+				cards[checkboxIndex].style.color = 'black';
+			}
+		});
+	});
+</script>

@@ -156,4 +156,19 @@ Er is een fout opgetreden bij het verwerken van uw verzoek</value>
     <data name="Suggestion" xml:space="preserve">
         <value>Suggestie</value>
     </data>
+    <data name="Vote" xml:space="preserve">
+        <value>Stem</value>
+    </data>
+    <data name="Detail" xml:space="preserve">
+        <value>Detail</value>
+    </data>
+    <data name="choose your desired dates" xml:space="preserve">
+        <value>Kies uw gewenste datums</value>
+    </data>
+    <data name="choose your desired outing" xml:space="preserve">
+        <value>Kies uw gewenste uitje</value>
+    </data>
+    <data name="Next" xml:space="preserve">
+        <value>Volgende</value>
+    </data>
 </root>

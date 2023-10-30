@@ -32,9 +32,10 @@ public class OutingRepository : IOutingRepository
 
     public Outing? GetById(int id)
     {
-        return _dataContext.Outings
-            .Include(o => o.OutingDates)
-            .Include(o => o.Suggestions)
+        return _dataContext.Outings?
+            .Include(o => o.Suggestions)?
+                .ThenInclude(s => s.Restrictions)
+            .Include(o => o.OutingDates.OrderBy(od => od.Date))
             .FirstOrDefault(o => o.Id == id);
     }
 

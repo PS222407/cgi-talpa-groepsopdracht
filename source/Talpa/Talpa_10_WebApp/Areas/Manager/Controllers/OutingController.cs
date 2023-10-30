@@ -99,7 +99,7 @@ public class OutingController : Controller
             return View(outingRequest);
         }
 
-        List<OutingDate> outingDates = outingRequest.Dates.Select(date => new OutingDate { Date = date }).ToList();
+        List<OutingDate> outingDates = outingRequest.Dates?.Select(date => new OutingDate { Date = date }).ToList() ?? new List<OutingDate>();
         Outing outing = new() { Name = outingRequest.Name, OutingDates = outingDates };
 
         Outing outingEntry;
@@ -164,7 +164,7 @@ public class OutingController : Controller
             return View(outingRequest);
         }
 
-        List<OutingDate> outingDates = outingRequest.Dates.Select(date => new OutingDate { Date = date }).ToList();
+        List<OutingDate> outingDates = outingRequest.Dates?.Select(date => new OutingDate { Date = date }).ToList() ?? new List<OutingDate>();
         List<Suggestion> suggestions = _suggestionService.GetByIds(outingRequest.SelectedSuggestionIds?.Select(int.Parse).ToList() ?? new List<int>());
         Outing outing = new()
         {

@@ -27,6 +27,13 @@ public class HomeController : Controller
         return View();
     }
 
+    [HttpGet("TestError")]
+    public IActionResult TestError()
+    {
+        throw new NullReferenceException();
+        return Ok();
+    }
+
     [HttpGet("SetLocale")]
     public ActionResult SetLocale(string locale)
     {
