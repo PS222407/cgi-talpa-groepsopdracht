@@ -14,4 +14,9 @@ public class SuggestionViewModel
         Name = name;
         Restrictions = restrictions;
     }
+
+    public SuggestionViewModel()
+    {
+
+    }
 }

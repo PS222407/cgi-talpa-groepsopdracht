@@ -4,6 +4,7 @@ using BusinessLogicLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Talpa_10_WebApp.Constants;
+using Talpa_10_WebApp.RequestModels;
 using Talpa_10_WebApp.Translations;
 using Talpa_10_WebApp.ViewModels;
 
@@ -67,5 +68,32 @@ public class OutingController : Controller
         };
         
         return View(outingViewModel);
+    }
+
+    public ActionResult VoteSuggestion(int id)
+    {
+        Outing? outing = _outingService.GetById(id);
+        if (outing == null)
+        {
+            TempData["Message"] = "Er bestaat geen entiteit met dit id.";
+            TempData["MessageType"] = "danger";
+
+            return View();
+        }
+
+        List<Suggestion> suggestions = outing.Suggestions;
+
+        var suggestionViewModels = suggestions.Select(suggestion => new SuggestionViewModel(
+            suggestion.Id,
+            suggestion.Name,
+            suggestion.Restrictions.Select(restriction => restriction.Name).ToList()
+        )).ToList();
+        return View(new OutingRequest(outing.Id, outing.Name, suggestionViewModels, outing.OutingDates.Select(dates => dates.Date).ToList()));
+    }
+
+    [HttpPost]
+    public ActionResult VoteSuggestion(OutingRequest outingRequest)
+    {
+        return View();
     }
 }

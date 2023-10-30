@@ -49,6 +49,10 @@ h1 {
     a.card-link {
         width: 100%;
     }
+
+    .card-frame {
+        width: 100%;
+    }
 }
 
 @media (min-width: 577px) and (max-width: 991px) {
@@ -62,6 +66,10 @@ h1 {
     }
 
     a.card-link {
+        width: 100%;
+    }
+
+    .card-frame {
         width: 100%;
     }
 }
