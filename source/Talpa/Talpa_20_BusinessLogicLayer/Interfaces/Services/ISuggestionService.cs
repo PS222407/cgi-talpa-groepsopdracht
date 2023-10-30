@@ -12,7 +12,7 @@ public interface ISuggestionService
 
     public List<Suggestion> GetAll();
 
-    public List<Suggestion> GetAllBy(string id);
+    public List<Suggestion> GetAllByUserId(string id);
 
     public bool Update(Suggestion suggestion);
 

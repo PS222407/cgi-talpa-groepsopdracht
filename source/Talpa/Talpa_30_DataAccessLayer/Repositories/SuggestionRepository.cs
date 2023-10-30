@@ -59,7 +59,7 @@ public class SuggestionRepository : ISuggestionRepository
             .ToList();
     }
 
-    public List<Suggestion> GetAllBy(string id)
+    public List<Suggestion> GetAllByUserId(string id)
     {
         return _dataContext.Suggestions
             .Include(s => s.Restrictions)
