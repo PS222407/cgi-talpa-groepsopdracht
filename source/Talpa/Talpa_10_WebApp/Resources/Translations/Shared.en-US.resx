@@ -159,4 +159,13 @@
     <data name="Detail" xml:space="preserve">
         <value>Detail</value>
     </data>
+    <data name="choose your desired dates" xml:space="preserve">
+        <value>Choose your desired dates</value>
+    </data>
+    <data name="choose your desired outing" xml:space="preserve">
+        <value>Choose your desired outing</value>
+    </data>
+    <data name="Next" xml:space="preserve">
+        <value>Next</value>
+    </data>
 </root>

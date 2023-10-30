@@ -35,7 +35,7 @@ public class OutingRepository : IOutingRepository
         return _dataContext.Outings?
             .Include(o => o.Suggestions)?
                 .ThenInclude(s => s.Restrictions)
-            .Include(o => o.OutingDates)
+            .Include(o => o.OutingDates.OrderBy(od => od.Date))
             .FirstOrDefault(o => o.Id == id);
     }
 

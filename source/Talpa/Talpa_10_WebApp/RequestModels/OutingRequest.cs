@@ -33,7 +33,7 @@ public class OutingRequest
         get => _dates;
         set
         {
-            _stringDates = value != null ? string.Join(",", value.Select(date => date.ToString("dd/MM/yyyy")).ToList()) : null;
+            _stringDates = value != null ? string.Join(",", value.Select(date => date.ToString("dd-MM-yyyy")).ToList()) : null;
             _dates = value;
         } 
     } 
@@ -61,7 +61,7 @@ public class OutingRequest
     private List<DateTime> ConvertStringToDates(string value)
     {
         string[] dateStrings = value.Split(',');
-        string dateFormat = "dd/MM/yyyy";
+        string dateFormat = "dd-MM-yyyy";
         List<DateTime> dateList = new();
 
         foreach (string dateString in dateStrings)

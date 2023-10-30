@@ -43,8 +43,8 @@ public class SuggestionService : ISuggestionService
         return _suggestionRepository.GetAll();
     }
 
-    public List<Suggestion> GetAllBy(string id)
+    public List<Suggestion> GetAllByUserId(string id)
     {
-        return _suggestionRepository.GetAllBy(id);
+        return _suggestionRepository.GetAllByUserId(id);
     }
 }
