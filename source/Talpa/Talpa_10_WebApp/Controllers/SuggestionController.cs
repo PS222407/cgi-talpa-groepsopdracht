@@ -38,7 +38,7 @@ public class SuggestionController : Controller
 
         if (User.IsInRole(RoleName.Admin))
         {
-            List<Suggestion> allSuggestions = _suggestionService.GetAllBy(id);
+            List<Suggestion> allSuggestions = _suggestionService.GetAll();
             List<SuggestionViewModel> suggestionViewModels = allSuggestions.Select(suggestion =>
                 new SuggestionViewModel(
                     suggestion.Id,
@@ -59,14 +59,14 @@ public class SuggestionController : Controller
             return View(new List<SuggestionViewModel>());
         }
 
-        return View(_suggestionService.GetAllBy(id)
+        return View(_suggestionService.GetAllByUserId(id)
             .Select(suggestion => new SuggestionViewModel(
                 suggestion.Id,
                 suggestion.Name,
                 suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>())));
     }
 
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
+    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}, {RoleName.Employee}")]
     public ActionResult Details(int id)
     {
         Suggestion? suggestion = _suggestionService.GetById(id);
@@ -81,7 +81,7 @@ public class SuggestionController : Controller
         return View(new SuggestionViewModel(suggestion.Id, suggestion.Name, suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>()));
     }
 
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
+    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}, {RoleName.Employee}")]
     public ActionResult Create()
     {
         List<Restriction> restrictions = _restrictionService.GetAll();
@@ -95,7 +95,7 @@ public class SuggestionController : Controller
         return View(suggestionRequest);
     }
 
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
+    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}, {RoleName.Employee}")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> Create(SuggestionRequest suggestionRequest)
@@ -106,7 +106,10 @@ public class SuggestionController : Controller
         }
 
         Suggestion suggestion = new()
-            { Name = suggestionRequest.Name, Restrictions = suggestionRequest.SelectedRestrictionIds?.Select(restriction => new Restriction { Name = restriction }).ToList() };
+        {
+            Name = suggestionRequest.Name,
+            Restrictions = suggestionRequest.SelectedRestrictionIds?.Select(restriction => new Restriction { Name = restriction }).ToList()
+        };
         string id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
         User user = (await _userService.GetById(id))!;
 
@@ -136,11 +139,14 @@ public class SuggestionController : Controller
     }
 
     // GET: Outing/Edit/5
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
+    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}, {RoleName.Employee}")]
     public ActionResult Edit(int id)
     {
         List<Restriction> restrictions = _restrictionService.GetAll();
-        List<SelectListItem> restrictionsOptions = restrictions.Select(restriction => new SelectListItem { Value = restriction.Id.ToString(), Text = restriction.Name }).ToList();
+        List<SelectListItem> restrictionsOptions = restrictions.Select(restriction => new SelectListItem
+        {
+            Value = restriction.Id.ToString(), Text = restriction.Name
+        }).ToList();
 
         Suggestion? suggestion = _suggestionService.GetById(id);
         if (suggestion == null)
@@ -162,7 +168,7 @@ public class SuggestionController : Controller
     }
 
     // POST: Outing/Edit/5
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
+    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}, {RoleName.Employee}")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public ActionResult Edit(int id, SuggestionRequest suggestionRequest)
@@ -189,7 +195,7 @@ public class SuggestionController : Controller
     }
 
     // GET: Outing/Delete/5
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
+    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}, {RoleName.Employee}")]
     public ActionResult Delete(int id)
     {
         Suggestion? suggestion = _suggestionService.GetById(id);
@@ -207,7 +213,7 @@ public class SuggestionController : Controller
     }
 
     // POST: Outing/Delete/5
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}")]
+    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}, {RoleName.Employee}")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public ActionResult Destroy(int id)
