@@ -1,41 +1,38 @@
-﻿@model Talpa_10_WebApp.RequestModels.OutingRequest
+﻿@using Talpa_10_WebApp.ViewModels
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Talpa_10_WebApp.Translations
+@model Talpa_10_WebApp.RequestModels.VoteSuggestionRequest
+@inject IHtmlLocalizer<Shared> SharedLocalizer
 
 @{
 	Layout = "_Layout";
-	ViewData["Title"] = "Detail";
+	ViewData["Title"] = SharedLocalizer["Detail"];
 }
 
-<form asp-action="VoteSuggestion">
-	<input asp-for="Id" type="hidden" />
-	<input asp-for="Name" type="hidden" />
-	@for (int i = 0; i < Model.Dates.Count; i++)
-	{
-		<input asp-for="Dates[i]" type="hidden" />
-	}
+<form asp-action="VoteDate" asp-route-id="@Model.OutingId">
 	<div class="outer-container">
-		@for (int i = 0; i < Model.Suggestions.Count; i++)
-		{
-			var suggestion = Model.Suggestions[i];
-			<label class="card-frame" style="text-decoration: none; display: flex; justify-content: center; align-items: center; margin: 10px;">
-				<input type="radio" asp-for="SuggestionVoteId" class="suggestionRadio" name="SuggestionVoteId" style="display: none" value="@suggestion.Id">
-				<div class="card" style="border-radius: 15px; background-color: dimgray;">
-					<div class="card-body">
-						<h1 class="card-title">
-							@suggestion.Name
-						</h1>
-					</div>
-				</div>
-			</label>
-		}
-	</div>
+        @foreach (SuggestionViewModel suggestion in Model.Suggestions ?? new List<SuggestionViewModel>())
+        {
+            <label class="card-frame" style="text-decoration: none; display: flex; justify-content: center; align-items: center; margin: 10px;">
+                <input type="radio" asp-for="SuggestionId" class="suggestionRadio" style="display: none" value="@suggestion.Id">
+                <div class="card" style="border-radius: 15px; background-color: dimgray;">
+                    <div class="card-body">
+                        <h1 class="card-title">
+                            @suggestion.Name
+                        </h1>
+                    </div>
+                </div>
+            </label>
+        }
+    </div>
 	<div class="form-group mt-3">
-		<input type="submit" value="Vote" class="btn btn-primary" />
+		<input type="submit" value="@SharedLocalizer["Vote"]" class="btn btn-primary" />
 	</div>
 </form>
 
 <script>
-	var radios = document.querySelectorAll('.suggestionRadio');
-	var cards = document.querySelectorAll('.card');
+	const radios = document.querySelectorAll('.suggestionRadio');
+	const cards = document.querySelectorAll('.card');
 
 	radios.forEach((radio, radioIndex) => {
 		radio.addEventListener('change', function () {
@@ -48,6 +45,5 @@
 			}
 		});
 	});
-
 </script>
 

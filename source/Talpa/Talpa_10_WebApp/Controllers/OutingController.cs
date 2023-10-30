@@ -47,63 +47,36 @@ public class OutingController : Controller
         return View(_outingService.GetAllFromTeam((int)teamId).Select(outing => new OutingViewModel(outing.Id, outing.Name)).ToList());
     }
 
-    [HttpGet("Outing/Details/{id:int}")]
-    public ActionResult ChooseSuggestion(int id)
-    {
-        Outing? outing = _outingService.GetById(id);
-
-        if (outing == null)
-        {
-            TempData["Message"] = _localizer.Get("Outing does not exist");
-            TempData["MessageType"] = "danger";
-
-            return RedirectToAction("Index");
-        }
-
-        List<SuggestionViewModel> suggestionViewModels = new();
-        foreach (Suggestion suggestion in outing.Suggestions ?? new List<Suggestion>())
-        {
-            suggestionViewModels.Add(new SuggestionViewModel
-            {
-                Name = suggestion.Name,
-                Restrictions = suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>(),
-            });
-        }
-
-        OutingViewModel outingViewModel = new()
-        {
-            Id = outing.Id,
-            Name = outing.Name,
-            Suggestions = suggestionViewModels,
-        };
-
-        return View(outingViewModel);
-    }
-
+    [HttpGet("Outing/{id:int}/VoteSuggestion")]
     public ActionResult VoteSuggestion(int id)
     {
         Outing? outing = _outingService.GetById(id);
         if (outing == null)
         {
-            TempData["Message"] = "Er bestaat geen entiteit met dit id.";
+            TempData["Message"] = _localizer.Get("Outing does not exist");
             TempData["MessageType"] = "danger";
 
             return View();
         }
 
-        List<Suggestion> suggestions = outing.Suggestions;
+        List<SuggestionViewModel>? suggestionViewModels = outing.Suggestions?.Select(suggestion => new SuggestionViewModel
+        {
+            Id = suggestion.Id,
+            Name = suggestion.Name,
+            Restrictions = suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>()
+        }).ToList();
 
-        var suggestionViewModels = suggestions.Select(suggestion => new SuggestionViewModel(
-            suggestion.Id,
-            suggestion.Name,
-            suggestion.Restrictions.Select(restriction => restriction.Name).ToList()
-        )).ToList();
-        return View(new OutingRequest(outing.Id, outing.Name, suggestionViewModels, outing.OutingDates.Select(dates => dates.Date).ToList()));
+        return View(new VoteSuggestionRequest
+        {
+            OutingId = id,
+            OutingName = outing.Name,
+            Suggestions = suggestionViewModels,
+        });
     }
 
-    [HttpPost]
-    public ActionResult VoteSuggestion(OutingRequest outingRequest)
+    [HttpPost("Outing/{id:int}/VoteDate")]
+    public ActionResult VoteDate(int id, VoteSuggestionRequest voteSuggestionRequest)
     {
-        return View();
+        throw new NotImplementedException();
     }
 }

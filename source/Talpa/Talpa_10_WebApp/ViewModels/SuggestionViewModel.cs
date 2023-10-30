@@ -8,11 +8,11 @@ public class SuggestionViewModel
 
     public List<string> Restrictions { get; set; }
 
-    public SuggestionViewModel(int? id, string name, List<string> restrictions)
+    public SuggestionViewModel(int? id, string name, List<string>? restrictions)
     {
         Id = id;
         Name = name;
-        Restrictions = restrictions;
+        Restrictions = restrictions ?? new List<string>();
     }
 
     public SuggestionViewModel()

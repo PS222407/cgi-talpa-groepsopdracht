@@ -1,7 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using BusinessLogicLayer.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Talpa_10_WebApp.Validations;
 using Talpa_10_WebApp.ViewModels;
@@ -39,9 +37,6 @@ public class OutingRequest
             _dates = value;
         } 
     } 
-    
-    [BindProperty, Required]
-    public int SuggestionVoteId { get; set; }
 
     [SuggestionCount(ErrorMessage = "You can only select 3 suggestions.")]
     public List<string>? SelectedSuggestionIds { get; set; } = new();
