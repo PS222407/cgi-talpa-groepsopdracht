@@ -153,4 +153,10 @@
     <data name="Suggestion" xml:space="preserve">
         <value>Suggestion</value>
     </data>
+    <data name="Vote" xml:space="preserve">
+        <value>Vote</value>
+    </data>
+    <data name="Detail" xml:space="preserve">
+        <value>Detail</value>
+    </data>
 </root>
