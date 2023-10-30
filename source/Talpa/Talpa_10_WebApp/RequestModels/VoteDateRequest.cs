@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BusinessLogicLayer.Models;
 using Talpa_10_WebApp.ViewModels;
 
 namespace Talpa_10_WebApp.RequestModels;
 
-public class VoteSuggestionRequest
+public class VoteDateRequest
 {
     public int OutingId { get; set; }
 
@@ -11,5 +12,9 @@ public class VoteSuggestionRequest
 
     [Required] public int SuggestionId { get; set; }
 
-    public List<SuggestionViewModel>? Suggestions { get; set; } = new();
+    public List<OutingDate> OutingDates { get; set; }
+    
+    public List<int> VotedOutingDates { get; set; }
+
+    public List<Checkbox> Checkboxes { get; set; }
 }

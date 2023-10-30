@@ -1,12 +1,12 @@
 ﻿@using Talpa_10_WebApp.ViewModels
 @using Talpa_10_WebApp.Translations
-@using Microsoft.Extensions.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
 @model IEnumerable<Talpa_10_WebApp.ViewModels.OutingViewModel>
-@inject IStringLocalizer<Shared> StringLocalizer
+@inject IHtmlLocalizer<Shared> SharedLocalizer
 
 @{
-    Shared SharedLocalizer = new(StringLocalizer);
-    ViewData["Title"] = SharedLocalizer.Get("Index");
+    ViewData["Title"] = SharedLocalizer["Index"];
+    ViewData["DisableMainContainer"] = "True";
 }
 
 <div class="outer-container">

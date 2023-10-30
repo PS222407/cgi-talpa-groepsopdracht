@@ -102,7 +102,7 @@
     </nav>
 </header>
 
-<main class="main" id="main">
+<main class="main @(ViewData["DisableMainContainer"] as string == "True" ? "" : "container")" id="main">
     @if (TempData.ContainsKey("Message"))
     {
         <div class="alert alert-@(TempData["MessageType"])">

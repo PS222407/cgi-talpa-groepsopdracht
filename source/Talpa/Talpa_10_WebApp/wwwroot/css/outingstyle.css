@@ -40,6 +40,53 @@ h1 {
     font-size: 26px;
 }
 
+.vote-date-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.5em
+}
+
+.vote-date-card {
+    font-size: 1.3em;
+    font-weight: bold;
+    box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.3);
+}
+
+.vote-date-card::first-letter {
+    text-transform: uppercase;
+}
+
+.vote-header {
+    display: flex;
+}
+
+.vote-header-item {
+    position: relative;
+    background-color: #F2F2F2;
+    color: black;
+    padding: 27px;
+    width: 100%;
+    font-size: 1.4em;
+}
+.vote-header-item.not-active::after{
+    position: absolute;
+    top: 0;
+    left: -60px;
+    content: "";
+    display: block;
+    
+    width: 0;
+    height: 0;
+    border-top: 44px solid #F2F2F2;
+    border-bottom: 44px solid #F2F2F2;
+    border-left: 60px solid transparent;
+}
+
+.vote-header-item.active {
+    background-color: #4D4D5E;
+    color: white;
+}
+
 @media (max-width: 576px) {
     .card {
         width: 80vw;
