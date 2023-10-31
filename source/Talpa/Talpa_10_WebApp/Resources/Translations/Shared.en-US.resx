@@ -168,4 +168,10 @@
     <data name="Next" xml:space="preserve">
         <value>Next</value>
     </data>
+    <data name="What" xml:space="preserve">
+        <value>What</value>
+    </data>
+    <data name="When" xml:space="preserve">
+        <value>When</value>
+    </data>
 </root>
