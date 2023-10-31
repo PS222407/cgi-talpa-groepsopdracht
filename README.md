@@ -20,3 +20,4 @@ dotnet user-secrets set "key" "value"
 "Auth0:ApiClientId"  
 "Auth0:ApiClientSecret"  
 ```
+Create a team manually in your developemnt database with teamId 1, here all users are assigned to due to conflicts when changing team id in Auth0 database
