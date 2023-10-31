@@ -174,4 +174,7 @@
     <data name="When" xml:space="preserve">
         <value>When</value>
     </data>
+    <data name="Not available in development" xml:space="preserve">
+        <value>Not available in Development mode</value>
+    </data>
 </root>

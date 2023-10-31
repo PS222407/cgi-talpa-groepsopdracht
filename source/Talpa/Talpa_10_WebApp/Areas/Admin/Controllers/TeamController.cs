@@ -75,6 +75,15 @@ public class TeamController : Controller
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> Create(TeamRequest teamRequest)
     {
+        bool appIsInDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+        if (appIsInDevelopment)
+        {
+            TempData["Message"] = _localizer.Get("Not available in development");
+            TempData["MessageType"] = "danger";
+
+            return RedirectToAction(nameof(Index));
+        }
+        
         if (!ModelState.IsValid)
         {
             return View(new TeamViewModel
@@ -155,6 +164,15 @@ public class TeamController : Controller
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> Edit(int id, TeamRequest teamRequest)
     {
+        bool appIsInDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+        if (appIsInDevelopment)
+        {
+            TempData["Message"] = _localizer.Get("Not available in development");
+            TempData["MessageType"] = "danger";
+
+            return RedirectToAction(nameof(Index));
+        }
+        
         if (!ModelState.IsValid)
         {
             return View(new TeamViewModel
@@ -214,6 +232,15 @@ public class TeamController : Controller
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> Destroy(int id)
     {
+        bool appIsInDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+        if (appIsInDevelopment)
+        {
+            TempData["Message"] = _localizer.Get("Not available in development");
+            TempData["MessageType"] = "danger";
+
+            return RedirectToAction(nameof(Index));
+        }
+        
         if (!await _teamService.Delete(id))
         {
             TempData["Message"] = _localizer.Get("Error while deleting");

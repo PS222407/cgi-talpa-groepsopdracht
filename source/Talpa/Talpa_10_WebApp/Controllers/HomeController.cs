@@ -52,12 +52,12 @@ public class HomeController : Controller
                 new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(100) }
             );
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            return Redirect(Request.Headers.Referer.ToString());
+            return BadRequest();
         }
 
-        return Redirect(Request.Headers.Referer.ToString());
+        return Json(new { message = "Success" });
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

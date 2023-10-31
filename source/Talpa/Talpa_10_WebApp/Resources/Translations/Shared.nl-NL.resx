@@ -177,4 +177,7 @@ Er is een fout opgetreden bij het verwerken van uw verzoek</value>
     <data name="When" xml:space="preserve">
         <value>Wanneer</value>
     </data>
+    <data name="Not available in development" xml:space="preserve">
+        <value>Niet beschikbaar in Development modus</value>
+    </data>
 </root>
