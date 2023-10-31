@@ -1,19 +1,18 @@
 @using Talpa_10_WebApp.ViewModels
 @using Talpa_10_WebApp.Translations
-@using Microsoft.Extensions.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
 @model IEnumerable<Talpa_10_WebApp.ViewModels.OutingViewModel>
-@inject IStringLocalizer<Shared> StringLocalizer
+@inject IHtmlLocalizer<Shared> SharedLocalizer
 
 @{
-    Shared SharedLocalizer = new(StringLocalizer);
     Layout = "_Layout";
-    ViewData["Title"] = SharedLocalizer.Get("Index");
+    ViewData["Title"] = SharedLocalizer["Index"];
 }
 
-<h1>@SharedLocalizer.Get("Index")</h1>
+<h1>@SharedLocalizer["Index"]</h1>
 
 <p>
-    <a asp-action="Create">@SharedLocalizer.Get("Create New")</a>
+    <a asp-action="Create">@SharedLocalizer["Create New"]</a>
 </p>
 <table class="table">
     <thead>
@@ -32,9 +31,9 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">@SharedLocalizer.Get("Edit")</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">@SharedLocalizer.Get("Details")</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">@SharedLocalizer.Get("Delete")</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">@SharedLocalizer["Edit"]</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">@SharedLocalizer["Details"]</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">@SharedLocalizer["Delete"]</a>
             </td>
         </tr>
     }

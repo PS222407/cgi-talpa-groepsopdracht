@@ -1,18 +1,17 @@
 @using Talpa_10_WebApp.Translations
-@using Microsoft.Extensions.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
 @model Talpa_10_WebApp.ViewModels.SuggestionViewModel
-@inject IStringLocalizer<Shared> StringLocalizer
+@inject IHtmlLocalizer<Shared> SharedLocalizer
 
 @{
-    Shared SharedLocalizer = new(StringLocalizer);
-    ViewData["Title"] = SharedLocalizer.Get("Delete");
+    ViewData["Title"] = SharedLocalizer["Delete"];
 }
 
-<h1>@SharedLocalizer.Get("Delete")</h1>
+<h1>@SharedLocalizer["Delete"]</h1>
 
-<h3>@SharedLocalizer.Get("Are you sure you want to delete this?")</h3>
+<h3>@SharedLocalizer["Are you sure you want to delete this?"]</h3>
 <div>
-    <h4>@SharedLocalizer.Get("Suggestion")</h4>
+    <h4>@SharedLocalizer["Suggestion"]</h4>
     <hr/>
     <dl class="row">
         <dt class="col-sm-2">
@@ -25,7 +24,7 @@
 
     <form asp-action="Destroy">
         <input type="hidden" asp-for="Id"/>
-        <input type="submit" value="@SharedLocalizer.Get("Delete")" class="btn btn-danger"/> |
-        <a asp-action="Index">@SharedLocalizer.Get("BackToList")</a>
+        <input type="submit" value="@SharedLocalizer["Delete"]" class="btn btn-danger"/> |
+        <a asp-action="Index">@SharedLocalizer["BackToList"]</a>
     </form>
 </div>

@@ -1,17 +1,16 @@
 @using Talpa_10_WebApp.Translations
-@using Microsoft.Extensions.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
 @model Talpa_10_WebApp.ViewModels.SuggestionViewModel
-@inject IStringLocalizer<Shared> StringLocalizer
+@inject IHtmlLocalizer<Shared> SharedLocalizer
 
 @{
-    Shared SharedLocalizer = new(StringLocalizer);
-    ViewData["Title"] = SharedLocalizer.Get("Detail");
+    ViewData["Title"] = SharedLocalizer["Detail"];
 }
 
-<h1>@SharedLocalizer.Get("Detail")</h1>
+<h1>@SharedLocalizer["Detail"]</h1>
 
 <div>
-    <h4>@SharedLocalizer.Get("Outing")</h4>
+    <h4>@SharedLocalizer["Outing"]</h4>
     <hr/>
     <dl class="row">
         <dt class="col-sm-2">
@@ -35,6 +34,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">@SharedLocalizer.Get("Edit")</a> |
-    <a asp-action="Index">@SharedLocalizer.Get("BackToList")</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">@SharedLocalizer["Edit"]</a> |
+    <a asp-action="Index">@SharedLocalizer["BackToList"]</a>
 </div>
