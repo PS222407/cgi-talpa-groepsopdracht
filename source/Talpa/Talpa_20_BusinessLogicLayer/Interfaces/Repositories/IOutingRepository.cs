@@ -14,5 +14,13 @@ public interface IOutingRepository
 
     public bool Delete(int id);
 
-    List<Outing> GetAllFromTeam(int teamId);
+    public List<Outing> GetAllFromTeam(int teamId);
+
+    public bool Vote(string userId, int outingId, int suggestionId, List<int> votedDateIds);
+
+    public bool UserHasVotedDatesForOuting(string userId, int outingId);
+
+    public bool UserHasVotedSuggestionForOuting(string userId, int outingId);
+
+    public Outing? GetByIdWithVotes(int id);
 }

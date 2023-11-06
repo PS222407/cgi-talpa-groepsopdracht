@@ -3,6 +3,7 @@ using System.Security.Claims;
 using BusinessLogicLayer.Interfaces.Services;
 using BusinessLogicLayer.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Localization;
 using Talpa_10_WebApp.Constants;
 using Talpa_10_WebApp.RequestModels;
@@ -51,7 +52,27 @@ public class OutingController : Controller
     [HttpGet("Outing/{id:int}/VoteSuggestion")]
     public ActionResult VoteSuggestion(int id)
     {
-        Outing? outing = _outingService.GetById(id);
+        string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
+
+        List<string> errors = new();
+        foreach (string key in TempData.Keys)
+        {
+            if (TempData[key] != null && key.Contains("ErrorMessage"))
+            {
+                errors.Add(TempData[key].ToString());
+            }
+        }
+        ViewBag.Errors = errors;
+        
+        if (_outingService.UserHasVotedForOuting(userId, id))
+        {
+            TempData["Message"] = _localizer.Get("You have already voted for this outing");
+            TempData["MessageType"] = "danger";
+
+            return RedirectToAction(nameof(Index));
+        }
+        
+        Outing? outing = _outingService.GetByIdWithVotes(id);
         if (outing == null)
         {
             TempData["Message"] = _localizer.Get("Outing does not exist");
@@ -64,7 +85,8 @@ public class OutingController : Controller
         {
             Id = suggestion.Id,
             Name = suggestion.Name,
-            Restrictions = suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>()
+            Restrictions = suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>(),
+            Votes = suggestion.SuggestionVotes?.Count ?? 0,
         }).ToList();
 
         return View(new VoteSuggestionRequest
@@ -78,6 +100,22 @@ public class OutingController : Controller
     [HttpPost("Outing/{id:int}/VoteDate")]
     public ActionResult VoteDate(int id, VoteSuggestionRequest voteSuggestionRequest)
     {
+        if (!ModelState.IsValid)
+        {
+            foreach (string key in ModelState.Keys)
+            {
+                foreach (ModelError error in ModelState[key].Errors)
+                {
+                    TempData["ErrorMessage" + key] = error.ErrorMessage;
+                }
+            }
+
+            TempData["Message"] = _localizer.Get("Invalid input");
+            TempData["MessageType"] = "danger";
+
+            return RedirectToAction(nameof(VoteSuggestion), new { id });
+        }
+        
         Outing? outing = _outingService.GetById(id);
         if (outing == null)
         {
@@ -107,12 +145,24 @@ public class OutingController : Controller
     [HttpPost("Outing/{id:int}/StoreVote")]
     public ActionResult StoreVote(int id, VoteDateRequest voteDateRequest)
     {
-        //TODO: save to database
-        var a = voteDateRequest.VotedOutingDates;
-        var b = voteDateRequest.SuggestionId;
+        if (!ModelState.IsValid)
+        {
+            return View("VoteDate", voteDateRequest);
+        }
+        
+        string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
+        List<int> votedDateIds = voteDateRequest.Checkboxes.Where(c => c.IsSelected).Select(c => c.Id).ToList();
 
-        TempData["Message"] = _localizer.Get("Item successfully created");
-        TempData["MessageType"] = "success";
+        if (_outingService.Vote(userId, id, voteDateRequest.SuggestionId, votedDateIds))
+        {
+            TempData["Message"] = _localizer.Get("Item successfully created");
+            TempData["MessageType"] = "success";
+        }
+        else
+        {
+            TempData["Message"] = _localizer.Get("Error while creating");
+            TempData["MessageType"] = "danger";
+        }
 
         return RedirectToAction(nameof(Index));
     }
