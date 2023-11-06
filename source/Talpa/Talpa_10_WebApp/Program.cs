@@ -15,13 +15,6 @@ using Talpa_10_WebApp.Translations;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<IUserRepository>(_ => new UserRepository(
-    builder.Configuration["Auth0:ClientId"],
-    builder.Configuration["Auth0:ClientSecret"],
-    builder.Configuration["Auth0:Domain"],
-    builder.Configuration["Auth0:ApiClientId"],
-    builder.Configuration["Auth0:ApiClientSecret"]
-    ));
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IOutingService, OutingService>();
 builder.Services.AddScoped<IOutingRepository, OutingRepository>();
@@ -42,6 +35,19 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddScoped<DataContext>();
 
+builder.Services.AddScoped<IUserRepository>(_ =>
+{
+    DataContext context = _.GetRequiredService<DataContext>();
+    return new UserRepository(
+        builder.Configuration["Auth0:ClientId"],
+        builder.Configuration["Auth0:ClientSecret"],
+        builder.Configuration["Auth0:Domain"],
+        builder.Configuration["Auth0:ApiClientId"],
+        builder.Configuration["Auth0:ApiClientSecret"],
+        context
+    );
+});
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -55,13 +61,8 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
 
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.Services.AddControllersWithViews()
-    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, opts =>
-    {
-        opts.ResourcesPath = "Resources";
-    })
-    .AddDataAnnotationsLocalization(options => {
-        options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedValidation));
-    });
+    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, opts => { opts.ResourcesPath = "Resources"; })
+    .AddDataAnnotationsLocalization(options => { options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(SharedValidation)); });
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {

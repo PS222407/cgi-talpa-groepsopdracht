@@ -42,4 +42,9 @@ public class UserService : IUserService
     {
         return await _userRepository.GetByTeam(teamId);
     }
+
+    public async Task<List<UserScoreboard>> GetTopTenUsersWhoOwnTheMostVotedSuggestions()
+    {
+        return await _userRepository.GetTopTenUsersWhoOwnTheMostVotedSuggestions();
+    }
 }
