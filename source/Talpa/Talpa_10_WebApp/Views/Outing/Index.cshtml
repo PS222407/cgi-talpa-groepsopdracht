@@ -9,6 +9,13 @@
     ViewData["DisableMainContainer"] = "True";
 }
 
+@if (TempData.ContainsKey("Message"))
+{
+    <div class="alert alert-@(TempData["MessageType"])">
+        @TempData["Message"]
+    </div>
+}
+
 <div class="outer-container">
     @foreach (OutingViewModel outing in Model)
     {
