@@ -17,7 +17,7 @@ public class SuggestionCount : ValidationAttribute
     
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
-        OutingRequest outingRequest = (OutingRequest)validationContext.ObjectInstance;
+        OutingEditRequest outingRequest = (OutingEditRequest)validationContext.ObjectInstance;
 
         if (outingRequest.SelectedSuggestionIds?.Count > 3)
         {
