@@ -6,7 +6,7 @@ public interface ISuggestionService
 {
     public Suggestion Create(Suggestion suggestion, string userid);
 
-    public Suggestion? GetById(int id);
+    public Suggestion? GetById(int id, string userid);
 
     public List<Suggestion> GetByIds(List<int> ids);
 
@@ -14,7 +14,7 @@ public interface ISuggestionService
 
     public List<Suggestion> GetAllByUserId(string id);
 
-    public bool Update(Suggestion suggestion);
+    public bool Update(Suggestion suggestion, string userid);
 
-    public bool Delete(int id);
+    public bool Delete(int id, string userid);
 }

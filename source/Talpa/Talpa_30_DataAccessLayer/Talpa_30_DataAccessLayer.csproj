@@ -1,41 +1,43 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <RootNamespace>DataAccessLayer</RootNamespace>
+        <UserSecretsId>8d9f6048-fc04-480e-ac47-2f8545a0fe80</UserSecretsId>
     </PropertyGroup>
 
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.11"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.11" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.11">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0"/>
-        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.32.3"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.32.3" />
     </ItemGroup>
 
 
     <ItemGroup>
-        <ProjectReference Include="..\Talpa_20_BusinessLogicLayer\Talpa_20_BusinessLogicLayer.csproj"/>
+        <ProjectReference Include="..\Talpa_20_BusinessLogicLayer\Talpa_20_BusinessLogicLayer.csproj" />
     </ItemGroup>
 
 
     <ItemGroup>
-        <Compile Remove="Dtos\TokenDto.cs"/>
-        <Compile Remove="Interfaces\IOutingRepository.cs"/>
-        <Compile Remove="Dtos\TeamDto.cs"/>
-        <Compile Remove="Interfaces\IUserRepository.cs"/>
+        <Compile Remove="Dtos\TokenDto.cs" />
+        <Compile Remove="Interfaces\IOutingRepository.cs" />
+        <Compile Remove="Dtos\TeamDto.cs" />
+        <Compile Remove="Interfaces\IUserRepository.cs" />
     </ItemGroup>
 
 
     <ItemGroup>
         <Folder Include="Exceptions\" />
-        <Folder Include="Migrations\"/>
+        <Folder Include="Migrations\" />
     </ItemGroup>
 
 
