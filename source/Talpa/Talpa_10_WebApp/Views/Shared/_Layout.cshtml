@@ -104,11 +104,14 @@
 </header>
 
 <main class="main @(ViewData["DisableMainContainer"] as string == "True" ? "" : "container")" id="main">
-    @if (TempData.ContainsKey("Message"))
+    @if (ViewData["DisableMainContainer"] as string != "True")
     {
-        <div class="alert alert-@(TempData["MessageType"])">
-            @TempData["Message"]
-        </div>
+        @if (TempData.ContainsKey("Message"))
+        {
+            <div class="alert alert-@(TempData["MessageType"])">
+                @TempData["Message"]
+            </div>
+        }
     }
 
     @RenderBody()

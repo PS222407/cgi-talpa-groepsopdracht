@@ -132,4 +132,7 @@
   <data name="You are required to select a suggestion." xml:space="preserve">
     <value>You are required to select a suggestion</value>
   </data>
+  <data name="You must select a suggestion" xml:space="preserve">
+    <value>You must select a suggestion</value>
+  </data>
 </root>
