@@ -20,17 +20,17 @@ public class SuggestionService : ISuggestionService
 
     public bool Update(Suggestion newSuggestion, string userid)
     {
-        var suggestion = _suggestionRepository.GetById(newSuggestion.Id);
+        Suggestion suggestion = _suggestionRepository.GetById(newSuggestion.Id);
         if (suggestion.UserId == userid)
         {
-            return _suggestionRepository.Update(suggestion);
+            return _suggestionRepository.Update(newSuggestion);
         }
         return false;
     }
 
     public bool Delete(int id, string userid)
     {
-        var suggestion = _suggestionRepository.GetById(id);
+        Suggestion suggestion = _suggestionRepository.GetById(id);
         if (suggestion.UserId == userid)
         {
             return _suggestionRepository.Delete(id);
@@ -40,7 +40,7 @@ public class SuggestionService : ISuggestionService
 
     public Suggestion? GetById(int id, string userid)
     {
-        var suggestion = _suggestionRepository.GetById(id);
+        Suggestion suggestion = _suggestionRepository.GetById(id);
         if (suggestion.UserId == userid)
         {
              return suggestion;
