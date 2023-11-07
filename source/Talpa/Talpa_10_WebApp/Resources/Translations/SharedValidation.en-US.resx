@@ -126,6 +126,9 @@
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="You are required to select a date." xml:space="preserve">
+    <value>You are required to select a date</value>
+  </data>
   <data name="You are required to select a suggestion." xml:space="preserve">
     <value>You are required to select a suggestion</value>
   </data>

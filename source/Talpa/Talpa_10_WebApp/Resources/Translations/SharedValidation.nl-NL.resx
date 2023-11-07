@@ -126,6 +126,9 @@
   <data name="Name" xml:space="preserve">
     <value>Naam</value>
   </data>
+  <data name="You are required to select a date." xml:space="preserve">
+    <value>Je moet een datum selecteren</value>
+  </data>
   <data name="You are required to select a suggestion." xml:space="preserve">
     <value>Je moet een suggestie selecteren </value>
   </data>
