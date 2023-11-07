@@ -5,26 +5,76 @@
 
 @{
     ViewData["Title"] = SharedLocalizer["Index"];
+    ViewData["DisableMainContainer"] = "True";
 }
 
-<table class="table">
-    <tr>
-        <th>@SharedLocalizer["Rank"]</th>
-        <th>@SharedLocalizer["UserName"]</th>
-        <th>@SharedLocalizer["Suggestion"]</th>
-        <th>@SharedLocalizer["Votes"]</th>
-    </tr>
-    @{
-        int i = 0;
-    }
-    @foreach (UserScoreboard userScoreboard in Model)
+<div style="background-color: rgb(245, 245, 245); padding: 1em; font-size: 1.5em">
+    <h1 style="text-align: center">@SharedLocalizer["Scoreboard"]</h1>
+</div>
+
+<div class="container" style="margin-top: 1em">
+    @if (TempData.ContainsKey("Message"))
     {
-        i++;
-        <tr class="p-3">
-            <td>@i</td>
-            <td>@userScoreboard.UserName</td>
-            <td>@userScoreboard.SuggestionName</td>
-            <td>@userScoreboard.VoteCount</td>
-        </tr>
+        <div class="alert alert-@(TempData["MessageType"])">
+            @TempData["Message"]
+        </div>
     }
-</table>
+    
+    <div style="display: flex; flex-direction: column; row-gap: 2em;">
+        @{
+            int i = 0;
+        }
+        @foreach (UserScoreboard userScoreboard in Model)
+        {
+            i++;
+
+            <div>
+                <div style="display: flex; column-gap: 1em; align-items: center;">
+                    <div style="height: 65px;">
+                        @if (i == 1)
+                        {
+                            <img src="images/first_place.png" alt="first_place" style="width: 50px;">
+                        }
+                        @if (i == 2)
+                        {
+                            <img src="images/second_place.png" alt="first_place" style="width: 50px;">
+                        }
+                        @if (i == 3)
+                        {
+                            <img src="images/third_place.png" alt="first_place" style="width: 50px;">
+                        }
+                    </div>
+                    <div style="display: flex; width: 100%; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: bold">
+                                @i. @userScoreboard.UserName
+                            </div>
+                            <div style="font-weight: bold">
+                                @userScoreboard.SuggestionName
+                            </div>
+                        </div>
+                        <div style="font-weight: bold">
+                            @SharedLocalizer["Votes"]: @userScoreboard.VoteCount
+                        </div>
+                    </div>
+                </div>
+                @if (i == 1)
+                {
+                    <div style="border-radius: 5px; height: 5px; width: @userScoreboard.VotePercentage%; background-color: #FFB900;"></div>
+                }
+                else if (i == 2)
+                {
+                    <div style="border-radius: 5px; height: 5px; width: @userScoreboard.VotePercentage%; background-color: #69797e;"></div>
+                }
+                else if (i == 3)
+                {
+                    <div style="border-radius: 5px; height: 5px; width: @userScoreboard.VotePercentage%; background-color: #847545;"></div>
+                }
+                else
+                {
+                    <div style="border-radius: 5px; height: 5px; width: @userScoreboard.VotePercentage%; background-color: rgb(180, 180, 180);"></div>
+                }
+            </div>
+        }
+    </div>
+</div>

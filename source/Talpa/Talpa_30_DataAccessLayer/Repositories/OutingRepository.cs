@@ -116,7 +116,8 @@ public class OutingRepository : IOutingRepository
 
     public bool UserHasVotedDatesForOuting(string userId, int outingId)
     {
-        return _dataContext.Outings.Any(o => o.OutingDates.Any(od => od.DateVotes.Any(dv => dv.UserId == userId)));
+        return _dataContext.Outings.Where(o => o.Id == outingId)
+            .Any(o => o.OutingDates.Any(od => od.DateVotes.Any(dv => dv.UserId == userId)));
     }
 
     public bool UserHasVotedSuggestionForOuting(string userId, int outingId)

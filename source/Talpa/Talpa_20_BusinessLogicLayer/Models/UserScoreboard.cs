@@ -11,4 +11,6 @@ public class UserScoreboard
     public string SuggestionName { get; set; }
 
     public int VoteCount { get; set; }
+
+    public int VotePercentage { get; set; }
 }
