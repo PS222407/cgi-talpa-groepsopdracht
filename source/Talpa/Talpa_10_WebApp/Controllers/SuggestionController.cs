@@ -109,6 +109,7 @@ public class SuggestionController : Controller
         Suggestion suggestion = new()
         {
             Name = suggestionRequest.Name,
+            Description = suggestionRequest.Description,
             Restrictions = suggestionRequest.SelectedRestrictionIds?.Select(restriction => new Restriction { Name = restriction }).ToList()
         };
         string id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
@@ -163,6 +164,7 @@ public class SuggestionController : Controller
         SuggestionRequest suggestionRequest = new()
         {
             Name = suggestion.Name,
+            Description = suggestion.Description,
             SelectedRestrictionIds = suggestion.Restrictions?.Select(restriction => restriction.Id.ToString()).ToList(),
             RestrictionOptions = restrictionsOptions,
         };
@@ -185,6 +187,7 @@ public class SuggestionController : Controller
         {
             Id = id,
             Name = suggestionRequest.Name,
+            Description = suggestionRequest.Description,
             Restrictions = suggestionRequest.SelectedRestrictionIds?.Select(restriction => new Restriction
             {
                 Name = restriction

@@ -180,6 +180,9 @@ Er is een fout opgetreden bij het verwerken van uw verzoek</value>
     <data name="Not available in development" xml:space="preserve">
         <value>Niet beschikbaar in Development modus</value>
     </data>
+    <data name="Name" xml:space="preserve">
+        <value>Naam</value>
+    </data>
     <data name="Votes" xml:space="preserve">
         <value>Stemmen</value>
     </data>
