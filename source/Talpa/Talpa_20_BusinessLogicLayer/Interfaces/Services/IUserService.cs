@@ -15,6 +15,6 @@ public interface IUserService
     public Task<bool> UpdateTeam(string id, int teamId);
 
     public Task<List<User>?> GetByTeam(int teamId);
-    
+
     public Task<List<UserScoreboard>> GetTopTenUsersWhoOwnTheMostVotedSuggestions();
 }

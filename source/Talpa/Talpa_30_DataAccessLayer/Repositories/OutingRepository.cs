@@ -99,7 +99,7 @@ public class OutingRepository : IOutingRepository
         {
             UserId = userId,
             SuggestionId = suggestionId,
-            OutingId = outingId
+            OutingId = outingId,
         };
 
         List<DateVote> dateVotes = votedDateIds.Select(dateId => new DateVote
