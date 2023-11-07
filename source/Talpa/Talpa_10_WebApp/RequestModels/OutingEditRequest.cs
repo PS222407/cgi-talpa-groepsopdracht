@@ -27,6 +27,7 @@ public class OutingEditRequest
             _stringDates = value;
         }
     }
+
     [Required(ErrorMessage = "You are required to select a date.")]
     public List<DateTime>? Dates
     {
@@ -35,8 +36,8 @@ public class OutingEditRequest
         {
             _stringDates = value != null ? string.Join(",", value.Select(date => date.ToString("dd-MM-yyyy")).ToList()) : null;
             _dates = value;
-        } 
-    } 
+        }
+    }
 
     [SuggestionCount(ErrorMessage = "You can only select 3 suggestions.")]
     [StringListNotEmpty(ErrorMessage = "You are required to select a suggestion.")]
@@ -51,12 +52,11 @@ public class OutingEditRequest
         Id = id;
         Name = name;
         Suggestions = suggestions;
-        Dates = dates ?? new(); 
+        Dates = dates ?? new List<DateTime>();
     }
 
     public OutingEditRequest()
     {
-
     }
 
     private List<DateTime> ConvertStringToDates(string value)

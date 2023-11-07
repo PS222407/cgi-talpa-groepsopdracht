@@ -1,7 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Talpa_10_WebApp.Validations;
 using Talpa_10_WebApp.ViewModels;
 
 namespace Talpa_10_WebApp.RequestModels;
@@ -27,6 +25,7 @@ public class OutingCreateRequest
             _stringDates = value;
         }
     }
+
     [Required(ErrorMessage = "You are required to select a date.")]
     public List<DateTime>? Dates
     {
@@ -35,18 +34,18 @@ public class OutingCreateRequest
         {
             _stringDates = value != null ? string.Join(",", value.Select(date => date.ToString("dd-MM-yyyy")).ToList()) : null;
             _dates = value;
-        } 
-    } 
+        }
+    }
+
     public OutingCreateRequest(int? id, string? name, List<SuggestionViewModel>? suggestions, List<DateTime>? dates)
     {
         Id = id;
         Name = name;
-        Dates = dates ?? new(); 
+        Dates = dates ?? new();
     }
 
     public OutingCreateRequest()
     {
-
     }
 
     private List<DateTime> ConvertStringToDates(string value)
