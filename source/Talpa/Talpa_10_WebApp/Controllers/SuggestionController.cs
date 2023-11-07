@@ -69,7 +69,8 @@ public class SuggestionController : Controller
     [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}, {RoleName.Employee}")]
     public ActionResult Details(int id)
     {
-        Suggestion? suggestion = _suggestionService.GetById(id);
+        string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
+        Suggestion? suggestion = _suggestionService.GetById(id, userId);
         if (suggestion == null)
         {
             TempData["Message"] = _localizer.Get("No entity found with this id");
@@ -148,7 +149,9 @@ public class SuggestionController : Controller
             Value = restriction.Id.ToString(), Text = restriction.Name
         }).ToList();
 
-        Suggestion? suggestion = _suggestionService.GetById(id);
+        string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
+
+        Suggestion? suggestion = _suggestionService.GetById(id, userId);
         if (suggestion == null)
         {
             TempData["Message"] = _localizer.Get("No entity found with this id");
@@ -179,13 +182,23 @@ public class SuggestionController : Controller
         }
 
         Suggestion suggestion = new()
-            { Id = id, Name = suggestionRequest.Name, Restrictions = suggestionRequest.SelectedRestrictionIds?.Select(restriction => new Restriction { Name = restriction }).ToList() };
-        if (!_suggestionService.Update(suggestion))
+        {
+            Id = id,
+            Name = suggestionRequest.Name,
+            Restrictions = suggestionRequest.SelectedRestrictionIds?.Select(restriction => new Restriction
+            {
+                Name = restriction
+            }).ToList(),
+        };
+
+        string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
+
+        if (!_suggestionService.Update(suggestion, userId))
         {
             TempData["Message"] = _localizer.Get("Error while updating");
             TempData["MessageType"] = "danger";
 
-            return View();
+            return View(suggestionRequest);
         }
 
         TempData["Message"] = _localizer.Get("Item successfully updated");
@@ -198,7 +211,8 @@ public class SuggestionController : Controller
     [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}, {RoleName.Employee}")]
     public ActionResult Delete(int id)
     {
-        Suggestion? suggestion = _suggestionService.GetById(id);
+        string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
+        Suggestion? suggestion = _suggestionService.GetById(id, userId);
         if (suggestion == null)
         {
             TempData["Message"] = _localizer.Get("No entity found with this id");
@@ -218,7 +232,9 @@ public class SuggestionController : Controller
     [ValidateAntiForgeryToken]
     public ActionResult Destroy(int id)
     {
-        if (!_suggestionService.Delete(id))
+        string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
+
+        if (!_suggestionService.Delete(id, userId))
         {
             TempData["Message"] = _localizer.Get("Error while deleting");
             TempData["MessageType"] = "danger";
