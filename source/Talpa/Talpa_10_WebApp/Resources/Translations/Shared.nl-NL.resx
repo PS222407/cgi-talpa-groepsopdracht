@@ -198,4 +198,10 @@ Er is een fout opgetreden bij het verwerken van uw verzoek</value>
     <data name="You must select a suggestion" xml:space="preserve">
         <value>Je moet een suggestie kiezen</value>
     </data>
+    <data name="UserName" xml:space="preserve">
+        <value>Gebruikersnaam</value>
+    </data>
+    <data name="Rank" xml:space="preserve">
+        <value>Rang</value>
+    </data>
 </root>
