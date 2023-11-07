@@ -12,7 +12,7 @@ namespace Talpa_10_WebApp.Controllers;
 public class HomeController : Controller
 {
     private readonly IStringLocalizer<Shared> _localizer;
-    
+
     private readonly ILogger<HomeController> _logger;
 
     public HomeController(IStringLocalizer<Shared> localizer)
@@ -23,7 +23,7 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         string frogTranslated = new Shared(_localizer).Get("Frog");
-        
+
         return View();
     }
 

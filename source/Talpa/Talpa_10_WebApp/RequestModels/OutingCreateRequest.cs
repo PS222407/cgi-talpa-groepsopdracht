@@ -41,7 +41,7 @@ public class OutingCreateRequest
     {
         Id = id;
         Name = name;
-        Dates = dates ?? new();
+        Dates = dates ?? new List<DateTime>();
     }
 
     public OutingCreateRequest()

@@ -25,7 +25,7 @@ public class OutingController : Controller
     private readonly ISuggestionService _suggestionService;
 
     private readonly Shared _localizer;
-    
+
     public OutingController(IOutingService outingService, IUserService userService, ISuggestionService suggestionService, IStringLocalizer<Shared> localizer)
     {
         _outingService = outingService;

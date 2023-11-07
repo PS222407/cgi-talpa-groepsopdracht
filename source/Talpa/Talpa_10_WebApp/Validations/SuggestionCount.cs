@@ -9,12 +9,12 @@ namespace Talpa_10_WebApp.Validations;
 public class SuggestionCount : ValidationAttribute
 {
     private static IStringLocalizer? _localizer;
-    
+
     private string GetErrorMessage(ValidationContext validationContext)
     {
         return GetLocalizer(validationContext)[ErrorMessage];
     }
-    
+
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
         OutingEditRequest outingRequest = (OutingEditRequest)validationContext.ObjectInstance;
@@ -26,7 +26,7 @@ public class SuggestionCount : ValidationAttribute
 
         return ValidationResult.Success;
     }
-    
+
     private IStringLocalizer GetLocalizer(ValidationContext validationContext)
     {
         if (_localizer is null)

@@ -23,7 +23,7 @@
             @TempData["Message"]
         </div>
     }
-    
+
     @if (ViewBag.Errors != null && ViewBag.Errors.Count > 0)
     {
         <ul class="text-danger">
@@ -33,9 +33,9 @@
             }
         </ul>
     }
-    
+
     <h1 class="text-center my-5" style="text-transform: uppercase; font-size: 2rem">@SharedLocalizer["choose your desired outing"]</h1>
-    
+
     <form asp-action="VoteDate" asp-route-id="@Model.OutingId">
         <div class="outer-container">
             @foreach (SuggestionViewModel suggestion in Model.Suggestions ?? new List<SuggestionViewModel>())

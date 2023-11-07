@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/css/outingstyle.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/css/datepicker.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/datepicker.css" asp-append-version="true"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca&family=Roboto:wght@100;200;300;400&display=swap" rel="stylesheet">
@@ -130,14 +130,14 @@
     $(".js-dynamic-tokenizer").select2({
         tags: true,
         tokenSeparators: [','],
-        language: "@CultureInfo.CurrentCulture.ToString().Substring(0,2)"
+        language: "@CultureInfo.CurrentCulture.ToString().Substring(0, 2)"
     });
     $(".js-tokenizer").select2({
-        language: "@CultureInfo.CurrentCulture.ToString().Substring(0,2)"
+        language: "@CultureInfo.CurrentCulture.ToString().Substring(0, 2)"
     });
     $(".js-tokenizer-max3").select2({ 
         maximumSelectionLength: 3,
-        language: "@CultureInfo.CurrentCulture.ToString().Substring(0,2)"
+        language: "@CultureInfo.CurrentCulture.ToString().Substring(0, 2)"
     });
     
     function formatState (state) {
@@ -166,7 +166,7 @@
 <script type="text/javascript" src="~/datepicker/locales/bootstrap-datepicker.en-US.js"></script>
 @* ENDDATEPICKER *@
 
-    <script>
+<script>
         $(document).ready(function () {
             var selectedDatesInput = $('#selectedDates');
 
@@ -179,7 +179,7 @@
                 multidate: true,
                 multidateSeparator: ",",
                 forceParse: false,
-                language: "@CultureInfo.CurrentCulture.ToString().Substring(0,2)"
+                language: "@CultureInfo.CurrentCulture.ToString().Substring(0, 2)"
             }).on('changeDate', function (e) {
                 selectedDatesInput.val(e.dates.join(','));
             });

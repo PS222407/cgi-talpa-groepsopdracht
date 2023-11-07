@@ -68,13 +68,14 @@ h1 {
     width: 100%;
     font-size: 1.4em;
 }
-.vote-header-item.not-active::after{
+
+.vote-header-item.not-active::after {
     position: absolute;
     top: 0;
     left: -60px;
     content: "";
     display: block;
-    
+
     width: 0;
     height: 0;
     border-top: 44px solid #F2F2F2;

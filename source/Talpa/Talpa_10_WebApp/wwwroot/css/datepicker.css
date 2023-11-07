@@ -21,7 +21,6 @@
 }
 
 
-
 table {
     border-collapse: separate;
     text-indent: initial;
@@ -46,11 +45,11 @@ table {
     background-color: #da2b3c !important;
 }
 
-    .datepicker table tr td.active.active.focus, .datepicker table tr td.active.active:focus, .datepicker table tr td.active.active:hover, .datepicker table tr td.active.highlighted.active.focus, .datepicker table tr td.active.highlighted.active:focus, .datepicker table tr td.active.highlighted.active:hover, .datepicker table tr td.active.highlighted:active.focus, .datepicker table tr td.active.highlighted:active:focus, .datepicker table tr td.active.highlighted:active:hover, .datepicker table tr td.active:active.focus, .datepicker table tr td.active:active:focus, .datepicker table tr td.active:active:hover {
-        color: #fff !important;
-        background-color: #da2b3c6b !important;
-        border-color: #DA2B3C !important;
-    }
+.datepicker table tr td.active.active.focus, .datepicker table tr td.active.active:focus, .datepicker table tr td.active.active:hover, .datepicker table tr td.active.highlighted.active.focus, .datepicker table tr td.active.highlighted.active:focus, .datepicker table tr td.active.highlighted.active:hover, .datepicker table tr td.active.highlighted:active.focus, .datepicker table tr td.active.highlighted:active:focus, .datepicker table tr td.active.highlighted:active:hover, .datepicker table tr td.active:active.focus, .datepicker table tr td.active:active:focus, .datepicker table tr td.active:active:hover {
+    color: #fff !important;
+    background-color: #da2b3c6b !important;
+    border-color: #DA2B3C !important;
+}
 
 .datepicker table tr td span.focused, .datepicker table tr td span:hover {
     color: white !important;
@@ -63,7 +62,7 @@ table {
     border-color: #204d74 !important;
 }
 
-.datepicker table tr td span.focused{
+.datepicker table tr td span.focused {
     color: white !important;
     background: #da2b3c !important;
 }

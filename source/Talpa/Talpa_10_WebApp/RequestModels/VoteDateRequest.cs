@@ -13,7 +13,7 @@ public class VoteDateRequest
     [Required] public int SuggestionId { get; set; }
 
     public List<OutingDate>? OutingDates { get; set; }
-    
+
     public List<int>? VotedOutingDates { get; set; }
 
     public List<Checkbox> Checkboxes { get; set; }
