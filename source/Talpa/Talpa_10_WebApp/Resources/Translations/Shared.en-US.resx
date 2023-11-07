@@ -177,4 +177,7 @@
     <data name="Not available in development" xml:space="preserve">
         <value>Not available in Development mode</value>
     </data>
+    <data name="Name" xml:space="preserve">
+        <value>Name</value>
+    </data>
 </root>

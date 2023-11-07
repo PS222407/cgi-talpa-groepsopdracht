@@ -89,6 +89,7 @@ public class SuggestionRepository : ISuggestionRepository
         }
 
         suggestionDb.Name = suggestion.Name;
+        suggestionDb.Description = suggestion.Description;
         suggestionDb.Restrictions = suggestion.Restrictions;
 
         return _dataContext.SaveChanges() > 0;
