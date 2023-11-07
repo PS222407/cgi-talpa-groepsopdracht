@@ -53,6 +53,13 @@ public class OutingRepository : IOutingRepository
     {
         return _dataContext.Outings.ToList();
     }
+    public List<Outing> GetAllComplete()
+    {
+        return _dataContext.Outings
+            .Include(o => o.Suggestions)
+            .Where(o => o.Suggestions.Any() && o.OutingDates.Any() && o.DeadLine.HasValue)
+            .ToList();
+    }
 
     public bool Update(Outing outing)
     {
@@ -66,6 +73,7 @@ public class OutingRepository : IOutingRepository
         }
 
         outingDb.Name = outing.Name;
+        outingDb.DeadLine = outing.DeadLine;
         outingDb.Suggestions = outing.Suggestions;
         outingDb.OutingDates = outing.OutingDates;
 
@@ -93,6 +101,14 @@ public class OutingRepository : IOutingRepository
         return _dataContext.Outings.Where(o => o.TeamId == teamId).ToList();
     }
 
+    public List<Outing> GetAllCompleteFromTeam(int teamId)
+    {
+        return _dataContext.Outings
+            .Include(o => o.Suggestions)
+            .Where(o => o.TeamId == teamId && o.Suggestions.Any() && o.OutingDates.Any() && o.DeadLine.HasValue)
+            .ToList();
+    }
+
     public bool Vote(string userId, int outingId, int suggestionId, List<int> votedDateIds)
     {
         SuggestionVote suggestionVote = new()
@@ -116,11 +132,13 @@ public class OutingRepository : IOutingRepository
 
     public bool UserHasVotedDatesForOuting(string userId, int outingId)
     {
-        return _dataContext.Outings.Any(o => o.OutingDates.Any(od => od.DateVotes.Any(dv => dv.UserId == userId)));
+        bool a = _dataContext.Outings.Any(o => o.OutingDates.Any(od => od.DateVotes.Any(dv => dv.UserId == userId)));
+        return a;
     }
 
     public bool UserHasVotedSuggestionForOuting(string userId, int outingId)
     {
-        return _dataContext.SuggestionVote.Any(sv => sv.UserId == userId && sv.OutingId == outingId);
+        bool b = _dataContext.SuggestionVote.Any(sv => sv.UserId == userId && sv.OutingId == outingId);
+        return b;
     }
 }
