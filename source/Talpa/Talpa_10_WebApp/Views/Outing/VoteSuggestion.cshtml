@@ -5,8 +5,8 @@
 @inject IHtmlLocalizer<Shared> SharedLocalizer
 
 @{
-	Layout = "_Layout";
-	ViewData["Title"] = SharedLocalizer["Detail"];
+    Layout = "_Layout";
+    ViewData["Title"] = SharedLocalizer["Detail"];
     ViewData["DisableMainContainer"] = "True";
 }
 
@@ -17,10 +17,27 @@
 </div>
 
 <div class="container">
+    @if (TempData.ContainsKey("Message"))
+    {
+        <div class="alert alert-@(TempData["MessageType"])">
+            @TempData["Message"]
+        </div>
+    }
+    
+    @if (ViewBag.Errors != null && ViewBag.Errors.Count > 0)
+    {
+        <ul class="text-danger">
+            @foreach (dynamic? error in ViewBag.Errors)
+            {
+                <li>@error</li>
+            }
+        </ul>
+    }
+    
     <h1 class="text-center my-5" style="text-transform: uppercase; font-size: 2rem">@SharedLocalizer["choose your desired outing"]</h1>
     
     <form asp-action="VoteDate" asp-route-id="@Model.OutingId">
-	    <div class="outer-container">
+        <div class="outer-container">
             @foreach (SuggestionViewModel suggestion in Model.Suggestions ?? new List<SuggestionViewModel>())
             {
                 <label class="card-frame" style="text-decoration: none; display: flex; justify-content: center; align-items: center; margin: 10px;">
@@ -30,13 +47,16 @@
                             <h1 class="card-title">
                                 @suggestion.Name
                             </h1>
+                            <div style="font-size: 1.3em; color: white">
+                                @SharedLocalizer["Votes"]: @suggestion.Votes
+                            </div>
                         </div>
                     </div>
                 </label>
             }
         </div>
         <div class="form-group mt-3" style="width: fit-content; margin-left: auto">
-            <input type="submit" value="@SharedLocalizer["Next"]" class="px-4 py-2" style="background-color: #D92A3B; font-size: 1.3em; border: none; color: white; border-radius: 5px" />
+            <input type="submit" value="@SharedLocalizer["Next"]" class="px-4 py-2" style="background-color: #D92A3B; font-size: 1.3em; border: none; color: white; border-radius: 5px"/>
         </div>
     </form>
 </div>
@@ -58,4 +78,3 @@
 		});
 	});
 </script>
-

@@ -2,11 +2,10 @@
 using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
-using Talpa_10_WebApp.RequestModels;
 
 namespace Talpa_10_WebApp.Validations;
 
-public class SuggestionCount : ValidationAttribute
+public class NotZero : ValidationAttribute
 {
     private static IStringLocalizer? _localizer;
     
@@ -17,9 +16,7 @@ public class SuggestionCount : ValidationAttribute
     
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
-        OutingEditRequest outingRequest = (OutingEditRequest)validationContext.ObjectInstance;
-
-        if (outingRequest.SelectedSuggestionIds?.Count > 3)
+        if ((int)(value ?? 0) == 0)
         {
             return new ValidationResult(GetErrorMessage(validationContext));
         }
