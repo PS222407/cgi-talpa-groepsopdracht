@@ -14,7 +14,7 @@ public interface ISuggestionService
 
     public List<Suggestion> GetAllByUserId(string id);
 
-    public bool Update(Suggestion suggestion, string userid);
+    public bool Update(Suggestion suggestion, string userId);
 
-    public bool Delete(int id, string userid);
+    public bool Delete(int id, string userId);
 }

@@ -18,33 +18,36 @@ public class SuggestionService : ISuggestionService
         return _suggestionRepository.Create(suggestion, userid);
     }
 
-    public bool Update(Suggestion newSuggestion, string userid)
+    public bool Update(Suggestion newSuggestion, string userId)
     {
-        Suggestion suggestion = _suggestionRepository.GetById(newSuggestion.Id);
-        if (suggestion.UserId == userid)
+        Suggestion? suggestion = _suggestionRepository.GetById(newSuggestion.Id);
+        if (suggestion?.UserId == userId)
         {
             return _suggestionRepository.Update(newSuggestion);
         }
+
         return false;
     }
 
-    public bool Delete(int id, string userid)
+    public bool Delete(int id, string userId)
     {
-        Suggestion suggestion = _suggestionRepository.GetById(id);
-        if (suggestion.UserId == userid)
+        Suggestion? suggestion = _suggestionRepository.GetById(id);
+        if (suggestion?.UserId == userId)
         {
             return _suggestionRepository.Delete(id);
         }
+
         return false;
     }
 
     public Suggestion? GetById(int id, string userid)
     {
-        Suggestion suggestion = _suggestionRepository.GetById(id);
-        if (suggestion.UserId == userid)
+        Suggestion? suggestion = _suggestionRepository.GetById(id);
+        if (suggestion?.UserId == userid)
         {
-             return suggestion;
+            return suggestion;
         }
+
         return null;
     }
 
