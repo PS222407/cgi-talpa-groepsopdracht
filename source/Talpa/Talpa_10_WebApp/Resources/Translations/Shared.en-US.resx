@@ -204,4 +204,7 @@
     <data name="Rank" xml:space="preserve">
         <value>Rank</value>
     </data>
+    <data name="Please select your preferred date and outing suggestion." xml:space="preserve">
+        <value>Please select your preferred date and outing suggestion.</value>
+    </data>
 </root>

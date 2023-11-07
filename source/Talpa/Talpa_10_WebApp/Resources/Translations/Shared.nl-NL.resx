@@ -207,4 +207,7 @@ Er is een fout opgetreden bij het verwerken van uw verzoek</value>
     <data name="Rank" xml:space="preserve">
         <value>Rang</value>
     </data>
+    <data name="Please select your preferred date and outing suggestion." xml:space="preserve">
+        <value>Selecteer alstublieft uw gewenste datum en suggestie voor het uitje.</value>
+    </data>
 </root>

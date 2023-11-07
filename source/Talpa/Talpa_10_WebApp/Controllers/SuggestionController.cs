@@ -66,21 +66,21 @@ public class SuggestionController : Controller
                 suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>())));
     }
 
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}, {RoleName.Employee}")]
-    public ActionResult Details(int id)
-    {
-        string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
-        Suggestion? suggestion = _suggestionService.GetById(id, userId);
-        if (suggestion == null)
-        {
-            TempData["Message"] = _localizer.Get("No entity found with this id");
-            TempData["MessageType"] = "danger";
-
-            return View();
-        }
-
-        return View(new SuggestionViewModel(suggestion.Id, suggestion.Name, suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>()));
-    }
+    // [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}, {RoleName.Employee}")]
+    // public ActionResult Details(int id)
+    // {
+    //     string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
+    //     Suggestion? suggestion = _suggestionService.GetById(id, userId);
+    //     if (suggestion == null)
+    //     {
+    //         TempData["Message"] = _localizer.Get("No entity found with this id");
+    //         TempData["MessageType"] = "danger";
+    //
+    //         return View();
+    //     }
+    //
+    //     return View(new SuggestionViewModel(suggestion.Id, suggestion.Name, suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>()));
+    // }
 
     [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}, {RoleName.Employee}")]
     public ActionResult Create()

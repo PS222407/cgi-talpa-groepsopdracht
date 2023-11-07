@@ -9,12 +9,19 @@
     ViewData["DisableMainContainer"] = "True";
 }
 
-@if (TempData.ContainsKey("Message"))
-{
-    <div class="alert alert-@(TempData["MessageType"])">
-        @TempData["Message"]
-    </div>
-}
+<div style="background-color: rgb(245, 245, 245); padding: 1em; font-size: 1.5em">
+    <h1 style="text-align: center">@SharedLocalizer["OutingsToPlan"]</h1>
+    <div style="font-size: 0.8em; text-align: center">@SharedLocalizer["Please select your preferred date and outing suggestion."]</div>
+</div>
+
+<div class="container">
+    @if (TempData.ContainsKey("Message"))
+    {
+        <div class="alert alert-@(TempData["MessageType"])">
+            @TempData["Message"]
+        </div>
+    }
+</div>
 
 <div class="outer-container">
     @foreach (OutingViewModel outing in Model)
