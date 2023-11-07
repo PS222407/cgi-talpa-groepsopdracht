@@ -110,7 +110,7 @@ public class SuggestionController : Controller
         {
             Name = suggestionRequest.Name,
             Description = suggestionRequest.Description,
-            Restrictions = suggestionRequest.SelectedRestrictionIds?.Select(restriction => new Restriction { Name = restriction }).ToList()
+            Restrictions = suggestionRequest.SelectedRestrictionIds?.Select(restriction => new Restriction { Name = restriction }).ToList(),
         };
         string id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
         User user = (await _userService.GetById(id))!;
@@ -147,7 +147,7 @@ public class SuggestionController : Controller
         List<Restriction> restrictions = _restrictionService.GetAll();
         List<SelectListItem> restrictionsOptions = restrictions.Select(restriction => new SelectListItem
         {
-            Value = restriction.Id.ToString(), Text = restriction.Name
+            Value = restriction.Id.ToString(), Text = restriction.Name,
         }).ToList();
 
         string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
@@ -190,7 +190,7 @@ public class SuggestionController : Controller
             Description = suggestionRequest.Description,
             Restrictions = suggestionRequest.SelectedRestrictionIds?.Select(restriction => new Restriction
             {
-                Name = restriction
+                Name = restriction,
             }).ToList(),
         };
 
