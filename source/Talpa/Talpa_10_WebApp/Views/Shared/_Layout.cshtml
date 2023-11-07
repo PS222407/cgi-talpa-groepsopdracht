@@ -44,11 +44,6 @@
                                 @SharedLocalizer["ManageOutings"]
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link">
-                                @SharedLocalizer["Scoreboard"]
-                            </a>
-                        </li>
                     }
                     @if (User.IsInRole(RoleName.Admin) || User.IsInRole(RoleName.Manager) || User.IsInRole(RoleName.Employee))
                     {
@@ -60,6 +55,11 @@
                         <li class="nav-item">
                             <a asp-area="" asp-controller="Suggestion" asp-action="Index" class="nav-link" style="@(new Uri(Context.Request.GetDisplayUrl()).AbsolutePath.StartsWith("/Suggestion") ? "color: white !important; text-decoration: underline; font-weight: bold;" : "")">
                                 @SharedLocalizer["Suggestions"]
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-area="" asp-controller="Scoreboard" asp-action="Index" class="nav-link" style="@(new Uri(Context.Request.GetDisplayUrl()).AbsolutePath.StartsWith("/Scoreboard") ? "color: white !important; text-decoration: underline; font-weight: bold;" : "")">
+                                @SharedLocalizer["Scoreboard"]
                             </a>
                         </li>
                     }
@@ -104,11 +104,14 @@
 </header>
 
 <main class="main @(ViewData["DisableMainContainer"] as string == "True" ? "" : "container")" id="main">
-    @if (TempData.ContainsKey("Message"))
+    @if (ViewData["DisableMainContainer"] as string != "True")
     {
-        <div class="alert alert-@(TempData["MessageType"])">
-            @TempData["Message"]
-        </div>
+        @if (TempData.ContainsKey("Message"))
+        {
+            <div class="alert alert-@(TempData["MessageType"])">
+                @TempData["Message"]
+            </div>
+        }
     }
 
     @RenderBody()

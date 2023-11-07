@@ -16,23 +16,36 @@
 </div>
 
 <div class="container">
+    @if (TempData.ContainsKey("Message"))
+    {
+        <div class="alert alert-@(TempData["MessageType"])">
+            @TempData["Message"]
+        </div>
+    }
+
     <h1 class="text-center my-5" style="text-transform: uppercase; font-size: 2rem">@SharedLocalizer["choose your desired dates"]</h1>
 
     <form asp-action="StoreVote" asp-route-id="@Model.OutingId">
+        <input asp-for="SuggestionId" type="hidden" value="@Model.SuggestionId"/>
+
         <div class="vote-date-container">
             @for (int i = 0; i < Model.Checkboxes.Count; i++)
             {
                 <label style="text-decoration: none;">
-                    <input asp-for="Checkboxes[i].Id" type="hidden" />
-                    <input asp-for="Checkboxes[i].IsSelected" type="checkbox" style="display: none" class="vote-date-checkbox" />
+                    <input asp-for="Checkboxes[i].Id" type="hidden"/>
+                    <input asp-for="Checkboxes[i].Name" type="hidden"/>
+                    <input asp-for="Checkboxes[i].IsSelected" type="checkbox" style="display: none" class="vote-date-checkbox"/>
                     <div class="vote-date-card" style="border-radius: 15px; background-color: #EBEBEB; padding: 2em">
                         @Model.Checkboxes[i].Name
                     </div>
                 </label>
             }
         </div>
-        <div class="form-group mt-3" style="width: fit-content; margin-left: auto">
-            <input type="submit" value="@SharedLocalizer["Vote"]" class="px-4 py-2" style="background-color: #D92A3B; font-size: 1.3em; border: none; color: white; border-radius: 5px" />
+        <div class="form-group mt-3" style="display: flex; justify-content: space-between">
+            <button type="button" role="button" onclick="history.back()" class="px-4 py-2" style="background-color: white; font-size: 1.3em; border: 1px solid black; color: black; border-radius: 5px">
+                @SharedLocalizer["Back"]
+            </button>
+            <input type="submit" value="@SharedLocalizer["Vote"]" class="px-4 py-2" style="background-color: #D92A3B; font-size: 1.3em; border: none; color: white; border-radius: 5px"/>
         </div>
     </form>
 </div>

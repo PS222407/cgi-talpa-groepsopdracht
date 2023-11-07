@@ -8,13 +8,13 @@ public class VoteDateRequest
 {
     public int OutingId { get; set; }
 
-    public string OutingName { get; set; }
+    public string? OutingName { get; set; }
 
     [Required] public int SuggestionId { get; set; }
 
-    public List<OutingDate> OutingDates { get; set; }
+    public List<OutingDate>? OutingDates { get; set; }
     
-    public List<int> VotedOutingDates { get; set; }
+    public List<int>? VotedOutingDates { get; set; }
 
     public List<Checkbox> Checkboxes { get; set; }
 }

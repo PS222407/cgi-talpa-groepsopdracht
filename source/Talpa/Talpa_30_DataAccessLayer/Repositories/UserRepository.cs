@@ -3,16 +3,21 @@ using System.Text;
 using System.Text.Json;
 using BusinessLogicLayer.Interfaces.Repositories;
 using BusinessLogicLayer.Models;
+using DataAccessLayer.Data;
 using DataAccessLayer.Dtos;
 
 namespace DataAccessLayer.Repositories;
 
 public class UserRepository : Repository, IUserRepository
 {
+    private readonly DataContext _dataContext;
+
     private readonly string _baseUrl;
 
-    public UserRepository(string clientId, string clientSecret, string domain, string apiClientId, string apiClientSecret) : base(clientId, clientSecret, domain, apiClientId, apiClientSecret)
+    public UserRepository(string clientId, string clientSecret, string domain, string apiClientId, string apiClientSecret, DataContext dataContext) : base(clientId, clientSecret, domain, apiClientId,
+        apiClientSecret)
     {
+        _dataContext = dataContext;
         _baseUrl = $"https://{domain}/api/v2";
     }
 
@@ -138,5 +143,48 @@ public class UserRepository : Repository, IUserRepository
             NickName = u.nickname,
             TeamId = u.user_metadata.teamId,
         }).ToList();
+    }
+
+    public async Task<List<UserScoreboard>> GetTopTenUsersWhoOwnTheMostVotedSuggestions()
+    {
+        var query = _dataContext.SuggestionVote
+            .GroupBy(sv => sv.SuggestionId)
+            .Select(group => new
+            {
+                SuggestionId = group.Key,
+                VoteCount = group.Count(),
+            })
+            .OrderByDescending(result => result.VoteCount)
+            .Take(10)
+            .Join(
+                _dataContext.Suggestions,
+                sv => sv.SuggestionId,
+                s => s.Id,
+                (sv, s) => new
+                {
+                    sv.VoteCount,
+                    sv.SuggestionId,
+                    s.UserId,
+                    SuggestionName = s.Name,
+                }
+            );
+
+        var results = query.ToList();
+        
+        List<UserScoreboard> userScoreboards = new();
+        foreach (var result in results)
+        {
+            User? user = await GetById(result.UserId);
+            userScoreboards.Add(new UserScoreboard()
+            {
+                UserId = result.UserId,
+                UserName = user?.Name ?? "",
+                SuggestionName = result.SuggestionName,
+                SuggestionId = result.SuggestionId,
+                VoteCount = result.VoteCount,
+            });
+        }
+        
+        return userScoreboards;
     }
 }

@@ -7,6 +7,8 @@ public class SuggestionViewModel
     public string Name { get; set; }
 
     public List<string> Restrictions { get; set; }
+    
+    public int Votes { get; set; }
 
     public SuggestionViewModel(int? id, string name, List<string>? restrictions)
     {

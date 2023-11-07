@@ -34,8 +34,18 @@ public class OutingRepository : IOutingRepository
     {
         return _dataContext.Outings?
             .Include(o => o.Suggestions)?
-                .ThenInclude(s => s.Restrictions)
+            .ThenInclude(s => s.Restrictions)
             .Include(o => o.OutingDates.OrderBy(od => od.Date))
+            .FirstOrDefault(o => o.Id == id);
+    }
+
+    public Outing? GetByIdWithVotes(int id)
+    {
+        return _dataContext.Outings?
+            .Include(o => o.Suggestions)?
+            .ThenInclude(s => s.Restrictions)
+            .Include(o => o.OutingDates.OrderBy(od => od.Date))
+            .Include(s => s.SuggestionVotes)
             .FirstOrDefault(o => o.Id == id);
     }
 
@@ -81,5 +91,36 @@ public class OutingRepository : IOutingRepository
     public List<Outing> GetAllFromTeam(int teamId)
     {
         return _dataContext.Outings.Where(o => o.TeamId == teamId).ToList();
+    }
+
+    public bool Vote(string userId, int outingId, int suggestionId, List<int> votedDateIds)
+    {
+        SuggestionVote suggestionVote = new()
+        {
+            UserId = userId,
+            SuggestionId = suggestionId,
+            OutingId = outingId
+        };
+
+        List<DateVote> dateVotes = votedDateIds.Select(dateId => new DateVote
+        {
+            UserId = userId,
+            OutingDateId = dateId,
+        }).ToList();
+
+        _dataContext.SuggestionVote.Add(suggestionVote);
+        _dataContext.DateVotes.AddRange(dateVotes);
+
+        return _dataContext.SaveChanges() > 0;
+    }
+
+    public bool UserHasVotedDatesForOuting(string userId, int outingId)
+    {
+        return _dataContext.Outings.Any(o => o.OutingDates.Any(od => od.DateVotes.Any(dv => dv.UserId == userId)));
+    }
+
+    public bool UserHasVotedSuggestionForOuting(string userId, int outingId)
+    {
+        return _dataContext.SuggestionVote.Any(sv => sv.UserId == userId && sv.OutingId == outingId);
     }
 }

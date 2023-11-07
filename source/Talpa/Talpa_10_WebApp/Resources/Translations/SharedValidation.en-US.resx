@@ -27,4 +27,7 @@
     <data name="Name" xml:space="preserve">
         <value>Name</value>
     </data>
+    <data name="You must select a suggestion" xml:space="preserve">
+        <value>You must select a suggestion</value>
+    </data>
 </root>

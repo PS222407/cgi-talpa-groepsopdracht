@@ -23,6 +23,11 @@ public class OutingService : IOutingService
         return _outingRepository.GetById(id);
     }
 
+    public Outing? GetByIdWithVotes(int id)
+    {
+        return _outingRepository.GetByIdWithVotes(id);
+    }
+
     public List<Outing> GetAll()
     {
         return _outingRepository.GetAll();
@@ -30,10 +35,11 @@ public class OutingService : IOutingService
 
     public bool Update(Outing outing)
     {
-        if(outing.Suggestions?.Count > 3)
+        if (outing.Suggestions?.Count > 3)
         {
             return false;
         }
+
         return _outingRepository.Update(outing);
     }
 
@@ -45,5 +51,17 @@ public class OutingService : IOutingService
     public List<Outing> GetAllFromTeam(int teamId)
     {
         return _outingRepository.GetAllFromTeam(teamId);
+    }
+
+    public bool UserHasVotedForOuting(string userId, int outingId)
+    {
+        return _outingRepository.UserHasVotedDatesForOuting(userId, outingId)
+               || _outingRepository.UserHasVotedSuggestionForOuting(userId, outingId);
+    }
+
+    public bool Vote(string userId, int outingId, int suggestionId, List<int> votedDateIds)
+    {
+        return !UserHasVotedForOuting(userId, outingId)
+               && _outingRepository.Vote(userId, outingId, suggestionId, votedDateIds);
     }
 }

@@ -179,5 +179,28 @@
     </data>
     <data name="Name" xml:space="preserve">
         <value>Name</value>
+    <data name="Votes" xml:space="preserve">
+        <value>Votes</value>
+    </data>
+    <data name="You have already voted for this outing" xml:space="preserve">
+        <value>You have already voted for this outing</value>
+    </data>
+    <data name="Back" xml:space="preserve">
+        <value>Back</value>
+    </data>
+    <data name="Invalid input" xml:space="preserve">
+        <value>Invalid input</value>
+    </data>
+    <data name="Can not be zero" xml:space="preserve">
+        <value>Can not be zero</value>
+    </data>
+    <data name="You must select a suggestion" xml:space="preserve">
+        <value>You must select a suggestion</value>
+    </data>
+    <data name="UserName" xml:space="preserve">
+        <value>Username</value>
+    </data>
+    <data name="Rank" xml:space="preserve">
+        <value>Rank</value>
     </data>
 </root>
