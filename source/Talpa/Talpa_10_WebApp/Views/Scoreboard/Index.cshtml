@@ -1,0 +1,30 @@
+﻿@using Talpa_10_WebApp.Translations
+@using Microsoft.AspNetCore.Mvc.Localization
+@using BusinessLogicLayer.Models
+@inject IHtmlLocalizer<Shared> SharedLocalizer
+
+@{
+    ViewData["Title"] = SharedLocalizer["Index"];
+}
+
+<table class="table">
+    <tr>
+        <th>@SharedLocalizer["Rank"]</th>
+        <th>@SharedLocalizer["UserName"]</th>
+        <th>@SharedLocalizer["Suggestion"]</th>
+        <th>@SharedLocalizer["Votes"]</th>
+    </tr>
+    @{
+        int i = 0;
+    }
+    @foreach (UserScoreboard userScoreboard in Model)
+    {
+        i++;
+        <tr class="p-3">
+            <td>@i</td>
+            <td>@userScoreboard.UserName</td>
+            <td>@userScoreboard.SuggestionName</td>
+            <td>@userScoreboard.VoteCount</td>
+        </tr>
+    }
+</table>

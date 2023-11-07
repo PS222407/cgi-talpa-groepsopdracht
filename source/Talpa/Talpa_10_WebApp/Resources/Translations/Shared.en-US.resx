@@ -195,4 +195,10 @@
     <data name="You must select a suggestion" xml:space="preserve">
         <value>You must select a suggestion</value>
     </data>
+    <data name="UserName" xml:space="preserve">
+        <value>Username</value>
+    </data>
+    <data name="Rank" xml:space="preserve">
+        <value>Rank</value>
+    </data>
 </root>
