@@ -27,6 +27,7 @@ public class OutingEditRequest
             _stringDates = value;
         }
     }
+
     [Required(ErrorMessage = "You need to select a deadline")]
     [DeadLine(ErrorMessage = "You can't select a timestamp that has already happened")]
     public DateTime? DeadLine { get; set; }

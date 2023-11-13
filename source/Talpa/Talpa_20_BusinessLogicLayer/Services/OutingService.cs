@@ -33,20 +33,14 @@ public class OutingService : IOutingService
     {
         return _outingRepository.GetAll();
     }
+
     public List<Outing> GetAllComplete()
     {
         List<Outing> completeOutings = _outingRepository.GetAllComplete();
-        List<Outing> completeOpenOutings = new List<Outing>();
 
-        foreach (Outing completeOuting in completeOutings)
-        {
-            if (completeOuting.DeadLine > DateTime.Now)
-            {
-                completeOpenOutings.Add(completeOuting);
-            }
-        }
-        return completeOpenOutings;
+        return completeOutings.Where(completeOuting => completeOuting.DeadLine > DateTime.Now).ToList();
     }
+
     public bool Update(Outing outing)
     {
         if (outing.Suggestions?.Count > 3)
@@ -66,19 +60,12 @@ public class OutingService : IOutingService
     {
         return _outingRepository.GetAllFromTeam(teamId);
     }
+
     public List<Outing> GetAllCompleteFromTeam(int teamId)
     {
         List<Outing> completeOutings = _outingRepository.GetAllCompleteFromTeam(teamId);
-        List<Outing> completeOpenOutings = new List<Outing>();
 
-        foreach (Outing completeOuting in completeOutings)
-        {
-            if (completeOuting.DeadLine > DateTime.Now)
-            {
-                completeOpenOutings.Add(completeOuting);
-            }
-        }
-        return completeOpenOutings;
+        return completeOutings.Where(completeOuting => completeOuting.DeadLine > DateTime.Now).ToList();
     }
 
     public bool UserHasVotedForOuting(string userId, int outingId)
