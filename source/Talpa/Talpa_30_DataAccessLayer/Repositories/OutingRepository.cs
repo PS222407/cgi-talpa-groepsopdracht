@@ -76,6 +76,7 @@ public class OutingRepository : IOutingRepository
         outingDb.Name = outing.Name;
         outingDb.Suggestions = outing.Suggestions;
         outingDb.OutingDates = outing.OutingDates;
+        outingDb.DeadLine = outing.DeadLine;
 
         _dataContext.SaveChanges();
 

@@ -59,7 +59,7 @@ public class OutingEditRequest
         Dates = dates ?? new List<DateTime>();
     }
 
-    public OutingEditRequest()
+    public OutingEditRequest()  
     {
     }
 
