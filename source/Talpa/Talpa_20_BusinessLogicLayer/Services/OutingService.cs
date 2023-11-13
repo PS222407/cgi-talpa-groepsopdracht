@@ -1,6 +1,7 @@
 ﻿using BusinessLogicLayer.Interfaces.Repositories;
 using BusinessLogicLayer.Interfaces.Services;
 using BusinessLogicLayer.Models;
+using System.Diagnostics;
 
 namespace BusinessLogicLayer.Services;
 
@@ -33,6 +34,13 @@ public class OutingService : IOutingService
         return _outingRepository.GetAll();
     }
 
+    public List<Outing> GetAllComplete()
+    {
+        List<Outing> completeOutings = _outingRepository.GetAllComplete();
+
+        return completeOutings.Where(completeOuting => completeOuting.DeadLine > DateTime.Now).ToList();
+    }
+
     public bool Update(Outing outing)
     {
         if (outing.Suggestions?.Count > 3)
@@ -51,6 +59,13 @@ public class OutingService : IOutingService
     public List<Outing> GetAllFromTeam(int teamId)
     {
         return _outingRepository.GetAllFromTeam(teamId);
+    }
+
+    public List<Outing> GetAllCompleteFromTeam(int teamId)
+    {
+        List<Outing> completeOutings = _outingRepository.GetAllCompleteFromTeam(teamId);
+
+        return completeOutings.Where(completeOuting => completeOuting.DeadLine > DateTime.Now).ToList();
     }
 
     public bool UserHasVotedForOuting(string userId, int outingId)

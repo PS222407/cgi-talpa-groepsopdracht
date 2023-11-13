@@ -14,5 +14,7 @@ public class Outing
 
     public List<SuggestionVote>? SuggestionVotes { get; set; }
 
+    public DateTime? DeadLine { get; set; }
+
     public List<OutingDate>? OutingDates { get; set; }
 }

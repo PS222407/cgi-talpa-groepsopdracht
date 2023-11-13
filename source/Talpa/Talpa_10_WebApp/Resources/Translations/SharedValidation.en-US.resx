@@ -135,4 +135,13 @@
     <data name="You must select a suggestion" xml:space="preserve">
     <value>You must select a suggestion</value>
   </data>
+    <data name="You must select a suggestion" xml:space="preserve">
+    <value>You must select a suggestion</value>
+  </data>
+    <data name="You can't select a timestamp that has already happened" xml:space="preserve">
+    <value>You can't select a timestamp that has already happened</value>
+  </data>
+    <data name="You need to select a deadline" xml:space="preserve">
+    <value>You need to select a deadline</value>
+  </data>
 </root>

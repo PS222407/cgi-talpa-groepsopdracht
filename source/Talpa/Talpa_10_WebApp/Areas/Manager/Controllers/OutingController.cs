@@ -147,6 +147,7 @@ public class OutingController : Controller
             Name = outing.Name,
             SuggestionOptions = suggestionOptions,
             SelectedSuggestionIds = outing.Suggestions?.Select(s => s.Id.ToString()).ToList(),
+            DeadLine = outing.DeadLine,
             Dates = outing.OutingDates?.Select(od => od.Date).ToList() ?? new List<DateTime>(),
         };
 
@@ -170,6 +171,7 @@ public class OutingController : Controller
         {
             Id = id,
             Name = outingRequest.Name,
+            DeadLine = outingRequest.DeadLine,
             OutingDates = outingDates,
             Suggestions = suggestions,
         };
