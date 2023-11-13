@@ -3,7 +3,7 @@
 <root>
     <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
         <xsd:element name="root" msdata:IsDataSet="true">
-            
+
         </xsd:element>
     </xsd:schema>
     <resheader name="resmimetype">
@@ -177,6 +177,9 @@
     <data name="Not available in development" xml:space="preserve">
         <value>Not available in Development mode</value>
     </data>
+    <data name="Name" xml:space="preserve">
+        <value>Name</value>
+    </data>
     <data name="Votes" xml:space="preserve">
         <value>Votes</value>
     </data>
@@ -200,5 +203,8 @@
     </data>
     <data name="Rank" xml:space="preserve">
         <value>Rank</value>
+    </data>
+    <data name="Please select your preferred date and outing suggestion." xml:space="preserve">
+        <value>Please select your preferred date and outing suggestion.</value>
     </data>
 </root>

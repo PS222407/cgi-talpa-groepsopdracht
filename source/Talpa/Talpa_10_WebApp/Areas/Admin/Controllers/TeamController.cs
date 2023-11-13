@@ -18,7 +18,7 @@ public class TeamController : Controller
     private readonly ITeamService _teamService;
 
     private readonly IUserService _userService;
-    
+
     private readonly Shared _localizer;
 
     public TeamController(ITeamService teamService, IUserService userService, IStringLocalizer<Shared> localizer)
@@ -83,7 +83,7 @@ public class TeamController : Controller
 
             return RedirectToAction(nameof(Index));
         }
-        
+
         if (!ModelState.IsValid)
         {
             return View(new TeamViewModel
@@ -172,7 +172,7 @@ public class TeamController : Controller
 
             return RedirectToAction(nameof(Index));
         }
-        
+
         if (!ModelState.IsValid)
         {
             return View(new TeamViewModel
@@ -240,7 +240,7 @@ public class TeamController : Controller
 
             return RedirectToAction(nameof(Index));
         }
-        
+
         if (!await _teamService.Delete(id))
         {
             TempData["Message"] = _localizer.Get("Error while deleting");

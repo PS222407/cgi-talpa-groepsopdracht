@@ -11,7 +11,7 @@ public class OutingViewModel
 
     public string? Name { get; set; }
 
-    public List<SuggestionViewModel>? Suggestions { get; set; } 
+    public List<SuggestionViewModel>? Suggestions { get; set; }
 
     public List<string>? SelectedSuggestionIds { get; set; }
 
@@ -34,6 +34,7 @@ public class OutingViewModel
         Id = id;
         Name = name;
     }
+
     public OutingViewModel(int? id, string? name, List<SuggestionViewModel>? suggestions)
     {
         Id = id;

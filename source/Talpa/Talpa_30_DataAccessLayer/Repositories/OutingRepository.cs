@@ -53,6 +53,7 @@ public class OutingRepository : IOutingRepository
     {
         return _dataContext.Outings.ToList();
     }
+
     public List<Outing> GetAllComplete()
     {
         return _dataContext.Outings
@@ -73,7 +74,6 @@ public class OutingRepository : IOutingRepository
         }
 
         outingDb.Name = outing.Name;
-        outingDb.DeadLine = outing.DeadLine;
         outingDb.Suggestions = outing.Suggestions;
         outingDb.OutingDates = outing.OutingDates;
 
@@ -115,7 +115,7 @@ public class OutingRepository : IOutingRepository
         {
             UserId = userId,
             SuggestionId = suggestionId,
-            OutingId = outingId
+            OutingId = outingId,
         };
 
         List<DateVote> dateVotes = votedDateIds.Select(dateId => new DateVote
@@ -132,13 +132,12 @@ public class OutingRepository : IOutingRepository
 
     public bool UserHasVotedDatesForOuting(string userId, int outingId)
     {
-        bool a = _dataContext.Outings.Any(o => o.OutingDates.Any(od => od.DateVotes.Any(dv => dv.UserId == userId)));
-        return a;
+        return _dataContext.Outings.Where(o => o.Id == outingId)
+            .Any(o => o.OutingDates.Any(od => od.DateVotes.Any(dv => dv.UserId == userId)));
     }
 
     public bool UserHasVotedSuggestionForOuting(string userId, int outingId)
     {
-        bool b = _dataContext.SuggestionVote.Any(sv => sv.UserId == userId && sv.OutingId == outingId);
-        return b;
+        return _dataContext.SuggestionVote.Any(sv => sv.UserId == userId && sv.OutingId == outingId);
     }
 }

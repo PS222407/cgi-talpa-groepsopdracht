@@ -6,37 +6,49 @@
 
 @{
     ViewData["Title"] = SharedLocalizer["Index"];
+    ViewData["DisableMainContainer"] = "True";
 }
 
-<h1>@SharedLocalizer["Index"]</h1>
+<div style="background-color: rgb(245, 245, 245); padding: 1em; font-size: 1.5em">
+    <h1 style="text-align: center">@SharedLocalizer["Suggestions"]</h1>
+</div>
 
-<p>
-    <a asp-action="Create">@SharedLocalizer["Create New"]</a>
-</p>
-<table class="table">
-    <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-
-        </th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (SuggestionViewModel item in Model)
+<div class="container" style="margin-top: 1em">
+    @if (TempData.ContainsKey("Message"))
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">@SharedLocalizer["Edit"]</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">@SharedLocalizer["Details"]</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">@SharedLocalizer["Delete"]</a>
-            </td>
-        </tr>
+        <div class="alert alert-@(TempData["MessageType"])">
+            @TempData["Message"]
+        </div>
     }
-    </tbody>
-</table>
+
+    <p>
+        <a asp-action="Create" class="btn btn-outline-secondary">@SharedLocalizer["Create New"]</a>
+    </p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                @SharedLocalizer["Name"]
+            </th>
+            <th>
+
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (SuggestionViewModel item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">@SharedLocalizer["Edit"]</a>
+                    @* <a asp-action="Details" asp-route-id="@item.Id">@SharedLocalizer["Details"]</a> | *@
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary" style="background-color: #D92A3B; border-color: #D92A3B;">@SharedLocalizer["Delete"]</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

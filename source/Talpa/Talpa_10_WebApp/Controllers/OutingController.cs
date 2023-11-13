@@ -69,8 +69,9 @@ public class OutingController : Controller
                 errors.Add(TempData[key].ToString());
             }
         }
+
         ViewBag.Errors = errors;
-        
+
         if (_outingService.UserHasVotedForOuting(userId, id))
         {
             TempData["Message"] = _localizer.Get("You have already voted for this outing");
@@ -78,7 +79,7 @@ public class OutingController : Controller
 
             return RedirectToAction(nameof(Index));
         }
-        
+
         if (outing == null)
         {
             TempData["Message"] = _localizer.Get("Outing does not exist");
@@ -121,7 +122,7 @@ public class OutingController : Controller
 
             return RedirectToAction(nameof(VoteSuggestion), new { id });
         }
-        
+
         Outing? outing = _outingService.GetById(id);
         if (outing == null)
         {
@@ -155,7 +156,7 @@ public class OutingController : Controller
         {
             return View("VoteDate", voteDateRequest);
         }
-        
+
         string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
         List<int> votedDateIds = voteDateRequest.Checkboxes.Where(c => c.IsSelected).Select(c => c.Id).ToList();
 

@@ -8,12 +8,12 @@ namespace Talpa_10_WebApp.Validations;
 public class NotZero : ValidationAttribute
 {
     private static IStringLocalizer? _localizer;
-    
+
     private string GetErrorMessage(ValidationContext validationContext)
     {
         return GetLocalizer(validationContext)[ErrorMessage];
     }
-    
+
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
         if ((int)(value ?? 0) == 0)
@@ -23,7 +23,7 @@ public class NotZero : ValidationAttribute
 
         return ValidationResult.Success;
     }
-    
+
     private IStringLocalizer GetLocalizer(ValidationContext validationContext)
     {
         if (_localizer is null)

@@ -47,7 +47,7 @@ public class Repository
         {
             throw new Auth0ForbiddenException();
         }
-        
+
         string status = response.Content.ReadAsStringAsync().Result;
         Token? token = JsonSerializer.Deserialize<Token>(status);
         Auth0.AccessToken = token?.access_token;

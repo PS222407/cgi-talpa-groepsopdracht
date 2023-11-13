@@ -3,7 +3,7 @@
 public class UserScoreboard
 {
     public string UserId { get; set; }
-    
+
     public string UserName { get; set; }
 
     public int SuggestionId { get; set; }
@@ -11,4 +11,6 @@ public class UserScoreboard
     public string SuggestionName { get; set; }
 
     public int VoteCount { get; set; }
+
+    public int VotePercentage { get; set; }
 }

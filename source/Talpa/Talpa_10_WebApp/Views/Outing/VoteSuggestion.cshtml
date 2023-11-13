@@ -1,6 +1,5 @@
 ﻿@using Talpa_10_WebApp.ViewModels
 @using Microsoft.AspNetCore.Mvc.Localization
-@using Microsoft.AspNetCore.Mvc.ModelBinding
 @using Talpa_10_WebApp.Translations
 @model Talpa_10_WebApp.RequestModels.VoteSuggestionRequest
 @inject IHtmlLocalizer<Shared> SharedLocalizer
@@ -24,7 +23,7 @@
             @TempData["Message"]
         </div>
     }
-    
+
     @if (ViewBag.Errors != null && ViewBag.Errors.Count > 0)
     {
         <ul class="text-danger">
@@ -34,9 +33,9 @@
             }
         </ul>
     }
-    
+
     <h1 class="text-center my-5" style="text-transform: uppercase; font-size: 2rem">@SharedLocalizer["choose your desired outing"]</h1>
-    
+
     <form asp-action="VoteDate" asp-route-id="@Model.OutingId">
         <div class="outer-container">
             @foreach (SuggestionViewModel suggestion in Model.Suggestions ?? new List<SuggestionViewModel>())

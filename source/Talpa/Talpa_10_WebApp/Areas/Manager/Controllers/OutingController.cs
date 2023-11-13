@@ -25,7 +25,7 @@ public class OutingController : Controller
     private readonly ISuggestionService _suggestionService;
 
     private readonly Shared _localizer;
-    
+
     public OutingController(IOutingService outingService, IUserService userService, ISuggestionService suggestionService, IStringLocalizer<Shared> localizer)
     {
         _outingService = outingService;
@@ -82,7 +82,7 @@ public class OutingController : Controller
     // POST: Outing/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult> Create(OutingRequest outingRequest)
+    public async Task<ActionResult> Create(OutingCreateRequest outingRequest)
     {
         if (!ModelState.IsValid)
         {
@@ -142,7 +142,7 @@ public class OutingController : Controller
         List<Suggestion> suggestions = _suggestionService.GetAll();
         List<SelectListItem> suggestionOptions = suggestions.Select(suggestion => new SelectListItem { Value = suggestion.Id.ToString(), Text = suggestion.Name }).ToList();
 
-        OutingRequest outingRequest = new()
+        OutingEditRequest outingRequest = new()
         {
             Name = outing.Name,
             SuggestionOptions = suggestionOptions,
@@ -157,7 +157,7 @@ public class OutingController : Controller
     // POST: Outing/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit(int id, OutingRequest outingRequest)
+    public ActionResult Edit(int id, OutingEditRequest outingRequest)
     {
         if (!ModelState.IsValid)
         {

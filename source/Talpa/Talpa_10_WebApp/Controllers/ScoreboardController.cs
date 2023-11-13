@@ -14,11 +14,11 @@ public class ScoreboardController : Controller
     {
         _userService = userService;
     }
-    
+
     public async Task<IActionResult> Index()
     {
-        List<UserScoreboard> userScoreboards = await _userService.GetTopTenUsersWhoOwnTheMostVotedSuggestions(); 
-        
+        List<UserScoreboard> userScoreboards = await _userService.GetTopTenUsersWhoOwnTheMostVotedSuggestions();
+
         return View(userScoreboards);
     }
 }

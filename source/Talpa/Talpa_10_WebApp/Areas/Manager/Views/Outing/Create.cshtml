@@ -1,6 +1,6 @@
 ﻿@using Talpa_10_WebApp.Translations
 @using Microsoft.AspNetCore.Mvc.Localization
-@model Talpa_10_WebApp.RequestModels.OutingRequest
+@model Talpa_10_WebApp.RequestModels.OutingCreateRequest
 @inject IHtmlLocalizer<Shared> SharedLocalizer
 
 @{
@@ -24,11 +24,11 @@
                 <label class="control-label">@SharedLocalizer["Dates"]</label>
                 <div class="input-group date">
                     <div id="datepicker">
-                    <input type="hidden" class="form-control" id="Dates" name="StringDates" value="@Model?.StringDates" placeholder="@SharedLocalizer["SelectDays"]" required="">
+                        <input type="hidden" class="form-control" id="Dates" name="StringDates" value="@Model?.StringDates" placeholder="@SharedLocalizer["SelectDays"]" required="">
                     </div>
                 </div>
             </div>
-
+            <span asp-validation-for="Dates" class="text-danger"></span>
             <div class="form-group mt-3">
                 <input type="submit" value="@SharedLocalizer["Create"]" class="btn btn-primary"/>
             </div>
