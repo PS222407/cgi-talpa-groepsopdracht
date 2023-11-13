@@ -2,28 +2,31 @@
 using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
+using Talpa_10_WebApp.RequestModels;
 
 namespace Talpa_10_WebApp.Validations;
 
-public class DeadLine : ValidationAttribute
+public class SuggestionCount : ValidationAttribute
 {
     private static IStringLocalizer? _localizer;
-
+    
     private string GetErrorMessage(ValidationContext validationContext)
     {
         return GetLocalizer(validationContext)[ErrorMessage];
     }
-
+    
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
-        if (value is DateTime deadLine && deadLine > DateTime.Now)
+        OutingEditRequest outingRequest = (OutingEditRequest)validationContext.ObjectInstance;
+
+        if (outingRequest.SelectedSuggestionIds?.Count > 3)
         {
-            return ValidationResult.Success;
+            return new ValidationResult(GetErrorMessage(validationContext));
         }
 
-        return new ValidationResult(GetErrorMessage(validationContext));
+        return ValidationResult.Success;
     }
-
+    
     private IStringLocalizer GetLocalizer(ValidationContext validationContext)
     {
         if (_localizer is null)
