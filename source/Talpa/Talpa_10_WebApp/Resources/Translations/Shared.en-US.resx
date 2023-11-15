@@ -207,4 +207,16 @@
     <data name="Please select your preferred date and outing suggestion." xml:space="preserve">
         <value>Please select your preferred date and outing suggestion.</value>
     </data>
+    <data name="Outings" xml:space="preserve">
+        <value>Outings</value>
+    </data>
+    <data name="Confirm" xml:space="preserve">
+        <value>Confirm</value>
+    </data>
+    <data name="Most chosen suggestion" xml:space="preserve">
+        <value>Most chosen suggestion(s)</value>
+    </data>
+    <data name="Most chosen date" xml:space="preserve">
+        <value>Most chosen date(s)</value>
+    </data>
 </root>

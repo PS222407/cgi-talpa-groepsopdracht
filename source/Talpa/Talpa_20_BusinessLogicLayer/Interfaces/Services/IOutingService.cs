@@ -25,4 +25,8 @@ public interface IOutingService
     public bool UserHasVotedForOuting(string userId, int outingId);
 
     public bool Vote(string userId, int outingId, int suggestionId, List<int> votedDateIds);
+
+    public Outing? GetOutingByIdWithMostVotedDatesAndSuggestions(int id);
+    
+    public bool ConfirmOuting(int id, int suggestionId, int outingDateId);
 }

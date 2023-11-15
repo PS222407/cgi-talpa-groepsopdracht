@@ -61,7 +61,7 @@ public class OutingController : Controller
     // GET: Outing/Details/5
     public ActionResult Details(int id)
     {
-        Outing? outing = _outingService.GetById(id);
+        Outing? outing = _outingService.GetOutingByIdWithMostVotedDatesAndSuggestions(id);
         if (outing == null)
         {
             TempData["Message"] = _localizer.Get("No entity found with this id");
@@ -70,7 +70,48 @@ public class OutingController : Controller
             return View();
         }
 
-        return View(new OutingViewModel(outing.Id, outing.Name));
+        ConfirmOutingRequest confirmOutingRequest = new()
+        {
+            Name = outing.Name,
+            OutingDates = outing.OutingDates,
+            Suggestions = outing.Suggestions.Select(s => new SuggestionViewModel
+            {
+                Id = s.Id,
+                Name = s.Name,
+            }).ToList(),
+            OutingDateVoteCount = outing.OutingDateVoteCount,
+            SuggestionVoteCount = outing.SuggestionVoteCount,
+            SuggestionId = outing.ConfirmedSuggestionId,
+            OutingDateId = outing.ConfirmedOutingDateId,
+        };
+        
+        return View(confirmOutingRequest);
+    }
+
+    [HttpPost]
+    public ActionResult Details(int id, ConfirmOutingRequest confirmOutingRequest)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(confirmOutingRequest);
+        }
+        
+        Outing? outing = _outingService.GetById(id);
+
+        if (outing == null)
+        {
+            TempData["Message"] = _localizer.Get("No entity found with this id");
+            TempData["MessageType"] = "danger";
+            
+            return View(confirmOutingRequest);
+        }
+
+        _outingService.ConfirmOuting(id, confirmOutingRequest.SuggestionId ?? 0, confirmOutingRequest.OutingDateId ?? 0);
+        
+        TempData["Message"] = _localizer.Get("Item successfully updated");
+        TempData["MessageType"] = "success";
+
+        return RedirectToAction(nameof(Index));
     }
 
     // GET: Outing/Create

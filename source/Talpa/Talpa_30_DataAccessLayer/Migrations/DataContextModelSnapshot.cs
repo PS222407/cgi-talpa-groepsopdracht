@@ -40,6 +40,12 @@ namespace DataAccessLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int?>("ConfirmedOutingDateId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ConfirmedSuggestionId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("DeadLine")
                         .HasColumnType("datetime(6)");
 

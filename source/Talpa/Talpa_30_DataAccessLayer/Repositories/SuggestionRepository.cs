@@ -92,7 +92,8 @@ public class SuggestionRepository : ISuggestionRepository
         suggestionDb.Description = suggestion.Description;
         suggestionDb.Restrictions = suggestion.Restrictions;
 
-        return _dataContext.SaveChanges() > 0;
+        _dataContext.SaveChanges();
+        return true;
     }
 
     public bool Delete(int id)
