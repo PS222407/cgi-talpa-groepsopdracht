@@ -7,6 +7,8 @@ public class OutingViewModel
 {
     private List<OutingDate>? _outingDates;
 
+    public DateTime? Deadline { get; set; }
+
     public int? Id { get; set; }
 
     public string? Name { get; set; }

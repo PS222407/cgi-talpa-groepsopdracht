@@ -28,6 +28,10 @@ public class OutingEditRequest
         }
     }
 
+    [Required(ErrorMessage = "You need to select a deadline")]
+    [DeadLine(ErrorMessage = "You can't select a timestamp that has already happened")]
+    public DateTime? DeadLine { get; set; }
+
     [Required(ErrorMessage = "You are required to select a date.")]
     public List<DateTime>? Dates
     {
@@ -55,7 +59,7 @@ public class OutingEditRequest
         Dates = dates ?? new List<DateTime>();
     }
 
-    public OutingEditRequest()
+    public OutingEditRequest()  
     {
     }
 

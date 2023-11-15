@@ -46,7 +46,11 @@ public class UserService : IUserService
     public async Task<List<UserScoreboard>> GetTopTenUsersWhoOwnTheMostVotedSuggestions()
     {
         List<UserScoreboard> userScoreboards = await _userRepository.GetTopTenUsersWhoOwnTheMostVotedSuggestions();
-
+        if (!userScoreboards.Any())
+        {
+            return userScoreboards;
+        }
+        
         int max = userScoreboards.Max(userScoreboard => userScoreboard.VoteCount);
         foreach (UserScoreboard userScoreboard in userScoreboards)
         {

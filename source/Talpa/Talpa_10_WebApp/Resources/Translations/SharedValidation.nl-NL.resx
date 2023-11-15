@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+
 <root>
     <!-- 
       Microsoft ResX Schema 
@@ -134,5 +135,14 @@
   </data>
     <data name="You must select a suggestion" xml:space="preserve">
     <value>Je moet een suggestie kiezen</value>
+  </data>
+    <data name="You must select a suggestion" xml:space="preserve">
+    <value>Je moet een suggestie kiezen</value>
+  </data>
+    <data name="You can't select a timestamp that has already happened" xml:space="preserve">
+    <value>Je kan geen tijdstip selecteren die al is gebeurd.</value>
+  </data>
+    <data name="You need to select a deadline" xml:space="preserve">
+    <value>Je moet een deadline selecteren</value>
   </data>
 </root>

@@ -36,20 +36,6 @@ public class SuggestionController : Controller
         string? id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
         User? user = await _userService.GetById(id);
 
-        if (User.IsInRole(RoleName.Admin))
-        {
-            List<Suggestion> allSuggestions = _suggestionService.GetAll();
-            List<SuggestionViewModel> suggestionViewModels = allSuggestions.Select(suggestion =>
-                new SuggestionViewModel(
-                    suggestion.Id,
-                    suggestion.Name,
-                    suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>()
-                )
-            ).ToList();
-
-            return View(suggestionViewModels);
-        }
-
         int? teamId = user?.TeamId;
         if (teamId == null)
         {
@@ -64,22 +50,6 @@ public class SuggestionController : Controller
                 suggestion.Id,
                 suggestion.Name,
                 suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>())));
-    }
-
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}, {RoleName.Employee}")]
-    public ActionResult Details(int id)
-    {
-        string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
-        Suggestion? suggestion = _suggestionService.GetById(id, userId);
-        if (suggestion == null)
-        {
-            TempData["Message"] = _localizer.Get("No entity found with this id");
-            TempData["MessageType"] = "danger";
-
-            return View();
-        }
-
-        return View(new SuggestionViewModel(suggestion.Id, suggestion.Name, suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>()));
     }
 
     [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}, {RoleName.Employee}")]
@@ -180,6 +150,11 @@ public class SuggestionController : Controller
     {
         if (!ModelState.IsValid)
         {
+            suggestionRequest.RestrictionOptions = _restrictionService.GetAll().Select(restriction => new SelectListItem
+            {
+                Value = restriction.Id.ToString(), Text = restriction.Name,
+            }).ToList();
+
             return View(suggestionRequest);
         }
 
@@ -200,6 +175,11 @@ public class SuggestionController : Controller
         {
             TempData["Message"] = _localizer.Get("Error while updating");
             TempData["MessageType"] = "danger";
+            
+            suggestionRequest.RestrictionOptions = _restrictionService.GetAll().Select(restriction => new SelectListItem
+            {
+                Value = restriction.Id.ToString(), Text = restriction.Name,
+            }).ToList();
 
             return View(suggestionRequest);
         }

@@ -1,4 +1,6 @@
-﻿namespace BusinessLogicLayer.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BusinessLogicLayer.Models;
 
 public class Outing
 {
@@ -14,5 +16,17 @@ public class Outing
 
     public List<SuggestionVote>? SuggestionVotes { get; set; }
 
+    public int? ConfirmedOutingDateId { get; set; }
+
+    public int? ConfirmedSuggestionId { get; set; }
+
+    [NotMapped]
+    public int? SuggestionVoteCount { get; set; }
+
+    public DateTime? DeadLine { get; set; }
+
     public List<OutingDate>? OutingDates { get; set; }
+
+    [NotMapped]
+    public int? OutingDateVoteCount { get; set; }
 }
