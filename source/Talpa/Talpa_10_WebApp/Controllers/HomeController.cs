@@ -1,30 +1,58 @@
 ﻿using System.Diagnostics;
+using BusinessLogicLayer.Models;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using Talpa_10_WebApp.Constants;
 using Talpa_10_WebApp.Translations;
 using Talpa_10_WebApp.ViewModels;
+using BusinessLogicLayer.Interfaces.Services;
 
 namespace Talpa_10_WebApp.Controllers;
 
 [Authorize]
 public class HomeController : Controller
 {
+    private readonly IOutingService _outingService;
+
+    private readonly IUserService _userService;
+
     private readonly IStringLocalizer<Shared> _localizer;
 
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(IStringLocalizer<Shared> localizer)
+    public HomeController(IStringLocalizer<Shared> localizer, IUserService userService, IOutingService outingService)
     {
         _localizer = localizer;
+        _userService = userService;
+        _outingService = outingService;
     }
 
-    public IActionResult Index()
+    public async Task<ActionResult> Index()
     {
         string frogTranslated = new Shared(_localizer).Get("Frog");
 
-        return View();
+
+        string? id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+        User? user = await _userService.GetById(id);
+
+        if (User.IsInRole(RoleName.Admin))
+        {
+            return View(_outingService.GetAllComplete().Select(outing => new OutingViewModel(outing.Id, outing.Name)).ToList());
+        }
+
+        int? teamId = user?.TeamId;
+        if (teamId == null)
+        {
+            TempData["Message"] = new Shared(_localizer).Get("You are not assigned to a team");
+            TempData["MessageType"] = "danger";
+
+            return View(new List<OutingViewModel>());
+        }
+
+        return View(_outingService.GetAllCompleteFromTeam((int)teamId).Select(outing => new OutingViewModel(outing.Id, outing.Name)).ToList());
     }
 
     [HttpGet("TestError")]
