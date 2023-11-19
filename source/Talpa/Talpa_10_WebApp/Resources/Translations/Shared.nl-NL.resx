@@ -1,215 +1,320 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <root>
+    <!-- 
+      Microsoft ResX Schema 
+      
+      Version 2.0
+      
+      The primary goals of this format is to allow a simple XML format 
+      that is mostly human readable. The generation and parsing of the 
+      various data types are done through the TypeConverter classes 
+      associated with the data types.
+      
+      Example:
+      
+      ... ado.net/XML headers & schema ...
+      <resheader name="resmimetype">text/microsoft-resx</resheader>
+      <resheader name="version">2.0</resheader>
+      <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+      <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+      <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+      <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+      <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+          <value>[base64 mime encoded serialized .NET Framework object]</value>
+      </data>
+      <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+          <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+          <comment>This is a comment</comment>
+      </data>
+                  
+      There are any number of "resheader" rows that contain simple 
+      name/value pairs.
+      
+      Each data row contains a name, and value. The row also contains a 
+      type or mimetype. Type corresponds to a .NET class that support 
+      text/value conversion through the TypeConverter architecture. 
+      Classes that don't support this are serialized and stored with the 
+      mimetype set.
+      
+      The mimetype is used for serialized objects, and tells the 
+      ResXResourceReader how to depersist the object. This is currently not 
+      extensible. For a given mimetype the value must be set accordingly:
+      
+      Note - application/x-microsoft.net.object.binary.base64 is the format 
+      that the ResXResourceWriter will generate, however the reader can 
+      read any of the formats listed below.
+      
+      mimetype: application/x-microsoft.net.object.binary.base64
+      value   : The object must be serialized with 
+              : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+              : and then encoded with base64 encoding.
+      
+      mimetype: application/x-microsoft.net.object.soap.base64
+      value   : The object must be serialized with 
+              : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+              : and then encoded with base64 encoding.
+  
+      mimetype: application/x-microsoft.net.object.bytearray.base64
+      value   : The object must be serialized into a byte array 
+              : using a System.ComponentModel.TypeConverter
+              : and then encoded with base64 encoding.
+      -->
     <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
         <xsd:element name="root" msdata:IsDataSet="true">
-
+            <xsd:complexType>
+                <xsd:choice maxOccurs="unbounded">
+                    <xsd:element name="metadata">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" use="required" type="xsd:string"/>
+                            <xsd:attribute name="type" type="xsd:string"/>
+                            <xsd:attribute name="mimetype" type="xsd:string"/>
+                            <xsd:attribute ref="xml:space"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="assembly">
+                        <xsd:complexType>
+                            <xsd:attribute name="alias" type="xsd:string"/>
+                            <xsd:attribute name="name" type="xsd:string"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="data">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+                            <xsd:attribute ref="xml:space"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="resheader">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:choice>
+            </xsd:complexType>
         </xsd:element>
     </xsd:schema>
     <resheader name="resmimetype">
         <value>text/microsoft-resx</value>
     </resheader>
     <resheader name="version">
-        <value>1.3</value>
+        <value>2.0</value>
     </resheader>
     <resheader name="reader">
-        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <resheader name="writer">
-        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="Frog" xml:space="preserve">
-        <value>Kikker</value>
-    </data>
+    <value>Kikker</value>
+  </data>
     <data name="Teams" xml:space="preserve">
-        <value>Teams</value>
-    </data>
+    <value>Teams</value>
+  </data>
     <data name="ManageOutings" xml:space="preserve">
-        <value>Beheer uitjes</value>
-    </data>
+    <value>Beheer uitjes</value>
+  </data>
     <data name="Scoreboard" xml:space="preserve">
-        <value>Scorebord</value>
-    </data>
+    <value>Scorebord</value>
+  </data>
     <data name="OutingsToPlan" xml:space="preserve">
-        <value>Te plannen uitjes</value>
+    <value>Te plannen uitjes</value>
         <comment>OutingsToPlan</comment>
-    </data>
+  </data>
     <data name="Suggestions" xml:space="preserve">
-        <value>Suggesties</value>
-    </data>
+    <value>Suggesties</value>
+  </data>
     <data name="Logout" xml:space="preserve">
-        <value>Uitloggen</value>
-    </data>
+    <value>Uitloggen</value>
+  </data>
     <data name="Login" xml:space="preserve">
-        <value>Log in</value>
-    </data>
+    <value>Log in</value>
+  </data>
     <data name="Hello" xml:space="preserve">
-        <value>Hallo</value>
-    </data>
-    <data name="Welcome" xml:space="preserve">  
-        <value>Welkom bij TALPA!</value>
-    </data>
+    <value>Hallo</value>
+  </data>
+    <data name="Welcome" xml:space="preserve">
+    <value>Welkom bij TALPA!</value>
+  </data>
     <data name="Description" xml:space="preserve">
-        <value>Beschrijving</value>
-    </data>
+    <value>Beschrijving</value>
+  </data>
     <data name="Index" xml:space="preserve">
-        <value>Overzicht</value>
-    </data>
+    <value>Overzicht</value>
+  </data>
     <data name="Manager" xml:space="preserve">
-        <value>Manager</value>
-    </data>
+    <value>Manager</value>
+  </data>
     <data name="Admin" xml:space="preserve">
-        <value>Admin</value>
-    </data>
+    <value>Admin</value>
+  </data>
     <data name="Employee" xml:space="preserve">
-        <value>Werknemer</value>
-    </data>
+    <value>Werknemer</value>
+  </data>
     <data name="Homepage" xml:space="preserve">
-        <value>Home Pagina</value>
-    </data>
+    <value>Home Pagina</value>
+  </data>
     <data name="Create New" xml:space="preserve">
-        <value>Nieuwe Aaanmaken</value>
-    </data>
+    <value>Nieuwe Aaanmaken</value>
+  </data>
     <data name="Edit" xml:space="preserve">
-        <value>Wijzig</value>
-    </data>
+    <value>Wijzig</value>
+  </data>
     <data name="Details" xml:space="preserve">
-        <value>Details</value>
-    </data>
+    <value>Details</value>
+  </data>
     <data name="Delete" xml:space="preserve">
-        <value>Verwijder</value>
-    </data>
+    <value>Verwijder</value>
+  </data>
     <data name="Outing" xml:space="preserve">
-        <value>Uitje</value>
-    </data>
+    <value>Uitje</value>
+  </data>
     <data name="Dates" xml:space="preserve">
-        <value>Datums</value>
-    </data>
+    <value>Datums</value>
+  </data>
     <data name="SelectDays" xml:space="preserve">
-        <value>Selecteer dagen</value>
-    </data>
+    <value>Selecteer dagen</value>
+  </data>
     <data name="Save" xml:space="preserve">
-        <value>Opslaan</value>
-    </data>
+    <value>Opslaan</value>
+  </data>
     <data name="BackToList" xml:space="preserve">
-        <value>Terug naar overzicht</value>
-    </data>
+    <value>Terug naar overzicht</value>
+  </data>
     <data name="Are you sure you want to delete this?" xml:space="preserve">
-        <value>Weet je zeker dat je dit wilt verwijderen?</value>
-    </data>
+    <value>Weet je zeker dat je dit wilt verwijderen?</value>
+  </data>
     <data name="Team" xml:space="preserve">
-        <value>Team</value>
-    </data>
+    <value>Team</value>
+  </data>
     <data name="Users" xml:space="preserve">
-        <value>Gebruikers</value>
-    </data>
+    <value>Gebruikers</value>
+  </data>
     <data name="No users selected" xml:space="preserve">
-        <value>Geen gebruikers geselecteerd</value>
-    </data>
+    <value>Geen gebruikers geselecteerd</value>
+  </data>
     <data name="Create" xml:space="preserve">
-        <value>Aanmaken</value>
-    </data>
+    <value>Aanmaken</value>
+  </data>
     <data name="Access Denied" xml:space="preserve">
-        <value>Toegang geweigerd</value>
-    </data>
+    <value>Toegang geweigerd</value>
+  </data>
     <data name="You do not have access to this resource" xml:space="preserve">
-        <value>
+    <value>
 U heeft geen toegang tot deze bron</value>
-    </data>
+  </data>
     <data name="An error occurred while processing your request" xml:space="preserve">
-        <value>
+    <value>
 Er is een fout opgetreden bij het verwerken van uw verzoek</value>
-    </data>
+  </data>
     <data name="You are not assigned to a team" xml:space="preserve">
-        <value>Je bent niet aan een team toegewezen</value>
-    </data>
+    <value>Je bent niet aan een team toegewezen</value>
+  </data>
     <data name="Outing does not exist" xml:space="preserve">
-        <value>Dit uitje bestaat niet</value>
-    </data>
+    <value>Dit uitje bestaat niet</value>
+  </data>
     <data name="No entity found with this id" xml:space="preserve">
-        <value>Er bestaat geen entiteit met dit id</value>
-    </data>
+    <value>Er bestaat geen entiteit met dit id</value>
+  </data>
     <data name="Error while creating" xml:space="preserve">
-        <value>Fout tijdens het aanmaken</value>
-    </data>
+    <value>Fout tijdens het aanmaken</value>
+  </data>
     <data name="Item successfully created" xml:space="preserve">
-        <value>Item succesvol aangemaakt</value>
-    </data>
+    <value>Item succesvol aangemaakt</value>
+  </data>
     <data name="Error while updating" xml:space="preserve">
-        <value>Fout tijdens het wijzigen</value>
-    </data>
+    <value>Fout tijdens het wijzigen</value>
+  </data>
     <data name="Item successfully updated" xml:space="preserve">
-        <value>Item succesvol gewijzigd</value>
-    </data>
+    <value>Item succesvol gewijzigd</value>
+  </data>
     <data name="Item successfully deleted" xml:space="preserve">
-        <value>Item successvol verwijderd</value>
-    </data>
+    <value>Item successvol verwijderd</value>
+  </data>
     <data name="Error while deleting" xml:space="preserve">
-        <value>Fout tijdens het verwijderen</value>
-    </data>
+    <value>Fout tijdens het verwijderen</value>
+  </data>
     <data name="Error white attaching users" xml:space="preserve">
-        <value>Fout tijdens het koppelen van de gebruikers</value>
-    </data>
+    <value>Fout tijdens het koppelen van de gebruikers</value>
+  </data>
     <data name="Restrictions" xml:space="preserve">
-        <value>Beperkingen</value>
-    </data>
+    <value>Beperkingen</value>
+  </data>
     <data name="Suggestion" xml:space="preserve">
-        <value>Suggestie</value>
-    </data>
+    <value>Suggestie</value>
+  </data>
     <data name="Vote" xml:space="preserve">
-        <value>Stem</value>
-    </data>
+    <value>Stem</value>
+  </data>
     <data name="Detail" xml:space="preserve">
-        <value>Detail</value>
-    </data>
+    <value>Detail</value>
+  </data>
     <data name="choose your desired dates" xml:space="preserve">
-        <value>Kies uw gewenste datums</value>
-    </data>
+    <value>Kies uw gewenste datums</value>
+  </data>
     <data name="choose your desired outing" xml:space="preserve">
-        <value>Kies uw gewenste uitje</value>
-    </data>
+    <value>Kies uw gewenste uitje</value>
+  </data>
     <data name="Next" xml:space="preserve">
-        <value>Volgende</value>
-    </data>
+    <value>Volgende</value>
+  </data>
     <data name="What" xml:space="preserve">
-        <value>Wat</value>
-    </data>
+    <value>Wat</value>
+  </data>
     <data name="When" xml:space="preserve">
-        <value>Wanneer</value>
-    </data>
+    <value>Wanneer</value>
+  </data>
     <data name="Not available in development" xml:space="preserve">
-        <value>Niet beschikbaar in Development modus</value>
-    </data>
+    <value>Niet beschikbaar in Development modus</value>
+  </data>
     <data name="Name" xml:space="preserve">
-        <value>Naam</value>
-    </data>
+    <value>Naam</value>
+  </data>
     <data name="Votes" xml:space="preserve">
-        <value>Stemmen</value>
-    </data>
+    <value>Stemmen</value>
+  </data>
     <data name="You have already voted for this outing" xml:space="preserve">
-        <value>Je hebt al gestemd voor dit uitje</value>
-    </data>
+    <value>Je hebt al gestemd voor dit uitje</value>
+  </data>
     <data name="Back" xml:space="preserve">
-        <value>Terug</value>
-    </data>
+    <value>Terug</value>
+  </data>
     <data name="Invalid input" xml:space="preserve">
-        <value>Onjuiste invoer</value>
-    </data>
+    <value>Onjuiste invoer</value>
+  </data>
     <data name="Can not be zero" xml:space="preserve">
-        <value>Kan niet nul zijn</value>
-    </data>
+    <value>Kan niet nul zijn</value>
+  </data>
     <data name="You must select a suggestion" xml:space="preserve">
-        <value>Je moet een suggestie kiezen</value>
-    </data>
+    <value>Je moet een suggestie kiezen</value>
+  </data>
     <data name="UserName" xml:space="preserve">
-        <value>Gebruikersnaam</value>
-    </data>
+    <value>Gebruikersnaam</value>
+  </data>
     <data name="Rank" xml:space="preserve">
-        <value>Rang</value>
-    </data>
+    <value>Rang</value>
+  </data>
     <data name="Please select your preferred date and outing suggestion." xml:space="preserve">
-        <value>Selecteer alstublieft uw gewenste datum en suggestie voor het uitje.</value>
-    </data>
+    <value>Selecteer alstublieft uw gewenste datum en suggestie voor het uitje.</value>
+  </data>
+    <data name="PlannedOutings" xml:space="preserve">
+    <value>Geplande uitjes</value>
+  </data>
+    <data name="These are the current planned outings" xml:space="preserve">
+    <value>Dit zijn de huidige geplande uitjes</value>
+  </data>
     <data name="Outings" xml:space="preserve">
         <value>Uitjes</value>
     </data>
