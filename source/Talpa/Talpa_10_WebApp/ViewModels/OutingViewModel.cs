@@ -7,17 +7,25 @@ public class OutingViewModel
 {
     private List<OutingDate>? _outingDates;
 
+    public DateTime? Deadline { get; set; }
+
     public int? Id { get; set; }
 
     public string? Name { get; set; }
 
     public string ImageUrl { get; set; }
 
-    public List<SuggestionViewModel>? Suggestions { get; set; } 
+    public List<SuggestionViewModel>? Suggestions { get; set; }
 
     public List<string>? SelectedSuggestionIds { get; set; }
 
     public List<SelectListItem>? SuggestionOptions { get; set; }
+    
+    public int? ConfirmedOutingDateId { get; set; }
+    
+    public OutingDate? ConfirmedOutingDate { get; set; }
+
+    public Suggestion? ConfirmedSuggestion { get; set; }
 
     public List<OutingDate>? OutingDates
     {
@@ -36,11 +44,17 @@ public class OutingViewModel
         Id = id;
         Name = name;
     }
+
     public OutingViewModel(int? id, string? name, List<SuggestionViewModel>? suggestions)
     {
         Id = id;
         Name = name;
         Suggestions = suggestions;
+    }
+
+    public int GetDaysLeft()
+    {
+        return (ConfirmedOutingDate?.Date - DateTime.Now.Date)?.Days ?? 0;
     }
 
     private string ConvertDatesToString(List<DateTime> dateList)

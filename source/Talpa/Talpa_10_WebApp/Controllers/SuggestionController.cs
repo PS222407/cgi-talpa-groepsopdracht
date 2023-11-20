@@ -28,7 +28,8 @@ public class SuggestionController : Controller
 
     private readonly Shared _localizer;
 
-    public SuggestionController(FileService fileService, IWebHostEnvironment webHostEnvironment, ISuggestionService suggestionService, IUserService userService, IRestrictionService restrictionService, IStringLocalizer<Shared> localizer)
+    public SuggestionController(FileService fileService, IWebHostEnvironment webHostEnvironment, ISuggestionService suggestionService, IUserService userService, IRestrictionService restrictionService,
+        IStringLocalizer<Shared> localizer)
     {
         _webHostEnvironment = webHostEnvironment;
         _suggestionService = suggestionService;
@@ -42,20 +43,6 @@ public class SuggestionController : Controller
     {
         string? id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
         User? user = await _userService.GetById(id);
-
-        if (User.IsInRole(RoleName.Admin))
-        {
-            List<Suggestion> allSuggestions = _suggestionService.GetAll();
-            List<SuggestionViewModel> suggestionViewModels = allSuggestions.Select(suggestion =>
-                new SuggestionViewModel(
-                    suggestion.Id,
-                    suggestion.Name,
-                    suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>()
-                )
-            ).ToList();
-
-            return View(suggestionViewModels);
-        }
 
         int? teamId = user?.TeamId;
         if (teamId == null)
@@ -71,21 +58,6 @@ public class SuggestionController : Controller
                 suggestion.Id,
                 suggestion.Name,
                 suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>())));
-    }
-
-    [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}, {RoleName.Employee}")]
-    public ActionResult Details(int id)
-    {
-        Suggestion? suggestion = _suggestionService.GetById(id);
-        if (suggestion == null)
-        {
-            TempData["Message"] = _localizer.Get("No entity found with this id");
-            TempData["MessageType"] = "danger";
-
-            return View();
-        }
-
-        return View(new SuggestionViewModel(suggestion.Id, suggestion.Name, suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>()));
     }
 
     [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}, {RoleName.Employee}")]
@@ -112,12 +84,20 @@ public class SuggestionController : Controller
             return View(suggestionRequest);
         }
 
+        if (_suggestionService.Exists(suggestionRequest.Name))
+        {
+            TempData["Message"] = _localizer.Get("Suggestion with the same name already exists");
+            TempData["MessageType"] = "danger";
+            return View(suggestionRequest);
+        }
+
         Suggestion suggestion = new()
         {
             Name = suggestionRequest.Name,
+            Description = suggestionRequest.Description,
             Restrictions = suggestionRequest.SelectedRestrictionIds?.Select(restriction => new Restriction { Name = restriction }).ToList(),
             ImageUrl = await _fileService.SaveImageAsync(suggestionRequest.Image, _webHostEnvironment) ?? ""
-    };
+        };
         string id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
         User user = (await _userService.GetById(id))!;
 
@@ -153,10 +133,12 @@ public class SuggestionController : Controller
         List<Restriction> restrictions = _restrictionService.GetAll();
         List<SelectListItem> restrictionsOptions = restrictions.Select(restriction => new SelectListItem
         {
-            Value = restriction.Id.ToString(), Text = restriction.Name
+            Value = restriction.Id.ToString(), Text = restriction.Name,
         }).ToList();
 
-        Suggestion? suggestion = _suggestionService.GetById(id);
+        string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
+
+        Suggestion? suggestion = _suggestionService.GetById(id, userId);
         if (suggestion == null)
         {
             TempData["Message"] = _localizer.Get("No entity found with this id");
@@ -168,9 +150,9 @@ public class SuggestionController : Controller
         SuggestionRequest suggestionRequest = new()
         {
             Name = suggestion.Name,
+            Description = suggestion.Description,
             SelectedRestrictionIds = suggestion.Restrictions?.Select(restriction => restriction.Id.ToString()).ToList(),
             RestrictionOptions = restrictionsOptions,
-            
         };
 
         return View(suggestionRequest);
@@ -184,21 +166,46 @@ public class SuggestionController : Controller
     {
         if (!ModelState.IsValid)
         {
+            suggestionRequest.RestrictionOptions = _restrictionService.GetAll().Select(restriction => new SelectListItem
+            {
+                Value = restriction.Id.ToString(), Text = restriction.Name,
+            }).ToList();
+
+            return View(suggestionRequest);
+        }
+
+        if (_suggestionService.Exists(suggestionRequest.Name))
+        {
+            TempData["Message"] = _localizer.Get("Suggestion with the same name already exists");
+            TempData["MessageType"] = "danger";
             return View(suggestionRequest);
         }
 
         Suggestion suggestion = new()
-            { 
-                Id = id, Name = suggestionRequest.Name, 
-                Restrictions = suggestionRequest.SelectedRestrictionIds?.Select(restriction => new Restriction { Name = restriction }).ToList(),
-                ImageUrl = await _fileService.SaveImageAsync(suggestionRequest.Image, _webHostEnvironment) ?? ""
+        {
+            Id = id,
+            Name = suggestionRequest.Name,
+            Description = suggestionRequest.Description,
+            Restrictions = suggestionRequest.SelectedRestrictionIds?.Select(restriction => new Restriction
+            {
+                Name = restriction,
+            }).ToList(),
+            ImageUrl = await _fileService.SaveImageAsync(suggestionRequest.Image, _webHostEnvironment) ?? "",
         };
-        if (!_suggestionService.Update(suggestion))
+
+        string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
+
+        if (!_suggestionService.Update(suggestion, userId))
         {
             TempData["Message"] = _localizer.Get("Error while updating");
             TempData["MessageType"] = "danger";
+            
+            suggestionRequest.RestrictionOptions = _restrictionService.GetAll().Select(restriction => new SelectListItem
+            {
+                Value = restriction.Id.ToString(), Text = restriction.Name,
+            }).ToList();
 
-            return View();
+            return View(suggestionRequest);
         }
 
         TempData["Message"] = _localizer.Get("Item successfully updated");
@@ -211,7 +218,8 @@ public class SuggestionController : Controller
     [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}, {RoleName.Employee}")]
     public ActionResult Delete(int id)
     {
-        Suggestion? suggestion = _suggestionService.GetById(id);
+        string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
+        Suggestion? suggestion = _suggestionService.GetById(id, userId);
         if (suggestion == null)
         {
             TempData["Message"] = _localizer.Get("No entity found with this id");
@@ -231,7 +239,9 @@ public class SuggestionController : Controller
     [ValidateAntiForgeryToken]
     public ActionResult Destroy(int id)
     {
-        if (!_suggestionService.Delete(id))
+        string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
+
+        if (!_suggestionService.Delete(id, userId))
         {
             TempData["Message"] = _localizer.Get("Error while deleting");
             TempData["MessageType"] = "danger";

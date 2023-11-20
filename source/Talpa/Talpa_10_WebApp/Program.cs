@@ -102,7 +102,7 @@ app.UseCookiePolicy();
 
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
-    ForwardedHeaders = ForwardedHeaders.XForwardedProto
+    ForwardedHeaders = ForwardedHeaders.XForwardedProto,
 });
 
 app.UseRouting();

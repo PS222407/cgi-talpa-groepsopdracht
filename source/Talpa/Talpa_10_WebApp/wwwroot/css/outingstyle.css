@@ -6,7 +6,56 @@
     flex-wrap: wrap;
 }
 
-.card {
+.home-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 3% 5% 0 5%;
+}
+
+.home-container .outer-container {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5vw
+}
+
+.home-container .outer-container .card {
+    top: 5vh;
+    min-width: 17%;
+    width: 17%;
+    max-width: 17%;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    border-radius: 15px;
+    position: relative;
+    flex: 1;
+}
+
+.card-link .card {
+    width: 20vw;
+    height: 50vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    border-radius: 5%;
+    margin: 10px;
+    position: relative;
+    flex: 1;
+}
+
+.card-frame .card {
     width: 20vw;
     height: 50vh;
     background-size: cover;
@@ -34,6 +83,10 @@
     background-color: rgba(192, 192, 192, 0.4);
     border-radius: 5%;
     padding: 20px;
+}
+
+.card p {
+    font-size: 16px;
 }
 
 h1 {
@@ -68,13 +121,14 @@ h1 {
     width: 100%;
     font-size: 1.4em;
 }
-.vote-header-item.not-active::after{
+
+.vote-header-item.not-active::after {
     position: absolute;
     top: 0;
     left: -60px;
     content: "";
     display: block;
-    
+
     width: 0;
     height: 0;
     border-top: 44px solid #F2F2F2;
@@ -86,11 +140,37 @@ h1 {
     background-color: #4D4D5E;
     color: white;
 }
+@media (min-width: 991px) and (max-width: 1280px) {
+    .home-container .outer-container .card {
+        min-width: 20vw;
+        width: 20vw;
+        max-width: 20vw;
+    }
+}
 
-@media (max-width: 576px) {
-    .card {
-        width: 80vw;
-        max-width: 80%;
+@media (min-width: 577px) and (max-width: 991px) {
+    .card-link .card {
+        max-width: 65%;
+        height: 40vh;
+    }
+
+    .home-container .outer-container .card {
+        min-width: 30vw;
+        width: 30vw;
+        max-width: 30vw;
+    }
+
+    .home-container {
+        padding: 3% 15% 0 15%;
+    }
+
+    .card-frame .card {
+        max-width: 65%;
+        height: 40vh;
+    }
+
+    h1 {
+        font-size: 24px;
     }
 
     a.card-link {
@@ -100,16 +180,30 @@ h1 {
     .card-frame {
         width: 100%;
     }
+
+    .card p {
+        font-size: 14px;
+    }
 }
 
-@media (min-width: 577px) and (max-width: 991px) {
-    .card {
-        max-width: 65%;
-        height: 40vh;
+@media (max-width: 576px) {
+    .card-link .card {
+        width: 80vw;
+        max-width: 80%;
+    }
+    .home-container .outer-container .card {
+        min-width: 60vw;
+        width: 60vw;
+        max-width: 60vw;
     }
 
-    h1 {
-        font-size: 24px;
+    .home-container .outer-container {
+        flex-direction: column;
+    }    
+
+    .card-frame .card {
+        width: 80vw;
+        max-width: 80%;
     }
 
     a.card-link {

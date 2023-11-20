@@ -170,7 +170,7 @@ public class UserRepository : Repository, IUserRepository
             );
 
         var results = query.ToList();
-        
+
         List<UserScoreboard> userScoreboards = new();
         foreach (var result in results)
         {
@@ -184,7 +184,7 @@ public class UserRepository : Repository, IUserRepository
                 VoteCount = result.VoteCount,
             });
         }
-        
+
         return userScoreboards;
     }
 }

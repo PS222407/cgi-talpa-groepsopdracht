@@ -69,16 +69,57 @@ public class OutingController : Controller
     // GET: Outing/Details/5
     public ActionResult Details(int id)
     {
+        Outing? outing = _outingService.GetOutingByIdWithMostVotedDatesAndSuggestions(id);
+        if (outing == null)
+        {
+            TempData["Message"] = _localizer.Get("There are no votes for this outing");
+            TempData["MessageType"] = "danger";
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        ConfirmOutingRequest confirmOutingRequest = new()
+        {
+            Name = outing.Name,
+            OutingDates = outing.OutingDates,
+            Suggestions = outing.Suggestions.Select(s => new SuggestionViewModel
+            {
+                Id = s.Id,
+                Name = s.Name,
+            }).ToList(),
+            OutingDateVoteCount = outing.OutingDateVoteCount,
+            SuggestionVoteCount = outing.SuggestionVoteCount,
+            SuggestionId = outing.ConfirmedSuggestionId,
+            OutingDateId = outing.ConfirmedOutingDateId,
+        };
+        
+        return View(confirmOutingRequest);
+    }
+
+    [HttpPost]
+    public ActionResult Details(int id, ConfirmOutingRequest confirmOutingRequest)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(confirmOutingRequest);
+        }
+        
         Outing? outing = _outingService.GetById(id);
+
         if (outing == null)
         {
             TempData["Message"] = _localizer.Get("No entity found with this id");
             TempData["MessageType"] = "danger";
-
-            return View();
+            
+            return View(confirmOutingRequest);
         }
 
-        return View(new OutingViewModel(outing.Id, outing.Name));
+        _outingService.ConfirmOuting(id, confirmOutingRequest.SuggestionId ?? 0, confirmOutingRequest.OutingDateId ?? 0);
+        
+        TempData["Message"] = _localizer.Get("Item successfully updated");
+        TempData["MessageType"] = "success";
+
+        return RedirectToAction(nameof(Index));
     }
 
     // GET: Outing/Create
@@ -90,7 +131,7 @@ public class OutingController : Controller
     // POST: Outing/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult> Create(OutingRequest outingRequest)
+    public async Task<ActionResult> Create(OutingCreateRequest outingRequest)
     {
         if (!ModelState.IsValid)
         {
@@ -108,7 +149,12 @@ public class OutingController : Controller
         }
 
         List<OutingDate> outingDates = outingRequest.Dates?.Select(date => new OutingDate { Date = date }).ToList() ?? new List<OutingDate>();
-        Outing outing = new() { Name = outingRequest.Name, OutingDates = outingDates, ImageUrl = await _fileService.SaveImageAsync(outingRequest.Image, _webHostEnvironment) ?? "" };
+        Outing outing = new()
+        {
+            Name = outingRequest.Name,
+            OutingDates = outingDates,
+            ImageUrl = await _fileService.SaveImageAsync(outingRequest.Image, _webHostEnvironment) ?? "",
+        };
 
         Outing outingEntry;
         try
@@ -150,11 +196,12 @@ public class OutingController : Controller
         List<Suggestion> suggestions = _suggestionService.GetAll();
         List<SelectListItem> suggestionOptions = suggestions.Select(suggestion => new SelectListItem { Value = suggestion.Id.ToString(), Text = suggestion.Name }).ToList();
 
-        OutingRequest outingRequest = new()
+        OutingEditRequest outingRequest = new()
         {
             Name = outing.Name,
             SuggestionOptions = suggestionOptions,
             SelectedSuggestionIds = outing.Suggestions?.Select(s => s.Id.ToString()).ToList(),
+            DeadLine = outing.DeadLine,
             Dates = outing.OutingDates?.Select(od => od.Date).ToList() ?? new List<DateTime>(),
         };
 
@@ -164,7 +211,7 @@ public class OutingController : Controller
     // POST: Outing/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit(int id, OutingRequest outingRequest)
+    public ActionResult Edit(int id, OutingEditRequest outingRequest)
     {
         if (!ModelState.IsValid)
         {
@@ -178,6 +225,7 @@ public class OutingController : Controller
         {
             Id = id,
             Name = outingRequest.Name,
+            DeadLine = outingRequest.DeadLine,
             OutingDates = outingDates,
             Suggestions = suggestions,
         };

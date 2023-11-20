@@ -89,9 +89,11 @@ public class SuggestionRepository : ISuggestionRepository
         }
 
         suggestionDb.Name = suggestion.Name;
+        suggestionDb.Description = suggestion.Description;
         suggestionDb.Restrictions = suggestion.Restrictions;
 
-        return _dataContext.SaveChanges() > 0;
+        _dataContext.SaveChanges();
+        return true;
     }
 
     public bool Delete(int id)
@@ -109,4 +111,13 @@ public class SuggestionRepository : ISuggestionRepository
 
         return _dataContext.SaveChanges() > 0;
     }
+
+    public bool Exists(string name)
+    {
+        string formattedName = name.Replace(" ", "");
+
+        return _dataContext.Suggestions
+            .Any(row => row.Name.Replace(" ", "") == formattedName);
+    }
+
 }

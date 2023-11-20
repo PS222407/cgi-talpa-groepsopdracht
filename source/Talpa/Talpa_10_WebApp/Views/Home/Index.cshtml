@@ -1,11 +1,51 @@
-﻿@using Talpa_10_WebApp.Translations
+﻿@using Talpa_10_WebApp.ViewModels
+@using Talpa_10_WebApp.Translations
 @using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization
+@model IEnumerable<Talpa_10_WebApp.ViewModels.OutingViewModel>
 @inject IHtmlLocalizer<Shared> SharedLocalizer
 
 @{
-    ViewData["Title"] = SharedLocalizer["Homepage"];
+    ViewData["Title"] = SharedLocalizer["Index"];
+    ViewData["DisableMainContainer"] = "True";
 }
 
-<div class="text-center">
-    <h1 class="display-4">@SharedLocalizer["Welcome"]</h1>
+<div style="background-color: rgb(245, 245, 245); padding: 1em; font-size: 1.5em">
+    <h1 style="text-align: center">@SharedLocalizer["PlannedOutings"]</h1>
+    <div style="font-size: 0.8em; text-align: center">@SharedLocalizer["These are the current planned outings"]</div>
+</div>
+
+<div class="container">
+    @if (TempData.ContainsKey("Message"))
+    {
+        <div class="alert alert-@(TempData["MessageType"])">
+            @TempData["Message"]
+        </div>
+    }
+</div>
+
+
+<div class="home-container">
+    <div class="outer-container">
+        @foreach (OutingViewModel outing in Model)
+        {
+            <div class="card" style="border-radius: 15px;">
+                <img class="card-img-top" style="border-radius: 15px 15px 0 0;" src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg" alt="@outing.Name">
+                <div class="card-body" style="padding: 10%;">
+                    <div>@outing.GetDaysLeft() @SharedLocalizer["Days left"]</div>
+                    <p style="margin:0">@outing.ConfirmedSuggestion?.Name</p>
+                    <h5 style="margin:0" class="title">
+                        @outing.Name
+                    </h5>
+                    <hr style="width: 100%">
+                    <p style="margin:0">
+                        @outing.ConfirmedSuggestion?.Description
+                    </p>
+                    <p style="margin:0">@(string.Join(", ", outing.ConfirmedSuggestion?.Restrictions?.Select(r => r.Name) ?? new List<string>())) </p>
+                    <hr style="width: 100%">
+                    <p style="margin:0">@outing.ConfirmedOutingDate?.Date.ToString("dddd d MMMM yyyy", CultureInfo.CurrentCulture)</p>
+                </div>
+            </div>
+        }
+    </div>
 </div>

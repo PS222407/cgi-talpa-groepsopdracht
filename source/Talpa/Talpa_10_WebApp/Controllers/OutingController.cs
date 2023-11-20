@@ -34,7 +34,7 @@ public class OutingController : Controller
 
         if (User.IsInRole(RoleName.Admin))
         {
-            return View(_outingService.GetAll().Select(outing => new OutingViewModel(outing.Id, outing.Name)).ToList());
+            return View(_outingService.GetAllComplete().Select(outing => new OutingViewModel(outing.Id, outing.Name)).ToList());
         }
 
         int? teamId = user?.TeamId;
@@ -46,12 +46,19 @@ public class OutingController : Controller
             return View(new List<OutingViewModel>());
         }
 
-        return View(_outingService.GetAllFromTeam((int)teamId).Select(outing => new OutingViewModel(outing.Id, outing.Name)).ToList());
+        return View(_outingService.GetAllCompleteFromTeam((int)teamId).Select(outing => new OutingViewModel(outing.Id, outing.Name)).ToList());
     }
 
     [HttpGet("Outing/{id:int}/VoteSuggestion")]
     public ActionResult VoteSuggestion(int id)
     {
+        Outing? outing = _outingService.GetByIdWithVotes(id);
+
+        if (outing == null || outing.DeadLine == null || outing.DeadLine <= DateTime.Now)
+        {
+            return RedirectToAction(nameof(Index));
+        }
+
         string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
 
         List<string> errors = new();
@@ -62,8 +69,9 @@ public class OutingController : Controller
                 errors.Add(TempData[key].ToString());
             }
         }
+
         ViewBag.Errors = errors;
-        
+
         if (_outingService.UserHasVotedForOuting(userId, id))
         {
             TempData["Message"] = _localizer.Get("You have already voted for this outing");
@@ -71,8 +79,7 @@ public class OutingController : Controller
 
             return RedirectToAction(nameof(Index));
         }
-        
-        Outing? outing = _outingService.GetByIdWithVotes(id);
+
         if (outing == null)
         {
             TempData["Message"] = _localizer.Get("Outing does not exist");
@@ -115,7 +122,7 @@ public class OutingController : Controller
 
             return RedirectToAction(nameof(VoteSuggestion), new { id });
         }
-        
+
         Outing? outing = _outingService.GetById(id);
         if (outing == null)
         {
@@ -149,7 +156,7 @@ public class OutingController : Controller
         {
             return View("VoteDate", voteDateRequest);
         }
-        
+
         string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
         List<int> votedDateIds = voteDateRequest.Checkboxes.Where(c => c.IsSelected).Select(c => c.Id).ToList();
 

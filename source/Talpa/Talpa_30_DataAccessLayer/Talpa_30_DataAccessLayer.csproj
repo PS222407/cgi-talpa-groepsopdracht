@@ -1,10 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <RootNamespace>DataAccessLayer</RootNamespace>
+        <UserSecretsId>8d9f6048-fc04-480e-ac47-2f8545a0fe80</UserSecretsId>
     </PropertyGroup>
 
 
@@ -15,6 +16,7 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1"/>
         <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0"/>
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.32.3"/>
     </ItemGroup>
@@ -34,7 +36,7 @@
 
 
     <ItemGroup>
-        <Folder Include="Exceptions\" />
+        <Folder Include="Exceptions\"/>
         <Folder Include="Migrations\"/>
     </ItemGroup>
 

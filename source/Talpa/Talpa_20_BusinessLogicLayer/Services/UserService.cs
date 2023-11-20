@@ -45,6 +45,18 @@ public class UserService : IUserService
 
     public async Task<List<UserScoreboard>> GetTopTenUsersWhoOwnTheMostVotedSuggestions()
     {
-        return await _userRepository.GetTopTenUsersWhoOwnTheMostVotedSuggestions();
+        List<UserScoreboard> userScoreboards = await _userRepository.GetTopTenUsersWhoOwnTheMostVotedSuggestions();
+        if (!userScoreboards.Any())
+        {
+            return userScoreboards;
+        }
+        
+        int max = userScoreboards.Max(userScoreboard => userScoreboard.VoteCount);
+        foreach (UserScoreboard userScoreboard in userScoreboards)
+        {
+            userScoreboard.VotePercentage = (int)Math.Round((double)userScoreboard.VoteCount / max * 100);
+        }
+
+        return userScoreboards;
     }
 }
