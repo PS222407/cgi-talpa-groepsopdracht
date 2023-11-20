@@ -11,6 +11,8 @@ public class OutingViewModel
 
     public string? Name { get; set; }
 
+    public string ImageUrl { get; set; }
+
     public List<SuggestionViewModel>? Suggestions { get; set; } 
 
     public List<string>? SelectedSuggestionIds { get; set; }

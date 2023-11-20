@@ -1,4 +1,4 @@
-@using Talpa_10_WebApp.Translations
+﻿@using Talpa_10_WebApp.Translations
 @using Microsoft.AspNetCore.Mvc.Localization
 @model Talpa_10_WebApp.RequestModels.SuggestionRequest
 @inject IHtmlLocalizer<Shared> SharedLocalizer
@@ -13,7 +13,7 @@
 <hr/>
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit" autocomplete=" off">
+        <form asp-action="Edit" autocomplete=" off" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -24,6 +24,11 @@
                 <label asp-for="SelectedRestrictionIds" class="control-label">@SharedLocalizer["Restrictions"]</label>
                 <select asp-for="SelectedRestrictionIds" asp-items="Model.RestrictionOptions" multiple="multiple" class="form-control js-dynamic-tokenizer"></select>
                 <span asp-validation-for="SelectedRestrictionIds" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input asp-for="Image" class="form-control"/>
+                <span asp-validation-for="Image" class="text-danger"></span>
             </div>
             <br/>
             <div class="form-group">

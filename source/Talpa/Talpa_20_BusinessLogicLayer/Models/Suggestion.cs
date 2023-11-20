@@ -8,6 +8,8 @@ public class Suggestion
 
     public string Name { get; set; }
 
+    public string ImageUrl { get; set; }
+
     public List<Outing>? Outing { get; set; }
 
     public List<Restriction>? Restrictions { get; set; }

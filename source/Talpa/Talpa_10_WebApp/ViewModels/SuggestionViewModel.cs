@@ -6,6 +6,8 @@ public class SuggestionViewModel
 
     public string Name { get; set; }
 
+    public string ImageUrl { get; set; }
+
     public List<string> Restrictions { get; set; }
     
     public int Votes { get; set; }

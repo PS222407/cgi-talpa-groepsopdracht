@@ -3,11 +3,13 @@ using BusinessLogicLayer.Exceptions;
 using BusinessLogicLayer.Interfaces.Services;
 using BusinessLogicLayer.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Localization;
 using Talpa_10_WebApp.Constants;
 using Talpa_10_WebApp.RequestModels;
+using Talpa_10_WebApp.Services;
 using Talpa_10_WebApp.Translations;
 using Talpa_10_WebApp.ViewModels;
 
@@ -24,14 +26,20 @@ public class OutingController : Controller
 
     private readonly ISuggestionService _suggestionService;
 
+    private readonly IWebHostEnvironment _webHostEnvironment;
+
     private readonly Shared _localizer;
-    
-    public OutingController(IOutingService outingService, IUserService userService, ISuggestionService suggestionService, IStringLocalizer<Shared> localizer)
+
+    private readonly FileService _fileService;
+
+    public OutingController(IOutingService outingService, IUserService userService, ISuggestionService suggestionService, IStringLocalizer<Shared> localizer, FileService fileService, IWebHostEnvironment webHostEnvironment)
     {
         _outingService = outingService;
         _userService = userService;
+        _fileService = fileService;
         _suggestionService = suggestionService;
         _localizer = new Shared(localizer);
+        _webHostEnvironment = webHostEnvironment;
     }
 
     // GET: Outing
@@ -100,7 +108,7 @@ public class OutingController : Controller
         }
 
         List<OutingDate> outingDates = outingRequest.Dates?.Select(date => new OutingDate { Date = date }).ToList() ?? new List<OutingDate>();
-        Outing outing = new() { Name = outingRequest.Name, OutingDates = outingDates };
+        Outing outing = new() { Name = outingRequest.Name, OutingDates = outingDates, ImageUrl = await _fileService.SaveImageAsync(outingRequest.Image, _webHostEnvironment) ?? "" };
 
         Outing outingEntry;
         try
