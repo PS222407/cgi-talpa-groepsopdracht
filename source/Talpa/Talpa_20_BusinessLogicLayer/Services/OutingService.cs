@@ -88,4 +88,9 @@ public class OutingService : IOutingService
     {
         return _outingRepository.ConfirmOuting(id, suggestionId, outingDateId);
     }
+
+    public List<Outing> GetAllConfirmedFromTeam(int teamId)
+    {
+        return _outingRepository.GetAllConfirmedFromTeam(teamId);
+    }
 }

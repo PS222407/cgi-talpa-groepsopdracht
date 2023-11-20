@@ -18,6 +18,12 @@ public class OutingViewModel
     public List<string>? SelectedSuggestionIds { get; set; }
 
     public List<SelectListItem>? SuggestionOptions { get; set; }
+    
+    public int? ConfirmedOutingDateId { get; set; }
+    
+    public OutingDate? ConfirmedOutingDate { get; set; }
+
+    public Suggestion? ConfirmedSuggestion { get; set; }
 
     public List<OutingDate>? OutingDates
     {
@@ -42,6 +48,11 @@ public class OutingViewModel
         Id = id;
         Name = name;
         Suggestions = suggestions;
+    }
+
+    public int GetDaysLeft()
+    {
+        return (ConfirmedOutingDate?.Date - DateTime.Now.Date)?.Days ?? 0;
     }
 
     private string ConvertDatesToString(List<DateTime> dateList)
