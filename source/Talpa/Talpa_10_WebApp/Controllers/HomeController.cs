@@ -21,8 +21,6 @@ public class HomeController : Controller
 
     private readonly IStringLocalizer<Shared> _localizer;
 
-    private readonly ILogger<HomeController> _logger;
-
     public HomeController(IStringLocalizer<Shared> localizer, IUserService userService, IOutingService outingService)
     {
         _localizer = localizer;
@@ -32,17 +30,10 @@ public class HomeController : Controller
 
     public async Task<ActionResult> Index()
     {
-        string frogTranslated = new Shared(_localizer).Get("Frog");
-
-
+        // string frogTranslated = new Shared(_localizer).Get("Frog");
         string? id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
         User? user = await _userService.GetById(id);
-
-        if (User.IsInRole(RoleName.Admin))
-        {
-            return View(_outingService.GetAllComplete().Select(outing => new OutingViewModel(outing.Id, outing.Name)).ToList());
-        }
-
+        
         int? teamId = user?.TeamId;
         if (teamId == null)
         {
@@ -52,7 +43,11 @@ public class HomeController : Controller
             return View(new List<OutingViewModel>());
         }
 
-        return View(_outingService.GetAllCompleteFromTeam((int)teamId).Select(outing => new OutingViewModel(outing.Id, outing.Name)).ToList());
+        return View(_outingService.GetAllConfirmedFromTeam((int)teamId).Select(outing => new OutingViewModel(outing.Id, outing.Name)
+        {
+            ConfirmedSuggestion = outing.ConfirmedSuggestion,
+            ConfirmedOutingDate = outing.ConfirmedOutingDate,
+        }).OrderBy(o => o.ConfirmedOutingDate?.Date).ToList());
     }
 
     [HttpGet("TestError")]

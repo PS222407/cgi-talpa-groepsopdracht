@@ -29,4 +29,6 @@ public interface IOutingService
     public Outing? GetOutingByIdWithMostVotedDatesAndSuggestions(int id);
     
     public bool ConfirmOuting(int id, int suggestionId, int outingDateId);
+    
+    public List<Outing> GetAllConfirmedFromTeam(int teamId);
 }
