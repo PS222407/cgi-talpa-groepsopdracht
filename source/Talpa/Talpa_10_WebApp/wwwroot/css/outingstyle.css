@@ -26,9 +26,9 @@
 
 .home-container .outer-container .card {
     top: 5vh;
-    min-width: 17%;
-    width: 17%;
-    max-width: 17%;
+    min-width: 17vw;
+    width: 17vw;
+    max-width: 17vw;
     background-size: cover;
     background-position: center;
     display: flex;
@@ -146,11 +146,21 @@ h1 {
         width: 20vw;
         max-width: 20vw;
     }
+
+    .card-frame .card {
+        width: 40vw;
+        height: 45vh;
+    }
+
+    .card-link .card {
+        width: 40vw;
+        height: 45vh;
+    }
 }
 
 @media (min-width: 577px) and (max-width: 991px) {
     .card-link .card {
-        max-width: 65%;
+        max-width: 65vw;
         height: 40vh;
     }
 
@@ -165,7 +175,7 @@ h1 {
     }
 
     .card-frame .card {
-        max-width: 65%;
+        max-width: 65vw;
         height: 40vh;
     }
 
@@ -189,7 +199,7 @@ h1 {
 @media (max-width: 576px) {
     .card-link .card {
         width: 80vw;
-        max-width: 80%;
+        max-width: 80vw;
     }
     .home-container .outer-container .card {
         min-width: 60vw;
