@@ -17,4 +17,5 @@ public interface ISuggestionService
     public bool Update(Suggestion suggestion, string userId);
 
     public bool Delete(int id, string userId);
+    bool Exists(string name);
 }
