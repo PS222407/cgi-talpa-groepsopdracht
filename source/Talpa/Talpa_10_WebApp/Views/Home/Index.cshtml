@@ -41,6 +41,7 @@
                     <p style="margin:0">
                         @outing.ConfirmedSuggestion?.Description
                     </p>
+                    <hr style="width: 100%">
                     <p style="margin:0">@(string.Join(", ", outing.ConfirmedSuggestion?.Restrictions?.Select(r => r.Name) ?? new List<string>())) </p>
                     <hr style="width: 100%">
                     <p style="margin:0">@outing.ConfirmedOutingDate?.Date.ToString("dddd d MMMM yyyy", CultureInfo.CurrentCulture)</p>
