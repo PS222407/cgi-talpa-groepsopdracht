@@ -133,7 +133,11 @@ public class OutingRepository : IOutingRepository
     {
         return _dataContext.Outings
             .Include(o => o.Suggestions)
-            .Where(o => o.Suggestions.Any() && o.OutingDates.Any() && o.DeadLine.HasValue && o.ConfirmedSuggestionId == null && o.ConfirmedOutingDateId == null)
+            .Where(o => o.Suggestions.Any() 
+                        && o.OutingDates.Any() 
+                        && o.DeadLine.HasValue 
+                        && o.ConfirmedSuggestionId == null
+                        && o.ConfirmedOutingDateId == null)
             .ToList();
     }
 
@@ -182,7 +186,12 @@ public class OutingRepository : IOutingRepository
     {
         return _dataContext.Outings
             .Include(o => o.Suggestions)
-            .Where(o => o.TeamId == teamId && o.Suggestions.Any() && o.OutingDates.Any() && o.DeadLine.HasValue)
+            .Where(o => o.TeamId == teamId
+                        && o.Suggestions.Any()
+                        && o.OutingDates.Any()
+                        && o.DeadLine.HasValue
+                        && o.ConfirmedSuggestionId == null
+                        && o.ConfirmedOutingDateId == null)
             .ToList();
     }
 
