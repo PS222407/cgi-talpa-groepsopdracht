@@ -111,4 +111,13 @@ public class SuggestionRepository : ISuggestionRepository
 
         return _dataContext.SaveChanges() > 0;
     }
+
+    public bool Exists(string name)
+    {
+        string formattedName = name.Replace(" ", "");
+
+        return _dataContext.Suggestions
+            .Any(row => row.Name.Replace(" ", "") == formattedName);
+    }
+
 }
