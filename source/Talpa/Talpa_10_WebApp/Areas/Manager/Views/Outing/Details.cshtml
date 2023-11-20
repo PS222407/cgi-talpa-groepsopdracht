@@ -1,34 +1,121 @@
 @using Talpa_10_WebApp.Translations
 @using Microsoft.AspNetCore.Mvc.Localization
-@model Talpa_10_WebApp.ViewModels.OutingViewModel
+@using Talpa_10_WebApp.ViewModels
+@using BusinessLogicLayer.Models
+@using System.Globalization
+@model Talpa_10_WebApp.RequestModels.ConfirmOutingRequest
 @inject IHtmlLocalizer<Shared> SharedLocalizer
 
 @{
     Layout = "_Layout";
-    ViewData["Title"] = SharedLocalizer["Detail"];
+    ViewData["Title"] = SharedLocalizer["Confirm"];
+    ViewData["DisableMainContainer"] = "True";
 }
 
-<h1>@SharedLocalizer["Details"]</h1>
+<div style="background-color: rgb(245, 245, 245); padding: 1em; font-size: 1.5em">
+    <h1 style="text-align: center">@SharedLocalizer["Outing"]</h1>
+    <div style="font-size: 0.8em; text-align: center">@SharedLocalizer["Confirm"]</div>
+</div>
 
-<div>
-    <h4>@SharedLocalizer["Outing"]</h4>
+<div class="container" style="margin-top: 1em">
+    @if (TempData.ContainsKey("Message"))
+    {
+        <div class="alert alert-@(TempData["MessageType"])">
+            @TempData["Message"]
+        </div>
+    }
     <hr/>
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt class="col-sm-2">
-            @SharedLocalizer["Name"]
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
+    <div class="row" style="display: flex; justify-content: center">
+        <div class="col-md-8">
+            <form asp-action="Details">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <hr/>
+                <p>@SharedLocalizer["Votes"]: @Model.SuggestionVoteCount</p>
+                <div style="display: flex; flex-wrap: wrap; gap: .5em">
+                    @foreach (SuggestionViewModel suggestion in Model.Suggestions)
+                    {
+                        <label>
+                            <input type="radio" asp-for="SuggestionId" class="suggestionRadio" style="display: none" value="@suggestion.Id">
+                            <div style="background-color: white; padding: 0.5em; border: 1px solid gray; border-radius: 5px;" class="suggestionCard">@suggestion.Name</div>
+                        </label>
+                        <span asp-validation-for="SuggestionId" class="text-danger"></span>
+                    }
+                </div>
+                <hr/>
+                <p>@SharedLocalizer["Votes"]: @Model.OutingDateVoteCount</p>
+                <div style="display: flex; flex-wrap: wrap; gap: .5em">
+                    @foreach (OutingDate outingDate in Model.OutingDates)
+                    {
+                        <label>
+                            <input type="radio" asp-for="OutingDateId" class="outingDateRadio" style="display: none" value="@outingDate.Id">
+                            <div style="background-color: white; padding: 0.5em; border: 1px solid gray; border-radius: 5px;" class="outingDateCard">@outingDate.Date.ToString("dddd d MMMM yyyy", CultureInfo.CurrentCulture)</div>
+                        </label>
+                        <span asp-validation-for="OutingDateId" class="text-danger"></span>
+                    }
+                </div>
+
+                <hr/>
+
+                <br>
+                <div class="form-group" style="display: flex; justify-content: space-between">
+                    <a asp-action="Index" class="btn btn-secondary">@SharedLocalizer["BackToList"]</a>
+                    <input type="submit" value="@SharedLocalizer["Confirm"]" class="btn btn-primary" style="background-color: #D92A3B; border-color: #D92A3B;"/>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">@SharedLocalizer["Edit"]</a> |
-    <a asp-action="Index">@SharedLocalizer["BackToList"]</a>
-</div>
+
+<script>
+	const suggestionRadios = document.querySelectorAll('.suggestionRadio');
+	const suggestionCards = document.querySelectorAll('.suggestionCard');
+	suggestionRadios.forEach((radio, radioIndex) => {
+		radio.addEventListener('change', function () {
+			suggestionCards.forEach((card) => {
+				card.style.backgroundColor = 'white';
+				card.style.color = 'black';
+			});
+
+			if (this.checked) {
+				suggestionCards[radioIndex].style.backgroundColor = '#08605f';
+				suggestionCards[radioIndex].style.color = 'white';
+			}
+		});
+	});
+    
+    suggestionRadios.forEach((radio, radioIndex) => {
+        suggestionCards.forEach((card) => {
+            if (radio.checked) {
+                suggestionCards[radioIndex].style.backgroundColor = '#08605f';
+                suggestionCards[radioIndex].style.color = 'white';
+            }
+        });
+    });
+
+
+	const outingDateRadios = document.querySelectorAll('.outingDateRadio');
+	const outingCards = document.querySelectorAll('.outingDateCard');
+	outingDateRadios.forEach((radio, radioIndex) => {
+		radio.addEventListener('change', function () {
+			outingCards.forEach((card) => {
+				card.style.backgroundColor = 'white';
+                card.style.color = 'black';
+			});
+
+			if (this.checked) {
+				outingCards[radioIndex].style.backgroundColor = '#08605f';
+                outingCards[radioIndex].style.color = 'white';
+			}
+		});
+	});
+    
+    outingDateRadios.forEach((radio, radioIndex) => {
+        outingCards.forEach((card) => {
+            if (radio.checked) {
+                outingCards[radioIndex].style.backgroundColor = '#08605f';
+                outingCards[radioIndex].style.color = 'white';
+            }
+        });
+    });
+</script>

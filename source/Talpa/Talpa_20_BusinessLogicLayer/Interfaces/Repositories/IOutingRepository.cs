@@ -27,4 +27,8 @@ public interface IOutingRepository
     public bool UserHasVotedSuggestionForOuting(string userId, int outingId);
 
     public Outing? GetByIdWithVotes(int id);
+
+    public Outing? GetOutingByIdWithMostVotedDatesAndSuggestions(int id);
+    
+    public bool ConfirmOuting(int id, int suggestionId, int outingDateId);
 }

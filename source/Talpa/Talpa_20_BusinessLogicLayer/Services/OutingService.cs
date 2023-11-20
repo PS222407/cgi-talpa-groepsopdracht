@@ -1,7 +1,6 @@
 ﻿using BusinessLogicLayer.Interfaces.Repositories;
 using BusinessLogicLayer.Interfaces.Services;
 using BusinessLogicLayer.Models;
-using System.Diagnostics;
 
 namespace BusinessLogicLayer.Services;
 
@@ -78,5 +77,15 @@ public class OutingService : IOutingService
     {
         return !UserHasVotedForOuting(userId, outingId)
                && _outingRepository.Vote(userId, outingId, suggestionId, votedDateIds);
+    }
+
+    public Outing? GetOutingByIdWithMostVotedDatesAndSuggestions(int id)
+    {
+        return _outingRepository.GetOutingByIdWithMostVotedDatesAndSuggestions(id);
+    }
+
+    public bool ConfirmOuting(int id, int suggestionId, int outingDateId)
+    {
+        return _outingRepository.ConfirmOuting(id, suggestionId, outingDateId);
     }
 }
