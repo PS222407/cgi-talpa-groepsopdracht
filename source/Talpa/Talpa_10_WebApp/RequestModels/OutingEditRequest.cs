@@ -14,6 +14,10 @@ public class OutingEditRequest
 
     private List<DateTime>? _dates = new();
 
+    public string? ImageUrl { get; set; }
+    
+    public IFormFile? Image { get; set; }
+
     [Required(ErrorMessage = "The Name field is required.")]
     [Display(Name = "Name")]
     public string Name { get; set; }
@@ -59,7 +63,7 @@ public class OutingEditRequest
         Dates = dates ?? new List<DateTime>();
     }
 
-    public OutingEditRequest()  
+    public OutingEditRequest()
     {
     }
 

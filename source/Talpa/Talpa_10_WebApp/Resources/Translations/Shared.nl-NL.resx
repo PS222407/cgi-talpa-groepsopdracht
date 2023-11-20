@@ -167,8 +167,8 @@
     <value>Home Pagina</value>
   </data>
     <data name="Create New" xml:space="preserve">
-    <value>Nieuwe Aaanmaken</value>
-  </data>
+        <value>Nieuwe Aanmaken</value>
+    </data>
     <data name="Edit" xml:space="preserve">
     <value>Wijzig</value>
   </data>
@@ -333,5 +333,11 @@ Er zijn geen stemmen voor dit uitje</value>
     </data>
     <data name="Days left" xml:space="preserve">
         <value>Dagen over</value>
+    </data>
+    <data name="Image" xml:space="preserve">
+        <value>Afbeelding</value>
+    </data>
+    <data name="Current image" xml:space="preserve">
+        <value>Huidige afbeelding</value>
     </data>
 </root>

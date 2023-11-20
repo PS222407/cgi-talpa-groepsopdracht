@@ -1,5 +1,4 @@
-﻿using BusinessLogicLayer.Exceptions;
-using DataAccessLayer.Data;
+﻿using DataAccessLayer.Data;
 using BusinessLogicLayer.Models;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using BusinessLogicLayer.Interfaces.Repositories;
@@ -83,14 +82,15 @@ public class SuggestionRepository : ISuggestionRepository
 
             if (existingRestriction != null)
             {
-                suggestion.Restrictions.Remove(inputRestriction);
-                suggestion.Restrictions.Add(existingRestriction);
+                suggestion.Restrictions?.Remove(inputRestriction);
+                suggestion.Restrictions?.Add(existingRestriction);
             }
         }
 
         suggestionDb.Name = suggestion.Name;
         suggestionDb.Description = suggestion.Description;
         suggestionDb.Restrictions = suggestion.Restrictions;
+        suggestionDb.ImageUrl = suggestion.ImageUrl;
 
         _dataContext.SaveChanges();
         return true;
@@ -112,12 +112,10 @@ public class SuggestionRepository : ISuggestionRepository
         return _dataContext.SaveChanges() > 0;
     }
 
-    public bool Exists(string name)
+    public bool Exists(string name, int? id)
     {
-        string formattedName = name.Replace(" ", "");
-
-        return _dataContext.Suggestions
-            .Any(row => row.Name.Replace(" ", "") == formattedName);
+        return _dataContext.Suggestions.Any(row =>
+            row.Name.Replace(" ", "") == name.Replace(" ", "")
+            && row.Id != id);
     }
-
 }

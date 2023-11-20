@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Localization;
 using Talpa_10_WebApp.Constants;
 using Talpa_10_WebApp.RequestModels;
+using Talpa_10_WebApp.Services;
 using Talpa_10_WebApp.Translations;
 using Talpa_10_WebApp.ViewModels;
 
@@ -24,14 +25,27 @@ public class OutingController : Controller
 
     private readonly ISuggestionService _suggestionService;
 
+    private readonly IWebHostEnvironment _webHostEnvironment;
+
     private readonly Shared _localizer;
 
-    public OutingController(IOutingService outingService, IUserService userService, ISuggestionService suggestionService, IStringLocalizer<Shared> localizer)
+    private readonly FileService _fileService;
+
+    public OutingController(
+        IOutingService outingService,
+        IUserService userService,
+        ISuggestionService suggestionService,
+        IStringLocalizer<Shared> localizer,
+        FileService fileService,
+        IWebHostEnvironment webHostEnvironment
+    )
     {
         _outingService = outingService;
         _userService = userService;
+        _fileService = fileService;
         _suggestionService = suggestionService;
         _localizer = new Shared(localizer);
+        _webHostEnvironment = webHostEnvironment;
     }
 
     // GET: Outing
@@ -84,7 +98,7 @@ public class OutingController : Controller
             SuggestionId = outing.ConfirmedSuggestionId,
             OutingDateId = outing.ConfirmedOutingDateId,
         };
-        
+
         return View(confirmOutingRequest);
     }
 
@@ -95,19 +109,19 @@ public class OutingController : Controller
         {
             return View(confirmOutingRequest);
         }
-        
+
         Outing? outing = _outingService.GetById(id);
 
         if (outing == null)
         {
             TempData["Message"] = _localizer.Get("No entity found with this id");
             TempData["MessageType"] = "danger";
-            
+
             return View(confirmOutingRequest);
         }
 
         _outingService.ConfirmOuting(id, confirmOutingRequest.SuggestionId ?? 0, confirmOutingRequest.OutingDateId ?? 0);
-        
+
         TempData["Message"] = _localizer.Get("Item successfully updated");
         TempData["MessageType"] = "success";
 
@@ -141,7 +155,12 @@ public class OutingController : Controller
         }
 
         List<OutingDate> outingDates = outingRequest.Dates?.Select(date => new OutingDate { Date = date }).ToList() ?? new List<OutingDate>();
-        Outing outing = new() { Name = outingRequest.Name, OutingDates = outingDates };
+        Outing outing = new()
+        {
+            Name = outingRequest.Name,
+            OutingDates = outingDates,
+            ImageUrl = await _fileService.SaveImageAsync(outingRequest.Image, _webHostEnvironment) ?? "",
+        };
 
         Outing outingEntry;
         try
@@ -186,6 +205,7 @@ public class OutingController : Controller
         OutingEditRequest outingRequest = new()
         {
             Name = outing.Name,
+            ImageUrl = outing.ImageUrl,
             SuggestionOptions = suggestionOptions,
             SelectedSuggestionIds = outing.Suggestions?.Select(s => s.Id.ToString()).ToList(),
             DeadLine = outing.DeadLine,
@@ -198,7 +218,7 @@ public class OutingController : Controller
     // POST: Outing/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit(int id, OutingEditRequest outingRequest)
+    public async Task<ActionResult> Edit(int id, OutingEditRequest outingRequest)
     {
         if (!ModelState.IsValid)
         {
@@ -208,6 +228,16 @@ public class OutingController : Controller
 
         List<OutingDate> outingDates = outingRequest.Dates?.Select(date => new OutingDate { Date = date }).ToList() ?? new List<OutingDate>();
         List<Suggestion> suggestions = _suggestionService.GetByIds(outingRequest.SelectedSuggestionIds?.Select(int.Parse).ToList() ?? new List<int>());
+        string imageUrl;
+        if (outingRequest.Image != null)
+        {
+            imageUrl = await _fileService.SaveImageAsync(outingRequest.Image, _webHostEnvironment) ?? "";
+        }
+        else
+        {
+            imageUrl = _outingService.GetById(id)?.ImageUrl ?? "";
+        }
+
         Outing outing = new()
         {
             Id = id,
@@ -215,6 +245,7 @@ public class OutingController : Controller
             DeadLine = outingRequest.DeadLine,
             OutingDates = outingDates,
             Suggestions = suggestions,
+            ImageUrl = imageUrl,
         };
         if (!_outingService.Update(outing))
         {

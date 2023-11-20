@@ -66,8 +66,8 @@ public class SuggestionService : ISuggestionService
         return _suggestionRepository.GetAllByUserId(id);
     }
 
-    public bool Exists (string name)
+    public bool Exists(string name, int? id = null)
     {
-        return _suggestionRepository.Exists(name);
+        return _suggestionRepository.Exists(name, id);
     }
 }
