@@ -94,7 +94,7 @@ public class SuggestionController : Controller
             Value = restriction.Id.ToString(),
             Text = restriction.Name,
         }).ToList();
-        
+
         if (!ModelState.IsValid)
         {
             return View(suggestionRequest);
@@ -163,12 +163,13 @@ public class SuggestionController : Controller
             return View();
         }
 
-        SuggestionRequest suggestionRequest = new()
+        SuggestionUpdateRequest suggestionRequest = new()
         {
             Name = suggestion.Name,
             Description = suggestion.Description,
             SelectedRestrictionIds = suggestion.Restrictions?.Select(restriction => restriction.Id.ToString()).ToList(),
             RestrictionOptions = restrictionsOptions,
+            ImageUrl = suggestion.ImageUrl,
         };
 
         return View(suggestionRequest);
@@ -178,7 +179,7 @@ public class SuggestionController : Controller
     [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}, {RoleName.Employee}")]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult> Edit(int id, SuggestionRequest suggestionRequest)
+    public async Task<ActionResult> Edit(int id, SuggestionUpdateRequest suggestionRequest)
     {
         if (!ModelState.IsValid)
         {
@@ -190,13 +191,24 @@ public class SuggestionController : Controller
             return View(suggestionRequest);
         }
 
-        if (_suggestionService.Exists(suggestionRequest.Name))
+        if (_suggestionService.Exists(suggestionRequest.Name, id))
         {
             TempData["Message"] = _localizer.Get("Suggestion with the same name already exists");
             TempData["MessageType"] = "danger";
             return View(suggestionRequest);
         }
+        
+        string? userid = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
+        string imageUrl;
+        if (suggestionRequest.Image != null)
+        {
+            imageUrl = await _fileService.SaveImageAsync(suggestionRequest.Image, _webHostEnvironment) ?? "";
+        }
+        else
+        {
+            imageUrl = _suggestionService.GetById(id, userid).ImageUrl;
+        }
         Suggestion suggestion = new()
         {
             Id = id,
@@ -206,7 +218,7 @@ public class SuggestionController : Controller
             {
                 Name = restriction,
             }).ToList(),
-            ImageUrl = await _fileService.SaveImageAsync(suggestionRequest.Image, _webHostEnvironment) ?? "",
+            ImageUrl = imageUrl,
         };
 
         string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;

@@ -337,4 +337,7 @@ Er zijn geen stemmen voor dit uitje</value>
     <data name="Image" xml:space="preserve">
         <value>Afbeelding</value>
     </data>
+    <data name="Current image" xml:space="preserve">
+        <value>Huidige afbeelding</value>
+    </data>
 </root>

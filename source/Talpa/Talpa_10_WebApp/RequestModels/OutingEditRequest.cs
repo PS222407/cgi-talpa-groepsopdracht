@@ -14,7 +14,9 @@ public class OutingEditRequest
 
     private List<DateTime>? _dates = new();
 
-    public IFormFile Image { get; set; }
+    public string? ImageUrl { get; set; }
+    
+    public IFormFile? Image { get; set; }
 
     [Required(ErrorMessage = "The Name field is required.")]
     [Display(Name = "Name")]

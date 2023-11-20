@@ -3,7 +3,6 @@ using BusinessLogicLayer.Exceptions;
 using BusinessLogicLayer.Interfaces.Services;
 using BusinessLogicLayer.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Localization;
@@ -206,6 +205,7 @@ public class OutingController : Controller
         OutingEditRequest outingRequest = new()
         {
             Name = outing.Name,
+            ImageUrl = outing.ImageUrl,
             SuggestionOptions = suggestionOptions,
             SelectedSuggestionIds = outing.Suggestions?.Select(s => s.Id.ToString()).ToList(),
             DeadLine = outing.DeadLine,
@@ -218,7 +218,7 @@ public class OutingController : Controller
     // POST: Outing/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit(int id, OutingEditRequest outingRequest)
+    public async Task<ActionResult> Edit(int id, OutingEditRequest outingRequest)
     {
         if (!ModelState.IsValid)
         {
@@ -228,6 +228,16 @@ public class OutingController : Controller
 
         List<OutingDate> outingDates = outingRequest.Dates?.Select(date => new OutingDate { Date = date }).ToList() ?? new List<OutingDate>();
         List<Suggestion> suggestions = _suggestionService.GetByIds(outingRequest.SelectedSuggestionIds?.Select(int.Parse).ToList() ?? new List<int>());
+        string imageUrl;
+        if (outingRequest.Image != null)
+        {
+            imageUrl = await _fileService.SaveImageAsync(outingRequest.Image, _webHostEnvironment) ?? "";
+        }
+        else
+        {
+            imageUrl = _outingService.GetById(id)?.ImageUrl ?? "";
+        }
+
         Outing outing = new()
         {
             Id = id,
@@ -235,6 +245,7 @@ public class OutingController : Controller
             DeadLine = outingRequest.DeadLine,
             OutingDates = outingDates,
             Suggestions = suggestions,
+            ImageUrl = imageUrl,
         };
         if (!_outingService.Update(outing))
         {

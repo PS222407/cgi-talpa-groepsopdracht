@@ -34,7 +34,7 @@ public class OutingController : Controller
 
         if (User.IsInRole(RoleName.Admin))
         {
-            return View(_outingService.GetAllComplete().Select(outing => new OutingViewModel(outing.Id, outing.Name)).ToList());
+            return View(_outingService.GetAllComplete().Select(outing => new OutingViewModel(outing.Id, outing.Name) { ImageUrl = outing.ImageUrl }).ToList());
         }
 
         int? teamId = user?.TeamId;
@@ -46,7 +46,7 @@ public class OutingController : Controller
             return View(new List<OutingViewModel>());
         }
 
-        return View(_outingService.GetAllCompleteFromTeam((int)teamId).Select(outing => new OutingViewModel(outing.Id, outing.Name)).ToList());
+        return View(_outingService.GetAllCompleteFromTeam((int)teamId).Select(outing => new OutingViewModel(outing.Id, outing.Name) { ImageUrl = outing.ImageUrl }).ToList());
     }
 
     [HttpGet("Outing/{id:int}/VoteSuggestion")]
@@ -94,6 +94,7 @@ public class OutingController : Controller
             Name = suggestion.Name,
             Restrictions = suggestion.Restrictions?.Select(restriction => restriction.Name).ToList() ?? new List<string>(),
             Votes = suggestion.SuggestionVotes?.Count ?? 0,
+            ImageUrl = suggestion.ImageUrl ?? "",
         }).ToList();
 
         return View(new VoteSuggestionRequest

@@ -42,12 +42,12 @@
             {
                 <label class="card-frame" style="text-decoration: none; display: flex; justify-content: center; align-items: center; margin: 10px;">
                     <input type="radio" asp-for="SuggestionId" class="suggestionRadio" style="display: none" value="@suggestion.Id">
-                    <div class="card" style="border-radius: 15px; background-color: dimgray;">
+                    <div class="card" style="border-radius: 15px; background-image: url(@(suggestion.ImageUrl ?? "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg"));">
                         <div class="card-body">
-                            <h1 class="card-title">
+                            <h1 class="card-title" style="background-color: #00000070; padding: .25em; border-radius: 5px">
                                 @suggestion.Name
                             </h1>
-                            <div style="font-size: 1.3em; color: white">
+                            <div style="font-size: 1.3em; color: white; background-color: #00000070; padding: .25em; border-radius: 5px">
                                 @SharedLocalizer["Votes"]: @suggestion.Votes
                             </div>
                         </div>
@@ -61,6 +61,11 @@
     </form>
 </div>
 
+<style>
+    .highlight-card {
+        box-shadow: inset 0 0 0 99999px rgba(8,96,95,0.55);
+    }
+</style>
 
 <script>
 	const radios = document.querySelectorAll('.suggestionRadio');
@@ -69,11 +74,11 @@
 	radios.forEach((radio, radioIndex) => {
 		radio.addEventListener('change', function () {
 			cards.forEach((card) => {
-				card.style.backgroundColor = 'dimgray';
+                card.classList.remove('highlight-card');
 			});
 
 			if (this.checked) {
-				cards[radioIndex].style.backgroundColor = '#08605F';
+                cards[radioIndex].classList.add('highlight-card');
 			}
 		});
 	});

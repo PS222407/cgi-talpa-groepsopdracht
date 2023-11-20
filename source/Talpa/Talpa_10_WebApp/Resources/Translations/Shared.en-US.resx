@@ -336,4 +336,7 @@
   <data name="Image" xml:space="preserve">
       <value>Image</value>
   </data>
+  <data name="Current image" xml:space="preserve">
+      <value>Current image</value>
+  </data>
 </root>

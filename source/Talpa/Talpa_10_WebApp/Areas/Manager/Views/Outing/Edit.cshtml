@@ -31,12 +31,23 @@
                     <input asp-for="Name" class="form-control"/>
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
-
+                
+                <br>
+                <div style="display: flex; flex-direction: column">
+                    <label>@SharedLocalizer["Current image"]:</label>
+                    @if (Model.ImageUrl != null)
+                    {
+                        <img class="col-md-3" src="@Model.ImageUrl" alt="Outing Image" style="max-height: 300px; object-fit: contain"/>
+                    }
+                </div>
+                <br>
+                
                 <div class="form-group">
                     <label asp-for="Image" class="control-label">@SharedLocalizer["Image"]</label>
                     <input asp-for="Image" class="form-control" accept="image/png, image/gif, image/jpeg" />
                     <span asp-validation-for="Image" class="text-danger"></span>
                 </div>
+                <br>
 
                 <div class="form-group">
                     <label asp-for="SelectedSuggestionIds" class="control-label">@SharedLocalizer["Suggestions"]</label>
