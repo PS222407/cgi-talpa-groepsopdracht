@@ -64,10 +64,10 @@ public class OutingController : Controller
         Outing? outing = _outingService.GetOutingByIdWithMostVotedDatesAndSuggestions(id);
         if (outing == null)
         {
-            TempData["Message"] = _localizer.Get("No entity found with this id");
+            TempData["Message"] = _localizer.Get("There are no votes for this outing");
             TempData["MessageType"] = "danger";
 
-            return View();
+            return RedirectToAction(nameof(Index));
         }
 
         ConfirmOutingRequest confirmOutingRequest = new()

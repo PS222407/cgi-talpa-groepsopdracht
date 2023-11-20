@@ -52,6 +52,7 @@ public class OutingRepository : IOutingRepository
     public Outing? GetOutingByIdWithMostVotedDatesAndSuggestions(int id)
     {
         Outing? outing = _dataContext.Outings?
+            .Where(o => o.Id == id)
             .Include(o => o.Suggestions)?
             .Include(o => o.OutingDates)
             .ThenInclude(od => od.DateVotes)
@@ -59,7 +60,7 @@ public class OutingRepository : IOutingRepository
             .ThenInclude(od => od.Suggestion)
             .FirstOrDefault();
 
-        if (outing == null)
+        if (outing == null || outing.SuggestionVotes?.Count <= 0 || outing.OutingDates?.Max(od => od.DateVotes.Count) <= 0)
         {
             return null;
         }
@@ -103,6 +104,24 @@ public class OutingRepository : IOutingRepository
         _dataContext.SaveChanges();
         
         return true;
+    }
+
+    public List<Outing> GetAllConfirmedFromTeam(int teamId)
+    {
+        List<Outing> outings = _dataContext.Outings
+            .Include(o => o.Suggestions)
+            .ThenInclude(s => s.Restrictions)
+            .Include(o => o.OutingDates)
+            .Where(o => o.TeamId == teamId && o.ConfirmedOutingDateId != null && o.ConfirmedSuggestionId != null)
+            .ToList();
+
+        foreach (Outing outing in outings)
+        {
+            outing.ConfirmedSuggestion = outing.Suggestions?.FirstOrDefault(s => s.Id == outing.ConfirmedSuggestionId);
+            outing.ConfirmedOutingDate = outing.OutingDates?.FirstOrDefault(od => od.Id == outing.ConfirmedOutingDateId);
+        }
+
+        return outings;
     }
 
     public List<Outing> GetAll()
