@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Localization;
 using Talpa_10_WebApp.Constants;
 using Talpa_10_WebApp.RequestModels;
+using Talpa_10_WebApp.Services;
 using Talpa_10_WebApp.Translations;
 using Talpa_10_WebApp.ViewModels;
 
@@ -21,11 +22,24 @@ public class SuggestionController : Controller
 
     private readonly IRestrictionService _restrictionService;
 
+    private readonly IWebHostEnvironment _webHostEnvironment;
+
+    private readonly FileService _fileService;
+
     private readonly Shared _localizer;
 
-    public SuggestionController(ISuggestionService suggestionService, IUserService userService, IRestrictionService restrictionService, IStringLocalizer<Shared> localizer)
+    public SuggestionController(
+        FileService fileService,
+        IWebHostEnvironment webHostEnvironment,
+        ISuggestionService suggestionService,
+        IUserService userService,
+        IRestrictionService restrictionService,
+        IStringLocalizer<Shared> localizer
+    )
     {
+        _webHostEnvironment = webHostEnvironment;
         _suggestionService = suggestionService;
+        _fileService = fileService;
         _userService = userService;
         _restrictionService = restrictionService;
         _localizer = new Shared(localizer);
@@ -56,7 +70,11 @@ public class SuggestionController : Controller
     public ActionResult Create()
     {
         List<Restriction> restrictions = _restrictionService.GetAll();
-        List<SelectListItem> restrictionsOptions = restrictions.Select(restriction => new SelectListItem { Value = restriction.Id.ToString(), Text = restriction.Name }).ToList();
+        List<SelectListItem> restrictionsOptions = restrictions.Select(restriction => new SelectListItem
+        {
+            Value = restriction.Id.ToString(),
+            Text = restriction.Name,
+        }).ToList();
 
         SuggestionRequest suggestionRequest = new()
         {
@@ -71,6 +89,12 @@ public class SuggestionController : Controller
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> Create(SuggestionRequest suggestionRequest)
     {
+        suggestionRequest.RestrictionOptions = _restrictionService.GetAll().Select(restriction => new SelectListItem
+        {
+            Value = restriction.Id.ToString(),
+            Text = restriction.Name,
+        }).ToList();
+
         if (!ModelState.IsValid)
         {
             return View(suggestionRequest);
@@ -88,6 +112,7 @@ public class SuggestionController : Controller
             Name = suggestionRequest.Name,
             Description = suggestionRequest.Description,
             Restrictions = suggestionRequest.SelectedRestrictionIds?.Select(restriction => new Restriction { Name = restriction }).ToList(),
+            ImageUrl = await _fileService.SaveImageAsync(suggestionRequest.Image, _webHostEnvironment) ?? ""
         };
         string id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
         User user = (await _userService.GetById(id))!;
@@ -138,12 +163,13 @@ public class SuggestionController : Controller
             return View();
         }
 
-        SuggestionRequest suggestionRequest = new()
+        SuggestionUpdateRequest suggestionRequest = new()
         {
             Name = suggestion.Name,
             Description = suggestion.Description,
             SelectedRestrictionIds = suggestion.Restrictions?.Select(restriction => restriction.Id.ToString()).ToList(),
             RestrictionOptions = restrictionsOptions,
+            ImageUrl = suggestion.ImageUrl,
         };
 
         return View(suggestionRequest);
@@ -153,7 +179,7 @@ public class SuggestionController : Controller
     [Authorize(Roles = $"{RoleName.Admin}, {RoleName.Manager}, {RoleName.Employee}")]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit(int id, SuggestionRequest suggestionRequest)
+    public async Task<ActionResult> Edit(int id, SuggestionUpdateRequest suggestionRequest)
     {
         if (!ModelState.IsValid)
         {
@@ -165,13 +191,24 @@ public class SuggestionController : Controller
             return View(suggestionRequest);
         }
 
-        if (_suggestionService.Exists(suggestionRequest.Name))
+        if (_suggestionService.Exists(suggestionRequest.Name, id))
         {
             TempData["Message"] = _localizer.Get("Suggestion with the same name already exists");
             TempData["MessageType"] = "danger";
             return View(suggestionRequest);
         }
+        
+        string? userid = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
+        string imageUrl;
+        if (suggestionRequest.Image != null)
+        {
+            imageUrl = await _fileService.SaveImageAsync(suggestionRequest.Image, _webHostEnvironment) ?? "";
+        }
+        else
+        {
+            imageUrl = _suggestionService.GetById(id, userid).ImageUrl;
+        }
         Suggestion suggestion = new()
         {
             Id = id,
@@ -181,6 +218,7 @@ public class SuggestionController : Controller
             {
                 Name = restriction,
             }).ToList(),
+            ImageUrl = imageUrl,
         };
 
         string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
@@ -189,7 +227,7 @@ public class SuggestionController : Controller
         {
             TempData["Message"] = _localizer.Get("Error while updating");
             TempData["MessageType"] = "danger";
-            
+
             suggestionRequest.RestrictionOptions = _restrictionService.GetAll().Select(restriction => new SelectListItem
             {
                 Value = restriction.Id.ToString(), Text = restriction.Name,

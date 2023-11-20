@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using Talpa_10_WebApp.Constants;
 using Talpa_10_WebApp.Translations;
 using Talpa_10_WebApp.ViewModels;
 using BusinessLogicLayer.Interfaces.Services;
@@ -47,6 +46,7 @@ public class HomeController : Controller
         {
             ConfirmedSuggestion = outing.ConfirmedSuggestion,
             ConfirmedOutingDate = outing.ConfirmedOutingDate,
+            ImageUrl = outing.ImageUrl,
         }).OrderBy(o => o.ConfirmedOutingDate?.Date).ToList());
     }
 

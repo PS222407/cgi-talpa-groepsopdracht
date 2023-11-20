@@ -152,6 +152,7 @@ public class OutingRepository : IOutingRepository
         outingDb.Suggestions = outing.Suggestions;
         outingDb.OutingDates = outing.OutingDates;
         outingDb.DeadLine = outing.DeadLine;
+        outingDb.ImageUrl = outing.ImageUrl;
 
         _dataContext.SaveChanges();
 

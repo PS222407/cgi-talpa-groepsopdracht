@@ -8,6 +8,8 @@ public class Outing
 
     public string Name { get; set; }
 
+    public string? ImageUrl { get; set; }
+
     public int TeamId { get; set; }
 
     public Team Team { get; set; }

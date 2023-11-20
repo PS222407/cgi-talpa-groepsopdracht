@@ -1,6 +1,6 @@
-@using Talpa_10_WebApp.Translations
+﻿@using Talpa_10_WebApp.Translations
 @using Microsoft.AspNetCore.Mvc.Localization
-@model Talpa_10_WebApp.RequestModels.SuggestionRequest
+@model Talpa_10_WebApp.RequestModels.SuggestionUpdateRequest
 @inject IHtmlLocalizer<Shared> SharedLocalizer
 
 @{
@@ -23,7 +23,7 @@
     <hr/>
     <div class="row" style="display: flex; justify-content: center">
         <div class="col-md-8">
-            <form asp-action="Edit" autocomplete=" off">
+            <form asp-action="Edit" autocomplete="off" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Name" class="control-label">@SharedLocalizer["Name"]</label>
@@ -39,6 +39,22 @@
                     <label asp-for="SelectedRestrictionIds" class="control-label">@SharedLocalizer["Restrictions"]</label>
                     <select asp-for="SelectedRestrictionIds" asp-items="Model.RestrictionOptions" multiple="multiple" class="form-control js-dynamic-tokenizer"></select>
                     <span asp-validation-for="SelectedRestrictionIds" class="text-danger"></span>
+                </div>
+                
+                <br>
+                <div style="display: flex; flex-direction: column">
+                    <label>@SharedLocalizer["Current image"]:</label>
+                    @if (Model.ImageUrl != null)
+                    {
+                        <img class="col-md-3" src="@Model.ImageUrl" alt="Suggestion Image" style="max-height: 300px; object-fit: contain"/>
+                    }
+                </div>
+                <br>
+                
+                <div class="form-group">
+                    <label asp-for="Image" class="control-label">@SharedLocalizer["Image"]</label>
+                    <input asp-for="Image" class="form-control" accept="image/png, image/gif, image/jpeg" />
+                    <span asp-validation-for="Image" class="text-danger"></span>
                 </div>
                 <br/>
                 <div class="form-group" style="display: flex; justify-content: space-between">

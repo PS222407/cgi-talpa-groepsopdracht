@@ -12,6 +12,8 @@ public class OutingCreateRequest
 
     private List<DateTime>? _dates = new();
 
+    public IFormFile Image { get; set; }
+
     [Required(ErrorMessage = "The Name field is required.")]
     [Display(Name = "Name")]
     public string Name { get; set; }
