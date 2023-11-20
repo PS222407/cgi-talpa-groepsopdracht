@@ -17,4 +17,6 @@ public interface ISuggestionRepository
     public bool Update(Suggestion suggestion);
 
     public bool Delete(int id);
+
+    public bool Exists(string name);
 }

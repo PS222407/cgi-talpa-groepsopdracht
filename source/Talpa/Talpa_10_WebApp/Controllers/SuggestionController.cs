@@ -76,6 +76,13 @@ public class SuggestionController : Controller
             return View(suggestionRequest);
         }
 
+        if (_suggestionService.Exists(suggestionRequest.Name))
+        {
+            TempData["Message"] = _localizer.Get("Suggestion with the same name already exists");
+            TempData["MessageType"] = "danger";
+            return View(suggestionRequest);
+        }
+
         Suggestion suggestion = new()
         {
             Name = suggestionRequest.Name,
@@ -155,6 +162,13 @@ public class SuggestionController : Controller
                 Value = restriction.Id.ToString(), Text = restriction.Name,
             }).ToList();
 
+            return View(suggestionRequest);
+        }
+
+        if (_suggestionService.Exists(suggestionRequest.Name))
+        {
+            TempData["Message"] = _localizer.Get("Suggestion with the same name already exists");
+            TempData["MessageType"] = "danger";
             return View(suggestionRequest);
         }
 
