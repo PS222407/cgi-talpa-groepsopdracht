@@ -333,4 +333,7 @@
     <data name="Days left" xml:space="preserve">
         <value>Days left</value>
     </data>
+  <data name="Image" xml:space="preserve">
+      <value>Image</value>
+  </data>
 </root>

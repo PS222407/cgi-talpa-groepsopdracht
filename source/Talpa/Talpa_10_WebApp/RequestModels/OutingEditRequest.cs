@@ -13,6 +13,7 @@ public class OutingEditRequest
     private string? _stringDates;
 
     private List<DateTime>? _dates = new();
+
     public IFormFile Image { get; set; }
 
     [Required(ErrorMessage = "The Name field is required.")]
@@ -60,7 +61,7 @@ public class OutingEditRequest
         Dates = dates ?? new List<DateTime>();
     }
 
-    public OutingEditRequest()  
+    public OutingEditRequest()
     {
     }
 

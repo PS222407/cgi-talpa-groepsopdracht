@@ -24,7 +24,7 @@
     <hr/>
     <div class="row" style="display: flex; justify-content: center">
         <div class="col-md-8">
-            <form asp-action="Create" autocomplete="off">
+            <form asp-action="Create" autocomplete="off" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Name" class="control-label">@SharedLocalizer["Name"]</label>
@@ -42,8 +42,8 @@
                     <span asp-validation-for="SelectedRestrictionIds" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Image" class="control-label"></label>
-                    <input asp-for="Image" class="form-control"/>
+                    <label asp-for="Image" class="control-label">@SharedLocalizer["Image"]</label>
+                    <input asp-for="Image" class="form-control" accept="image/png, image/gif, image/jpeg" />
                     <span asp-validation-for="Image" class="text-danger"></span>
                 </div>
                 <br/>

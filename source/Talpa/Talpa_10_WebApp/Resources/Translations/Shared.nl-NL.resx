@@ -334,4 +334,7 @@ Er zijn geen stemmen voor dit uitje</value>
     <data name="Days left" xml:space="preserve">
         <value>Dagen over</value>
     </data>
+    <data name="Image" xml:space="preserve">
+        <value>Afbeelding</value>
+    </data>
 </root>

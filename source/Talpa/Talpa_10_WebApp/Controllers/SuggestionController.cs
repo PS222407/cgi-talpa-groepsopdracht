@@ -28,8 +28,14 @@ public class SuggestionController : Controller
 
     private readonly Shared _localizer;
 
-    public SuggestionController(FileService fileService, IWebHostEnvironment webHostEnvironment, ISuggestionService suggestionService, IUserService userService, IRestrictionService restrictionService,
-        IStringLocalizer<Shared> localizer)
+    public SuggestionController(
+        FileService fileService,
+        IWebHostEnvironment webHostEnvironment,
+        ISuggestionService suggestionService,
+        IUserService userService,
+        IRestrictionService restrictionService,
+        IStringLocalizer<Shared> localizer
+    )
     {
         _webHostEnvironment = webHostEnvironment;
         _suggestionService = suggestionService;
@@ -64,7 +70,11 @@ public class SuggestionController : Controller
     public ActionResult Create()
     {
         List<Restriction> restrictions = _restrictionService.GetAll();
-        List<SelectListItem> restrictionsOptions = restrictions.Select(restriction => new SelectListItem { Value = restriction.Id.ToString(), Text = restriction.Name }).ToList();
+        List<SelectListItem> restrictionsOptions = restrictions.Select(restriction => new SelectListItem
+        {
+            Value = restriction.Id.ToString(),
+            Text = restriction.Name,
+        }).ToList();
 
         SuggestionRequest suggestionRequest = new()
         {
@@ -79,6 +89,12 @@ public class SuggestionController : Controller
     [ValidateAntiForgeryToken]
     public async Task<ActionResult> Create(SuggestionRequest suggestionRequest)
     {
+        suggestionRequest.RestrictionOptions = _restrictionService.GetAll().Select(restriction => new SelectListItem
+        {
+            Value = restriction.Id.ToString(),
+            Text = restriction.Name,
+        }).ToList();
+        
         if (!ModelState.IsValid)
         {
             return View(suggestionRequest);
@@ -199,7 +215,7 @@ public class SuggestionController : Controller
         {
             TempData["Message"] = _localizer.Get("Error while updating");
             TempData["MessageType"] = "danger";
-            
+
             suggestionRequest.RestrictionOptions = _restrictionService.GetAll().Select(restriction => new SelectListItem
             {
                 Value = restriction.Id.ToString(), Text = restriction.Name,

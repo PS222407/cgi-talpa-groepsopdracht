@@ -32,7 +32,14 @@ public class OutingController : Controller
 
     private readonly FileService _fileService;
 
-    public OutingController(IOutingService outingService, IUserService userService, ISuggestionService suggestionService, IStringLocalizer<Shared> localizer, FileService fileService, IWebHostEnvironment webHostEnvironment)
+    public OutingController(
+        IOutingService outingService,
+        IUserService userService,
+        ISuggestionService suggestionService,
+        IStringLocalizer<Shared> localizer,
+        FileService fileService,
+        IWebHostEnvironment webHostEnvironment
+    )
     {
         _outingService = outingService;
         _userService = userService;
@@ -92,7 +99,7 @@ public class OutingController : Controller
             SuggestionId = outing.ConfirmedSuggestionId,
             OutingDateId = outing.ConfirmedOutingDateId,
         };
-        
+
         return View(confirmOutingRequest);
     }
 
@@ -103,19 +110,19 @@ public class OutingController : Controller
         {
             return View(confirmOutingRequest);
         }
-        
+
         Outing? outing = _outingService.GetById(id);
 
         if (outing == null)
         {
             TempData["Message"] = _localizer.Get("No entity found with this id");
             TempData["MessageType"] = "danger";
-            
+
             return View(confirmOutingRequest);
         }
 
         _outingService.ConfirmOuting(id, confirmOutingRequest.SuggestionId ?? 0, confirmOutingRequest.OutingDateId ?? 0);
-        
+
         TempData["Message"] = _localizer.Get("Item successfully updated");
         TempData["MessageType"] = "success";
 
