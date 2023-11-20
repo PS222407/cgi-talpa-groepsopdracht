@@ -167,8 +167,8 @@
     <value>Home Pagina</value>
   </data>
     <data name="Create New" xml:space="preserve">
-    <value>Nieuwe Aaanmaken</value>
-  </data>
+        <value>Nieuwe Aanmaken</value>
+    </data>
     <data name="Edit" xml:space="preserve">
     <value>Wijzig</value>
   </data>
