@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Talpa_10_WebApp.RequestModels;
 
 public class SuggestionUpdateRequest
 {
+    [Required(ErrorMessage = "The Name field is required.")]
     public string Name { get; set; }
 
     public string? ImageUrl { get; set; }

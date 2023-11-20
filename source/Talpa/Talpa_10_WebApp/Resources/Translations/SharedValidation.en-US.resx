@@ -144,4 +144,7 @@
     <data name="You need to select a deadline" xml:space="preserve">
     <value>You need to select a deadline</value>
   </data>
+    <data name="The Image field is required." xml:space="preserve">
+        <value>The Image field is required.</value>
+    </data>
 </root>
