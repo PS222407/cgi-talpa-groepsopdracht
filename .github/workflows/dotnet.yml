@@ -82,4 +82,6 @@ jobs:
 
     - name: Test
       working-directory: source/Talpa
-      run: dotnet test --no-build --verbosity normal
+      run: |
+        export ASPNETCORE_ENVIRONMENT=Development
+        dotnet test --no-build --verbosity normal
