@@ -74,10 +74,19 @@ jobs:
       working-directory: source/Talpa
       run: dotnet build --no-restore
 
+    - name: Install Chrome for Selenium
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y google-chrome-stable
+
     - name: Run the app
       working-directory: source/Talpa
-      run: dotnet run --project="Talpa_10_WebApp"
-      
+      run: |
+        nohup dotnet run --project="Talpa_10_WebApp" > talpa_log.txt 2>&1 &
+        echo $! > talpa_pid.txt
+
     - name: Test
       working-directory: source/Talpa
-      run: dotnet test --no-build --verbosity normal
+      run: |
+        export ASPNETCORE_ENVIRONMENT=Development
+        dotnet test --no-build --verbosity normal
