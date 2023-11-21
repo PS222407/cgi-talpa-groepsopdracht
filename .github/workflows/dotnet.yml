@@ -86,4 +86,4 @@ jobs:
       working-directory: source/Talpa
       run: |
         export ASPNETCORE_ENVIRONMENT=Development
-        dotnet test --no-build --verbosity normal .\Talpa_UnitTests\
+        dotnet test --no-build --verbosity normal ./Talpa_UnitTests
