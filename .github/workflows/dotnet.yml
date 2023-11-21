@@ -19,6 +19,7 @@ jobs:
 
     - name: download images
       run: |
+        mkdir images && 
         curl -o images/sample.png https://jensramakers.nl/assets/img/portfolio/cube.png
 
     - name: verify images exists
