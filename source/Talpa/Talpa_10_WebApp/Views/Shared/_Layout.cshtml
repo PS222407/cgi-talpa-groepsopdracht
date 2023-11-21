@@ -108,7 +108,7 @@
     {
         @if (TempData.ContainsKey("Message"))
         {
-            <div class="alert alert-@(TempData["MessageType"])">
+            <div id="flashmessage" class="alert alert-@(TempData["MessageType"])">
                 @TempData["Message"]
             </div>
         }
