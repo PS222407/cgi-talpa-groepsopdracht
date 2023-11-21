@@ -28,12 +28,38 @@ jobs:
 
     - name: Check current directory
       run: |
-        ls -la images
+        pwd
 
     - name: Create Database
       run: |
         sudo systemctl start mysql
-        mysql --user="root" -e "CREATE DATABASE \`Talpa\` character set UTF8mb4 collate utf8mb4_bin;"
+        mysql --user="root" --password="root" -e "CREATE DATABASE \`Talpa\` character set UTF8mb4 collate utf8mb4_bin;"
+
+    - name: Create appsettings.Development.json
+      run: |
+        echo '{
+          "ConnectionStrings": {
+            "DefaultConnection": "Data Source=(LocalDb);Server=127.0.0.1;Port=3306;Database=Talpa;User ID=root;Password=root;"
+          },
+          "Logging": {
+            "LogLevel": {
+              "Default": "Information",
+              "Microsoft.AspNetCore": "Warning"
+            }
+          },
+          "kestrel": {
+            "EndPoints": {
+              "Http": {
+                "Url": "http://*:3000"
+              }
+            }
+          },
+          "Auth0": {
+            "Domain": "",
+            "ClientId": "",
+            "ClientSecret": ""
+          }
+        }' > appsettings.Development.json
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
@@ -47,6 +73,10 @@ jobs:
     - name: Build
       working-directory: source/Talpa
       run: dotnet build --no-restore
+
+    - name: Run the app
+      working-directory: source/Talpa
+      run: dotnet run --project="Talpa_10_WebApp"
       
     - name: Test
       working-directory: source/Talpa
