@@ -49,7 +49,7 @@ public class SuggestionTests
         driver.FindElement(By.Id("Description")).SendKeys("Heerlijk dagje schoonmaken met zijn allen!");
         js.ExecuteScript("window.scrollTo(0,0)");
         driver.FindElement(By.CssSelector(".select2-search__field")).SendKeys("Saai,");
-        driver.FindElement(By.Id("Image")).SendKeys("/images/sample.jpg");
+        driver.FindElement(By.Id("Image")).SendKeys(@"C:\samples\sample.jpg");
         driver.FindElement(By.CssSelector(".btn-primary")).Click();
         
         bool verifyFlashMessage = driver.FindElement(By.Id("flashmessage")).Text
