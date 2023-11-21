@@ -309,34 +309,37 @@
   <data name="Suggestion with the same name already exists" xml:space="preserve">
     <value>Suggestion with the same name already exists</value>
   </data>
-    <data name="PlannedOutings" xml:space="preserve">
-        <value>Planned outings</value>
-      </data>
-    <data name="These are the current planned outings" xml:space="preserve">
-        <value>These are the current planned outings</value>
-      </data>
-    <data name="Outings" xml:space="preserve">
-        <value>Outings</value>
-    </data>
-    <data name="Confirm" xml:space="preserve">
-        <value>Confirm</value>
-    </data>
-    <data name="Most chosen suggestion" xml:space="preserve">
-        <value>Most chosen suggestion(s)</value>
-    </data>
-    <data name="Most chosen date" xml:space="preserve">
-        <value>Most chosen date(s)</value>
-    </data>
-    <data name="There are no votes for this outing" xml:space="preserve">
-        <value>There are no votes for this outing</value>
-    </data>
-    <data name="Days left" xml:space="preserve">
-        <value>Days left</value>
-    </data>
+  <data name="PlannedOutings" xml:space="preserve">
+    <value>Planned outings</value>
+  </data>
+  <data name="These are the current planned outings" xml:space="preserve">
+    <value>These are the current planned outings</value>
+  </data>
+  <data name="Outings" xml:space="preserve">
+    <value>Outings</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="Most chosen suggestion" xml:space="preserve">
+    <value>Most chosen suggestion(s)</value>
+  </data>
+  <data name="Most chosen date" xml:space="preserve">
+    <value>Most chosen date(s)</value>
+  </data>
+  <data name="There are no votes for this outing" xml:space="preserve">
+    <value>There are no votes for this outing</value>
+  </data>
+  <data name="Days left" xml:space="preserve">
+    <value>Days left</value>
+  </data>
   <data name="Image" xml:space="preserve">
-      <value>Image</value>
+    <value>Image</value>
   </data>
   <data name="Current image" xml:space="preserve">
-      <value>Current image</value>
+    <value>Current image</value>
+  </data>
+  <data name="Vote succesful" xml:space="preserve">
+    <value>Vote succesful</value>
   </data>
 </root>

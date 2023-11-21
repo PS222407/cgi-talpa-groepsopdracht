@@ -122,7 +122,7 @@ public class OutingController : Controller
 
         _outingService.ConfirmOuting(id, confirmOutingRequest.SuggestionId ?? 0, confirmOutingRequest.OutingDateId ?? 0);
 
-        TempData["Message"] = _localizer.Get("Item successfully updated");
+        TempData["Message"] = _localizer.Get("Item succesfully updated");
         TempData["MessageType"] = "success";
 
         return RedirectToAction(nameof(Index));
