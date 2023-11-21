@@ -14,7 +14,12 @@ public class Tests
     [SetUp]
     public void SetUp()
     {
-        driver = new ChromeDriver();
+        var chromeOptions = new ChromeOptions();
+        chromeOptions.AddArgument("--headless"); // Add other options as needed
+        
+        var chromeDriverService = ChromeDriverService.CreateDefaultService();
+        
+        driver = new ChromeDriver(chromeDriverService, chromeOptions);
         js = (IJavaScriptExecutor)driver;
         vars = new Dictionary<string, object>();
     }
