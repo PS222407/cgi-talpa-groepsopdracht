@@ -25,7 +25,12 @@ jobs:
     - name: verify images exists
       run: |
         ls -la images
-    
+
+    - name: Create Database
+      run: |
+        sudo systemctl start mysql
+        mysql --user="root" --password="" -e "CREATE DATABASE \`Talpa\` character set UTF8mb4 collate utf8mb4_bin;"
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
