@@ -11,7 +11,7 @@ using BusinessLogicLayer.Interfaces.Services;
 
 namespace Talpa_10_WebApp.Controllers;
 
-// [Authorize]
+[Authorize]
 public class HomeController : Controller
 {
     private readonly IOutingService _outingService;
