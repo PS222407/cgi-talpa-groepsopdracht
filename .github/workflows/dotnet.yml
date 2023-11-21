@@ -74,6 +74,11 @@ jobs:
       working-directory: source/Talpa
       run: dotnet build --no-restore
 
+    - name: Install Chrome for Selenium
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y google-chrome-stable
+
     - name: Run the app
       working-directory: source/Talpa
       run: |
