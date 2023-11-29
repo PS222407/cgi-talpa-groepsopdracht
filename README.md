@@ -24,14 +24,13 @@ Create a team manually in your developemnt database with teamId 1, here all user
 
 ## Tests
 UnitTests can be started from your IDE  
-UITests must be runned from the <b>run_project_in_testing_env.bat</b> file in the source folder.  
-
-Inside the TalpaSeeder project run
+UITests must be runned from the <b>run_project_in_testing_env.bat</b> file in the source folder. But you first have to run this command inside the TalpaSeeder folder.
 ```bash 
 composer i
 ```
-copy the .env.example to .env and fill in your database details
+and copy the .env.example to .env and fill in your database details
 
+  
 You might want to debug and start all the services manually. To do this follow these steps:  
 Go into TalpaSeeder and run 
 ```bash
