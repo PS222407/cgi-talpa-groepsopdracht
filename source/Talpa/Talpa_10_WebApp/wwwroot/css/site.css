@@ -98,15 +98,6 @@ li a {
     text-align: center
 }
 
-:root {
-    --backgroundcolor: #F5F5F5;
-    --white: #ffffff;
-    --main: red;
-    --main-darker: color-mix(in srgb,var(--main),#000 15%);
-    --secondary: lightgrey;
-    --secondary-darker: color-mix(in srgb,var(--secondary),#000 15%);
-}
-
 .page-title-container {
     background-color: var(--backgroundcolor);
     padding: 1em;
