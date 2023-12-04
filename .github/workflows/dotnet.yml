@@ -1,6 +1,3 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
-
 name: .NET
 
 on:
@@ -16,16 +13,77 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
+    - name: download images
+      run: |
+        mkdir images && 
+        curl -o images/sample.png https://jensramakers.nl/assets/img/portfolio/cube.png
+
+    - name: verify images exists
+      run: |
+        ls -la images
+
+    - name: Check current directory
+      run: |
+        pwd
+
+    - name: Create Database
+      run: |
+        sudo systemctl start mysql
+        mysql --user="root" --password="root" -e "CREATE DATABASE \`Talpa\` character set UTF8mb4 collate utf8mb4_bin;"
+
+    - name: Create appsettings.Development.json
+      run: |
+        echo '{
+          "ConnectionStrings": {
+            "DefaultConnection": "Data Source=(LocalDb);Server=127.0.0.1;Port=3306;Database=Talpa;User ID=root;Password=root;"
+          },
+          "Logging": {
+            "LogLevel": {
+              "Default": "Information",
+              "Microsoft.AspNetCore": "Warning"
+            }
+          },
+          "kestrel": {
+            "EndPoints": {
+              "Http": {
+                "Url": "http://*:3000"
+              }
+            }
+          },
+          "Auth0": {
+            "Domain": "",
+            "ClientId": "",
+            "ClientSecret": ""
+          }
+        }' > appsettings.Development.json
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
+        
     - name: Restore dependencies
       working-directory: source/Talpa
       run: dotnet restore
+      
     - name: Build
       working-directory: source/Talpa
       run: dotnet build --no-restore
+
+    - name: Install Chrome for Selenium
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y google-chrome-stable
+
+    - name: Run the app
+      working-directory: source/Talpa
+      run: |
+        nohup dotnet run --project="Talpa_10_WebApp" > talpa_log.txt 2>&1 &
+        echo $! > talpa_pid.txt
+
     - name: Test
       working-directory: source/Talpa
-      run: dotnet test --no-build --verbosity normal
+      run: |
+        export ASPNETCORE_ENVIRONMENT=Development
+        dotnet test --no-build --verbosity normal ./Talpa_UnitTests

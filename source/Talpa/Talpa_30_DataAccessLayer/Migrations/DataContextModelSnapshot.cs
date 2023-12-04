@@ -19,6 +19,32 @@ namespace DataAccessLayer.Migrations
                 .HasAnnotation("ProductVersion", "7.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("BusinessLogicLayer.Models.Appearance", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Background")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Main")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Secondary")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Appearances");
+                });
+
             modelBuilder.Entity("BusinessLogicLayer.Models.DateVote", b =>
                 {
                     b.Property<string>("UserId")

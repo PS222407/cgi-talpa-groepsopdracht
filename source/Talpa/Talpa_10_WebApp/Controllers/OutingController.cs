@@ -163,7 +163,7 @@ public class OutingController : Controller
 
         if (_outingService.Vote(userId, id, voteDateRequest.SuggestionId, votedDateIds))
         {
-            TempData["Message"] = _localizer.Get("Vote succesful");
+            TempData["Message"] = _localizer.Get("Vote successful");
             TempData["MessageType"] = "success";
         }
         else

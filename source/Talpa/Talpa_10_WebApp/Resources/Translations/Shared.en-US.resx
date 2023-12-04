@@ -339,8 +339,8 @@
   <data name="Current image" xml:space="preserve">
     <value>Current image</value>
   </data>
-  <data name="Vote succesful" xml:space="preserve">
-    <value>Vote succesful</value>
+  <data name="Vote successful" xml:space="preserve">
+    <value>Vote successful</value>
   </data>
   <data name="Background" xml:space="preserve">
     <value>Background</value>
@@ -353,5 +353,8 @@
   </data>
   <data name="Secondary" xml:space="preserve">
     <value>Secondary</value>
+  </data>
+  <data name="Appearance" xml:space="preserve">
+      <value>Appearance</value>
   </data>
 </root>
