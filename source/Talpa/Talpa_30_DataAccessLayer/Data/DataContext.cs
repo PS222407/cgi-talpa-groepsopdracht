@@ -24,6 +24,8 @@ public class DataContext : DbContext
     public DbSet<OutingDate> OutingDates { get; set; }
 
     public DbSet<DateVote> DateVotes { get; set; }
+    
+    public DbSet<Appearance> Appearances { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
