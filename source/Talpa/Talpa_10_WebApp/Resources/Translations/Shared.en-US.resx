@@ -342,6 +342,18 @@
   <data name="Vote successful" xml:space="preserve">
     <value>Vote successful</value>
   </data>
+  <data name="Background" xml:space="preserve">
+    <value>Background</value>
+  </data>
+  <data name="Customization" xml:space="preserve">
+    <value>Customization</value>
+  </data>
+  <data name="Primary" xml:space="preserve">
+    <value>Primary</value>
+  </data>
+  <data name="Secondary" xml:space="preserve">
+    <value>Secondary</value>
+  </data>
   <data name="Appearance" xml:space="preserve">
       <value>Appearance</value>
   </data>

@@ -1,4 +1,4 @@
-@using Talpa_10_WebApp.ViewModels
+﻿@using Talpa_10_WebApp.ViewModels
 @using Talpa_10_WebApp.Translations
 @using Microsoft.AspNetCore.Mvc.Localization
 @model IEnumerable<Talpa_10_WebApp.ViewModels.SuggestionViewModel>
@@ -9,7 +9,7 @@
     ViewData["DisableMainContainer"] = "True";
 }
 
-<div style="background-color: rgb(245, 245, 245); padding: 1em; font-size: 1.5em">
+<div class="page-title-container">
     <h1 style="text-align: center">@SharedLocalizer["Suggestions"]</h1>
 </div>
 
@@ -45,7 +45,7 @@
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">@SharedLocalizer["Edit"]</a>
                     @* <a asp-action="Details" asp-route-id="@item.Id">@SharedLocalizer["Details"]</a> | *@
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary" style="background-color: #D92A3B; border-color: #D92A3B;">@SharedLocalizer["Delete"]</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary">@SharedLocalizer["Delete"]</a>
                 </td>
             </tr>
         }
