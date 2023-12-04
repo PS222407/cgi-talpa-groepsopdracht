@@ -11,7 +11,9 @@ public class SuggestionTests
     public IDictionary<string, object> vars { get; private set; }
     
     private IJavaScriptExecutor js;
-    
+
+    readonly HttpClient _httpClient = new();
+
     [SetUp]
     public void SetUp()
     {
@@ -38,8 +40,11 @@ public class SuggestionTests
     }
     
     [Test]
-    public void create_suggestion_successfully()
+    public async Task create_suggestion_successfully()
     {
+        await _httpClient.GetAsync("http://localhost:8000/api/rollback");
+        await _httpClient.GetAsync("http://localhost:8000/api/migrate");
+        
         driver.Navigate().GoToUrl("http://localhost:3000/");
         driver.Manage().Window.Size = new System.Drawing.Size(1094, 1032);
         driver.FindElement(By.CssSelector(".nav-item:nth-child(3) > .nav-link")).Click();
@@ -49,7 +54,7 @@ public class SuggestionTests
         driver.FindElement(By.Id("Description")).SendKeys("Heerlijk dagje schoonmaken met zijn allen!");
         js.ExecuteScript("window.scrollTo(0,0)");
         driver.FindElement(By.CssSelector(".select2-search__field")).SendKeys("Saai,");
-        driver.FindElement(By.Id("Image")).SendKeys(@"C:\samples\sample.jpg");
+        driver.FindElement(By.Id("Image")).SendKeys(@"C:\images\sample.jpg");
         driver.FindElement(By.CssSelector(".btn-primary")).Click();
         
         bool verifyFlashMessage = driver.FindElement(By.Id("flashmessage")).Text

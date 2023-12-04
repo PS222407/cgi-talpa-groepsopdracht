@@ -13,14 +13,35 @@ public class SuggestionService : ISuggestionService
         _suggestionRepository = suggestionRepository;
     }
 
-    public Suggestion Create(Suggestion suggestion, string userid)
+    public Suggestion Create(Suggestion newSuggestion, string userid)
     {
-        return _suggestionRepository.Create(suggestion, userid);
+        if (newSuggestion == null)
+        {
+            throw new ArgumentOutOfRangeException("Suggestion can't be null");
+        }
+
+        if (Exists(newSuggestion.Name))
+        {
+            return null;
+        }
+
+        return _suggestionRepository.Create(newSuggestion, userid);
     }
 
     public bool Update(Suggestion newSuggestion, string userId)
     {
+        if (newSuggestion == null)
+        {
+            throw new ArgumentOutOfRangeException("Suggestion can't be null");
+        }
+
         Suggestion? suggestion = _suggestionRepository.GetById(newSuggestion.Id);
+
+        if (suggestion == null)
+        {
+            throw new ArgumentNullException("Suggestion doesn't exist");
+        }
+
         if (suggestion?.UserId == userId)
         {
             return _suggestionRepository.Update(newSuggestion);
@@ -32,6 +53,12 @@ public class SuggestionService : ISuggestionService
     public bool Delete(int id, string userId)
     {
         Suggestion? suggestion = _suggestionRepository.GetById(id);
+
+        if (suggestion == null)
+        {
+            throw new ArgumentNullException("Suggestion doesn't exist");
+        }
+
         if (suggestion?.UserId == userId)
         {
             return _suggestionRepository.Delete(id);
@@ -43,6 +70,12 @@ public class SuggestionService : ISuggestionService
     public Suggestion? GetById(int id, string userid)
     {
         Suggestion? suggestion = _suggestionRepository.GetById(id);
+
+        if (suggestion == null)
+        {
+            throw new ArgumentNullException("Suggestion doesn't exist");
+        }
+
         if (suggestion?.UserId == userid)
         {
             return suggestion;
