@@ -78,9 +78,12 @@ public class AppearanceController : Controller
             using StreamWriter writer = new(cssPath);
 
             string css = $":root {{" +
-                         $"\n    --main: {main};" +
                          $"\n    --backgroundcolor: {background};" +
-                         $"\n    --white: {secondary};" +
+                         $"\n    --white: #ffffff;" +
+                         $"\n    --main: {main};" +
+                         $"\n    --main-darker: color-mix(in srgb,var(--main),#000 15%);" +
+                         $"\n    --secondary: {secondary};" +
+                         $"\n    --secondary-darker: color-mix(in srgb,var(--secondary),#000 15%);" +
                          $"\n}}";
             
             writer.Write(css);

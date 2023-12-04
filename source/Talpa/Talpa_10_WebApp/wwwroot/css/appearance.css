@@ -1,5 +1,8 @@
 :root {
-    --main: #ae00ff;
-    --backgroundcolor: #000000;
+    --backgroundcolor: #ffffff;
     --white: #ffffff;
+    --main: #82ff4d;
+    --main-darker: color-mix(in srgb,var(--main),#000 15%);
+    --secondary: #0062ff;
+    --secondary-darker: color-mix(in srgb,var(--secondary),#000 15%);
 }
