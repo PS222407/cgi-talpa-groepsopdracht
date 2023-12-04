@@ -14,6 +14,8 @@ timeout /nobreak /t 20
 
 dotnet test --no-build --verbosity normal ./Talpa_UITests
 
+cd .\Talpa_10_WebApp\
+
 copy appsettings.Development.backup.json appsettings.Development.json 
 
 pause

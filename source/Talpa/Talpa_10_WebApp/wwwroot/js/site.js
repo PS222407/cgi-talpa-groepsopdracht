@@ -15,3 +15,21 @@
         }
     });
 }
+
+function getLogo() {
+    $.ajax({
+        type: "GET",
+        url: "/GetLogo",
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        error: function (xhr, status, error) {
+            console.error(xhr, status, error);
+        },
+        success: function (result) {
+            console.log(result.data.imageUrl);
+            if (result.data.imageUrl) {
+                document.getElementById('imglogo').setAttribute('src', result.data.imageUrl);
+            }
+        }
+    });
+}
