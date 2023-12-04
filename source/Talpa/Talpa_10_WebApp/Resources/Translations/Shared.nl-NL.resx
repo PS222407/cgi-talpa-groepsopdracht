@@ -346,4 +346,16 @@ Er zijn geen stemmen voor dit uitje</value>
   <data name="Vote succesful" xml:space="preserve">
     <value>Succesvol gestemd</value>
   </data>
+  <data name="Background" xml:space="preserve">
+    <value>Achtergrond</value>
+  </data>
+  <data name="Customization" xml:space="preserve">
+    <value>Huisstijl</value>
+  </data>
+  <data name="Primary" xml:space="preserve">
+    <value>Primair</value>
+  </data>
+  <data name="Secondary" xml:space="preserve">
+    <value>Secundair</value>
+  </data>
 </root>

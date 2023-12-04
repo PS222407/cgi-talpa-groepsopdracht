@@ -1,4 +1,4 @@
-@using Talpa_10_WebApp.Translations
+﻿@using Talpa_10_WebApp.Translations
 @using Microsoft.AspNetCore.Mvc.Localization
 @model Talpa_10_WebApp.ViewModels.OutingViewModel
 @inject IHtmlLocalizer<Shared> SharedLocalizer
@@ -10,9 +10,9 @@
 }
 
 
-<div style="background-color: rgb(245, 245, 245); padding: 1em; font-size: 1.5em">
+<div class="page-title-container">
     <h1 style="text-align: center">@SharedLocalizer["Outing"]</h1>
-    <div style="font-size: 0.8em; text-align: center">@SharedLocalizer["Delete"]</div>
+    <div class="page-title">@SharedLocalizer["Delete"]</div>
 </div>
 
 
@@ -40,7 +40,7 @@
                 <input type="hidden" asp-for="Id"/>
                 <div class="form-group" style="display: flex; justify-content: space-between">
                     <a asp-action="Index" class="btn btn-secondary">@SharedLocalizer["BackToList"]</a>
-                    <input type="submit" value="@SharedLocalizer["Delete"]" class="btn btn-danger" style="background-color: #D92A3B; border-color: #D92A3B;"/>
+                    <input type="submit" value="@SharedLocalizer["Delete"]" class="btn btn-primary"/>
                 </div>
             </form>
         </div>

@@ -1,4 +1,4 @@
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+﻿.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
@@ -9,12 +9,6 @@ html {
 
 body {
     margin-bottom: 60px;
-}
-
-:root {
-    --main: #D92A3B;
-    --backgroundcolor: #E5E5E5;
-    --white: #ffffff;
 }
 
 .body {
@@ -98,3 +92,56 @@ li a {
     color: #2B2118 !important;
     margin-top: -5px !important;
 }
+
+.page-title {
+    font-size: 0.8em;
+    text-align: center
+}
+
+:root {
+    --backgroundcolor: #F5F5F5;
+    --white: #ffffff;
+    --main: red;
+    --main-darker: color-mix(in srgb,var(--main),#000 15%);
+    --secondary: lightgrey;
+    --secondary-darker: color-mix(in srgb,var(--secondary),#000 15%);
+}
+
+.page-title-container {
+    background-color: var(--backgroundcolor);
+    padding: 1em;
+    font-size: 1.5em
+}
+
+.btn-primary {
+    background-color: var(--main); 
+    border-color: var(--main);
+}
+
+.btn-primary:hover {
+    background-color: var(--main-darker);
+    border-color: var(--main-darker);
+}
+
+.btn-secondary {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+}
+
+.btn-secondary:hover{
+    background-color: var(--secondary-darker);
+    border-color: var(--secondary-darker);
+}
+
+.btn-outline-secondary {
+    background-color: white;
+    border: 1px solid var(--secondary);
+    color: var(--secondary);
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--secondary);
+    color: white;
+    border: 1px solid var(--secondary)
+}
+

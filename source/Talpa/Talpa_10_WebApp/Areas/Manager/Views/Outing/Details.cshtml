@@ -1,4 +1,4 @@
-@using Talpa_10_WebApp.Translations
+﻿@using Talpa_10_WebApp.Translations
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Talpa_10_WebApp.ViewModels
 @using BusinessLogicLayer.Models
@@ -12,9 +12,9 @@
     ViewData["DisableMainContainer"] = "True";
 }
 
-<div style="background-color: rgb(245, 245, 245); padding: 1em; font-size: 1.5em">
+<div class="page-title-container">
     <h1 style="text-align: center">@Model.Name</h1>
-    <div style="font-size: 0.8em; text-align: center">@SharedLocalizer["Confirm"]</div>
+    <div class="page-title">@SharedLocalizer["Confirm"]</div>
 </div>
 
 <div class="container" style="margin-top: 1em">
@@ -60,7 +60,7 @@
                 <br>
                 <div class="form-group" style="display: flex; justify-content: space-between">
                     <a asp-action="Index" class="btn btn-secondary">@SharedLocalizer["BackToList"]</a>
-                    <input type="submit" value="@SharedLocalizer["Confirm"]" class="btn btn-primary" style="background-color: #D92A3B; border-color: #D92A3B;"/>
+                    <input type="submit" value="@SharedLocalizer["Confirm"]" class="btn btn-primary"/>
                 </div>
             </form>
         </div>
