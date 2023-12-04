@@ -19,12 +19,15 @@ public class HomeController : Controller
     private readonly IUserService _userService;
 
     private readonly IStringLocalizer<Shared> _localizer;
+    
+    private readonly IAppearanceService _appearanceService;
 
-    public HomeController(IStringLocalizer<Shared> localizer, IUserService userService, IOutingService outingService)
+    public HomeController(IStringLocalizer<Shared> localizer, IUserService userService, IOutingService outingService, IAppearanceService appearanceService)
     {
         _localizer = localizer;
         _userService = userService;
         _outingService = outingService;
+        _appearanceService = appearanceService;
     }
 
     public async Task<ActionResult> Index()
@@ -81,6 +84,14 @@ public class HomeController : Controller
         }
 
         return Json(new { message = "Success" });
+    }
+    
+    [HttpGet("GetLogo")]
+    public ActionResult GetLogo()
+    {
+        Appearance? appearance = _appearanceService.Get();
+
+        return Json(new { message = "Success", data = new { appearance?.ImageUrl } });
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
