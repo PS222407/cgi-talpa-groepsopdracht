@@ -29,7 +29,7 @@
     <nav style="z-index: 20;" class="nav navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow">
         <div class="container-navbar">
             <a class="navbar-brand letterspace" style="color: white;" asp-area="" asp-controller="Home" asp-action="Index">
-                <img style="height: 50px" id="imglogo" src="~/images/logo.png" alt="logo">
+                <img style="height: 50px" id="imglogo" alt="logo">
             </a>
             <button class="navbar-toggler" style="background-color: white;" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -41,6 +41,11 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="Admin" asp-controller="Team" asp-action="Index" style="@(new Uri(Context.Request.GetDisplayUrl()).AbsolutePath.StartsWith("/Admin/Team") ? "color: white !important; text-decoration: underline; font-weight: bold;" : "")">
                                 @SharedLocalizer["Teams"]
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Admin" asp-controller="Appearance" asp-action="Index" style="@(new Uri(Context.Request.GetDisplayUrl()).AbsolutePath.StartsWith("/Admin/Appearance") ? "color: white !important; text-decoration: underline; font-weight: bold;" : "")">
+                                @SharedLocalizer["Appearance"]
                             </a>
                         </li>
                     }

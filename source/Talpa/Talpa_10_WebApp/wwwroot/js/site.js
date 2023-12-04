@@ -26,10 +26,8 @@ function getLogo() {
             console.error(xhr, status, error);
         },
         success: function (result) {
-            console.log(result.data.imageUrl);
-            if (result.data.imageUrl) {
-                document.getElementById('imglogo').setAttribute('src', result.data.imageUrl);
-            }
+            const imageUrl = result.data.imageUrl ?? '/images/logo.png';
+            document.getElementById('imglogo').setAttribute('src', imageUrl);
         }
     });
 }

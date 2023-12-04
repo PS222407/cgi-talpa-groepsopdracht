@@ -342,4 +342,7 @@
   <data name="Vote successful" xml:space="preserve">
     <value>Vote successful</value>
   </data>
+  <data name="Appearance" xml:space="preserve">
+      <value>Appearance</value>
+  </data>
 </root>

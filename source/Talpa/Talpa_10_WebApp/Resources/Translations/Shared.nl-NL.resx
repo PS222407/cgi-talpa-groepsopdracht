@@ -346,4 +346,7 @@ Er zijn geen stemmen voor dit uitje</value>
   <data name="Vote successful" xml:space="preserve">
     <value>Succesvol gestemd</value>
   </data>
+  <data name="Appearance" xml:space="preserve">
+      <value>Huisstijl</value>
+  </data>
 </root>
