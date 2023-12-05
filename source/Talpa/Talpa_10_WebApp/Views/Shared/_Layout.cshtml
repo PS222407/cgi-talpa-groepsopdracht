@@ -116,7 +116,7 @@
     </nav>
 </header>
 
-<main class="main @(ViewData["DisableMainContainer"] as string == "True" ? "" : "container")" id="main">
+<main class="page-background @(ViewData["DisableMainContainer"] as string == "True" ? "" : "container")" id="main">
     @if (ViewData["DisableMainContainer"] as string != "True")
     {
         @if (TempData.ContainsKey("Message"))
