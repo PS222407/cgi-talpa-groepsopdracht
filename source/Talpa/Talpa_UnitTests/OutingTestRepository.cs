@@ -8,6 +8,8 @@ namespace Talpa_UnitTests;
 public class OutingTestRepository : IOutingRepository
 {
     private readonly List<Outing> outings = new List<Outing>();
+    private readonly List<SuggestionVote> suggestionVotes = new List<SuggestionVote>();
+    private readonly List<DateVote> dateVotes = new List<DateVote>();
 
     public void Add(Outing outing, int teamId)
     {
@@ -61,6 +63,69 @@ public class OutingTestRepository : IOutingRepository
 
         return true;
     }
+    public Outing? GetByIdWithVotes(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Outing? GetOutingByIdWithMostVotedDatesAndSuggestions(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool UserHasVotedDatesForOuting(string userId, int outingId)
+    {
+        foreach (DateVote dateVote in dateVotes)
+        {
+            if (dateVote.UserId == userId && dateVote.OutingDate.Outing.Id == outingId)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool UserHasVotedSuggestionForOuting(string userId, int outingId)
+    {
+        foreach (SuggestionVote suggestionVote in suggestionVotes)
+        {
+            if (suggestionVote.UserId == userId && suggestionVote.OutingId == outingId)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool Vote(string userId, int outingId, int suggestionId, List<int> votedDateIds)
+    {
+        foreach(int votedDateId in votedDateIds)
+        {
+            DateVote dateVote = new DateVote
+            {
+                OutingDateId = votedDateId,
+                UserId = userId,
+                OutingDate = new OutingDate
+                {
+                    Outing = new Outing
+                    {
+                        Id = outingId
+                    }
+                },
+            };
+            dateVotes.Add(dateVote);
+        }
+        SuggestionVote suggestionVote = new SuggestionVote
+        {
+            UserId = userId,
+            OutingId = outingId,
+            SuggestionId = suggestionId,
+        };
+
+        suggestionVotes.Add(suggestionVote);
+
+        return true;
+    }
 
     public List<Outing> GetAll()
     {
@@ -83,30 +148,6 @@ public class OutingTestRepository : IOutingRepository
     }
 
     public List<Outing> GetAllFromTeam(int teamId)
-    {
-        throw new NotImplementedException();
-    }
-    public Outing? GetByIdWithVotes(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Outing? GetOutingByIdWithMostVotedDatesAndSuggestions(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool UserHasVotedDatesForOuting(string userId, int outingId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool UserHasVotedSuggestionForOuting(string userId, int outingId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool Vote(string userId, int outingId, int suggestionId, List<int> votedDateIds)
     {
         throw new NotImplementedException();
     }
