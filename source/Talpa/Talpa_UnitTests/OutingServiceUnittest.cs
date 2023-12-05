@@ -411,13 +411,64 @@ public class OutingServiceUnittest
         outingTestRepository.Add(outing, teamId);
         OutingService outingService = new OutingService(outingTestRepository);
 
-        outingService.Vote("user1", 1, 3, new List<int>
+        bool Vote = outingService.Vote("user1", 1, 3, new List<int>
         {
             1,
             2
         });
 
-        bool HasVoted = outingService.UserHasVotedForOuting("user1", 2);
-        Assert.IsTrue(HasVoted);
+        Assert.IsTrue(Vote);
+    }
+
+    [Test]
+    public void Vote_HasAlreadyVoted_Failure()
+    {
+        Outing outing = new Outing
+        {
+            Id = 1,
+            Name = "Test",
+            ImageUrl = "/url",
+            OutingDates = new List<OutingDate>
+            {
+                new OutingDate
+                {
+                    Id = 2,
+                    Date = new DateTime(2023,12,6),
+                }
+            }
+        };
+        int teamId = 2;
+        OutingTestRepository outingTestRepository = new OutingTestRepository();
+        outingTestRepository.Add(outing, teamId);
+        outingTestRepository.Vote("user1", 1, 3, new List<int>
+        {
+            1,
+            2
+        });
+        OutingService outingService = new OutingService(outingTestRepository);
+
+        bool Vote = outingService.Vote("user1", 1, 3, new List<int>
+        {
+            1,
+            2
+        });
+
+        Assert.IsFalse(Vote);
+    }
+    
+    [Test]
+    public void Vote_InvalidInput_Failure()
+    {
+        Outing outing = null;
+        int teamId = 2;
+        OutingTestRepository outingTestRepository = new OutingTestRepository();
+        OutingService outingService = new OutingService(outingTestRepository);
+
+        void Vote()
+        {
+            outingService.Vote("user1", 1, 3, new List<int> { 1, 2 });
+        }
+
+        Assert.Throws<ArgumentNullException>(Vote);
     }
 }
