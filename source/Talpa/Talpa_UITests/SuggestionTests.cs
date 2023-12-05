@@ -6,6 +6,8 @@ namespace Talpa_UITests;
 [TestFixture]
 public class SuggestionTests
 {
+    private readonly DatabaseSeederService _seeder = new();
+    
     private IWebDriver driver;
     
     public IDictionary<string, object> vars { get; private set; }
@@ -36,14 +38,15 @@ public class SuggestionTests
         driver.Manage().Window.Size = new System.Drawing.Size(1094, 1032);
         driver.FindElement(By.Id("username")).SendKeys("manager@gmail.com");
         driver.FindElement(By.Id("password")).SendKeys("Password123");
-        driver.FindElement(By.CssSelector(".c480bc568")).Click();
+        driver.FindElement(By.CssSelector(".c42321455 .cb8dcbc41[type=submit], .c7ff2a7be .cb8dcbc41[type=submit]")).Click();
     }
     
     [Test]
     public async Task create_suggestion_successfully()
     {
-        await _httpClient.GetAsync("http://localhost:8000/api/rollback");
-        await _httpClient.GetAsync("http://localhost:8000/api/migrate");
+        // await _httpClient.GetAsync("http://localhost:8000/api/rollback");
+        // await _httpClient.GetAsync("http://localhost:8000/api/migrate");
+        _seeder.Seed();
         
         driver.Navigate().GoToUrl("http://localhost:3000/");
         driver.Manage().Window.Size = new System.Drawing.Size(1094, 1032);
