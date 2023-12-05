@@ -7,10 +7,10 @@ start "Talpa" dotnet run
 cd ..
 
 cd .\TalpaSeeder\
-start "TalpaSeeder" php artisan serve
+REM start "TalpaSeeder" php artisan serve
 cd ..
 
-timeout /nobreak /t 20
+timeout /nobreak /t 15
 
 dotnet test --no-build --verbosity normal ./Talpa_UITests
 
