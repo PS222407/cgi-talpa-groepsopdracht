@@ -98,8 +98,12 @@ li a {
     text-align: center
 }
 
+.page-background {
+    background-color: var(--background);
+}
+
 .page-title-container {
-    background-color: var(--backgroundcolor);
+    background-color: var(--title-container);
     padding: 1em;
     font-size: 1.5em
 }
