@@ -15,11 +15,23 @@ public class OutingService : IOutingService
 
     public Outing Create(Outing outing, int teamId)
     {
+        if (outing == null)
+        {
+            throw new ArgumentOutOfRangeException("Outing can't be null");
+        }
+
         return _outingRepository.Create(outing, teamId);
     }
 
     public Outing? GetById(int id)
     {
+        Outing? outing = _outingRepository.GetById(id);
+
+        if (outing == null)
+        {
+            throw new ArgumentNullException("Outing doesn't exist");
+        }
+         
         return _outingRepository.GetById(id);
     }
 
@@ -40,9 +52,21 @@ public class OutingService : IOutingService
         return completeOutings.Where(completeOuting => completeOuting.DeadLine > DateTime.Now).ToList();
     }
 
-    public bool Update(Outing outing)
+    public bool Update(Outing newOuting)
     {
-        if (outing.Suggestions?.Count > 3)
+        if (newOuting == null)
+        {
+            throw new ArgumentOutOfRangeException("Outing can't be null");
+        }
+
+        Outing? outing = _outingRepository.GetById((int)newOuting.Id);
+
+        if (outing == null)
+        {
+            throw new ArgumentNullException("Outing doesn't exist");
+        }
+
+        if (newOuting.Suggestions?.Count > 3)
         {
             return false;
         }
@@ -52,6 +76,13 @@ public class OutingService : IOutingService
 
     public bool Delete(int id)
     {
+        Outing? outing = _outingRepository.GetById(id);
+
+        if (outing == null)
+        {
+            throw new ArgumentNullException("Outing doesn't exist");
+        }
+
         return _outingRepository.Delete(id);
     }
 
@@ -75,18 +106,38 @@ public class OutingService : IOutingService
 
     public bool Vote(string userId, int outingId, int suggestionId, List<int> votedDateIds)
     {
+        Outing? outing = _outingRepository.GetById(outingId);
+
+        if (outing == null)
+        {
+            throw new ArgumentNullException("Outing doesn't exist");
+        }
+
         return !UserHasVotedForOuting(userId, outingId)
                && _outingRepository.Vote(userId, outingId, suggestionId, votedDateIds);
+    }
+    public bool ConfirmOuting(int id, int suggestionId, int outingDateId)
+    {
+        Outing? outing = _outingRepository.GetById(id);
+
+        if (outing == null)
+        {
+            throw new ArgumentNullException("Outing doesn't exist");
+        }
+
+        return _outingRepository.ConfirmOuting(id, suggestionId, outingDateId);
     }
 
     public Outing? GetOutingByIdWithMostVotedDatesAndSuggestions(int id)
     {
-        return _outingRepository.GetOutingByIdWithMostVotedDatesAndSuggestions(id);
-    }
+        Outing? outing = _outingRepository.GetById(id);
 
-    public bool ConfirmOuting(int id, int suggestionId, int outingDateId)
-    {
-        return _outingRepository.ConfirmOuting(id, suggestionId, outingDateId);
+        if (outing == null)
+        {
+            throw new ArgumentNullException("Outing doesn't exist");
+        }
+
+        return _outingRepository.GetOutingByIdWithMostVotedDatesAndSuggestions(id);
     }
 
     public List<Outing> GetAllConfirmedFromTeam(int teamId)

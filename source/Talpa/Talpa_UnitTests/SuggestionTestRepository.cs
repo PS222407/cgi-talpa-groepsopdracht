@@ -53,10 +53,6 @@ public class SuggestionTestRepository : ISuggestionRepository
     {
         Suggestion? suggestionDb = suggestions
             .FirstOrDefault(o => o.Id == suggestion.Id);
-        if (suggestionDb == null)
-        {
-            return false;
-        }
 
         suggestionDb.Name = suggestion.Name;
         suggestionDb.Description = suggestion.Description;
@@ -70,11 +66,6 @@ public class SuggestionTestRepository : ISuggestionRepository
     {
         Suggestion? suggestion = suggestions
             .FirstOrDefault(o => o.Id == id);
-
-        if (suggestion == null)
-        {
-            return false;
-        }
 
         suggestions.Remove(suggestion);
 
