@@ -38,7 +38,7 @@ public class SuggestionTests
         driver.Manage().Window.Size = new System.Drawing.Size(1094, 1032);
         driver.FindElement(By.Id("username")).SendKeys("manager@gmail.com");
         driver.FindElement(By.Id("password")).SendKeys("Password123");
-        driver.FindElement(By.CssSelector(".c42321455 .cb8dcbc41[type=submit], .c7ff2a7be .cb8dcbc41[type=submit]")).Click();
+        driver.FindElement(By.XPath("(//button[@type='submit'])[last()]")).Click();
     }
     
     [Test]
