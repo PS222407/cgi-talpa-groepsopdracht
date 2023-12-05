@@ -1,4 +1,4 @@
-@using Talpa_10_WebApp.Translations
+﻿@using Talpa_10_WebApp.Translations
 @using Microsoft.AspNetCore.Mvc.Localization
 @model Talpa_10_WebApp.RequestModels.AppearanceRequest
 @inject IHtmlLocalizer<Shared> SharedLocalizer
@@ -64,8 +64,8 @@
                 <br>
 
                 <div class="form-group" style="display: flex; justify-content: space-between">
-                    <a class="btn btn-secondary" asp-action="Index">@SharedLocalizer["BackToList"]</a>
-                    <input type="submit" value="@SharedLocalizer["Create"]" class="btn btn-primary" style="background-color: #D92A3B; border-color: #D92A3B;"/>
+                    <a class="btn btn-secondary" href="/">@SharedLocalizer["Back"]</a>
+                    <input type="submit" value="@SharedLocalizer["Edit"]" class="btn btn-primary"/>
                 </div>
             </form>
         </div>
