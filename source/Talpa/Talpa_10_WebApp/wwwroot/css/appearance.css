@@ -1,8 +1,8 @@
-﻿:root {
-    --title-container: #ededed;
+:root {
+    --backgroundcolor: #f8f8f8;
     --white: #ffffff;
-    --main: #949494;
+    --main: #d92a3b;
     --main-darker: color-mix(in srgb,var(--main),#000 15%);
-    --secondary: #aa42ff;
+    --secondary: #d2d2d2;
     --secondary-darker: color-mix(in srgb,var(--secondary),#000 15%);
 }

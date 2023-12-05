@@ -3,3 +3,4 @@ appsettings.Development.backup.json
 appsettings.Production.json
 appsettings.Testing.json
 wwwroot/uploads/images/*
+wwwroot/css/appearance.backup.css
