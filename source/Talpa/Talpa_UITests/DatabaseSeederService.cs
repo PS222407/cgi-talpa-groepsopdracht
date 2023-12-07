@@ -1,6 +1,7 @@
 ﻿using BusinessLogicLayer.Models;
 using DataAccessLayer.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Configuration;
 
 namespace Talpa_UITests;
@@ -60,9 +61,12 @@ public class DatabaseSeederService
             _dataContext.Database.ExecuteSqlRaw($"DELETE FROM {table};");
             _dataContext.Database.ExecuteSqlRaw($"ALTER TABLE {table} AUTO_INCREMENT = 1;");
         }
-
         _dataContext.Database.ExecuteSqlRaw("SET FOREIGN_KEY_CHECKS=1;");
-
+        foreach (EntityEntry entry in _dataContext.ChangeTracker.Entries())
+        {
+            entry.State = EntityState.Detached;
+        }
+        
         _dataContext.Teams.Add(new Team { Id = 1, Name = "Team 1" });
         _dataContext.SaveChanges();
 
@@ -78,12 +82,18 @@ public class DatabaseSeederService
             {
                 Id = 1, Name = "Bowlen", UserId = ManagerId, Description = "Bowlen in de plaatselijke bowlingbaan", ImageUrl = "/uploads/images/870bc7ff-ff94-4083-adde-c8d5f0c8cd0a.jpg"
             },
-            new Suggestion { Id = 2, Name = "Boogschieten", UserId = EmployeeId, Description = "Lekker boogschieten", ImageUrl = null },
+            new Suggestion
+            {
+                Id = 2, Name = "Boogschieten", UserId = EmployeeId, Description = "Lekker boogschieten", ImageUrl = null
+            },
             new Suggestion
             {
                 Id = 3, Name = "Fietsen", UserId = ManagerId, Description = "Fietsen door de bossen van de Veluwe", ImageUrl = "/uploads/images/340dc5ec-01f4-4219-ac41-da44397ea43b.jpg"
             },
-            new Suggestion { Id = 4, Name = "Schaatsen", UserId = ManagerId, Description = "Schaatsen op de ijsbaan", ImageUrl = "/uploads/images/9ed7cd9a-b00c-42bd-a564-08d98a79859e.jpg" },
+            new Suggestion
+            {
+                Id = 4, Name = "Schaatsen", UserId = ManagerId, Description = "Schaatsen op de ijsbaan", ImageUrl = "/uploads/images/9ed7cd9a-b00c-42bd-a564-08d98a79859e.jpg"
+            },
             new Suggestion
             {
                 Id = 5, Name = "Poolen", UserId = ManagerId, Description = "Een gezellig potje poolen bij de The Rex Snooker en pool Club",
@@ -153,6 +163,18 @@ public class DatabaseSeederService
         _dataContext.Database.ExecuteSqlRaw($"INSERT INTO `SuggestionVote` (`UserId`, `SuggestionId`, `OutingId`) VALUES ('{AdminId}', 1, 1);");
         _dataContext.Database.ExecuteSqlRaw($"INSERT INTO `SuggestionVote` (`UserId`, `SuggestionId`, `OutingId`) VALUES ('{EmployeeId}', 1, 1);");
         _dataContext.Database.ExecuteSqlRaw($"INSERT INTO `SuggestionVote` (`UserId`, `SuggestionId`, `OutingId`) VALUES ('{EmployeeId}', 2, 1);");
+        _dataContext.SaveChanges();
+    }
+
+    public void AddDateVotes(string userId, int outingDateId)
+    {
+        _dataContext.Database.ExecuteSqlRaw($"INSERT INTO `DateVotes` (`UserId`, `OutingDateId`) VALUES ('{userId}', {outingDateId});");
+        _dataContext.SaveChanges();
+    }
+
+    public void AddSuggestionVotes(string userId, int suggestionId, int outingId)
+    {
+        _dataContext.Database.ExecuteSqlRaw($"INSERT INTO `SuggestionVote` (`UserId`, `SuggestionId`, `OutingId`) VALUES ('{userId}', {suggestionId}, {outingId});");
         _dataContext.SaveChanges();
     }
 }
