@@ -71,7 +71,7 @@ public class OutingService : IOutingService
             return false;
         }
 
-        return _outingRepository.Update(outing);
+        return _outingRepository.Update(newOuting);
     }
 
     public bool Delete(int id)
