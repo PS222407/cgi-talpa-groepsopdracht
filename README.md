@@ -23,20 +23,13 @@ dotnet user-secrets set "key" "value"
 Create a team manually in your developemnt database with teamId 1, here all users are assigned to due to conflicts when changing team id in Auth0 database
 
 ## Tests
-UnitTests can be started from your IDE  
-UITests must be runned from the <b>run_project_in_testing_env.bat</b> file in the source folder. But you first have to run this command inside the TalpaSeeder folder.
-```bash 
-composer i
-```
-and copy the .env.example to .env and fill in your database details
-
+UITests must be runned from the <b>run_project_in_testing_env.bat</b> file in the source folder. But you first have to put an image named sample.jpg in C:\images folder.
   
 You might want to debug and start all the services manually. To do this follow these steps:  
-Go into TalpaSeeder and run 
-```bash
-php artisan serve
-```
+
 Go into Talpa_10_Web and run 
 ```bash
 dotnet run
 ```
+
+And start the UI test from IDE

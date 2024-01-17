@@ -7,10 +7,6 @@ dotnet build
 start "Talpa" dotnet run
 cd ..
 
-cd .\TalpaSeeder\
-REM start "TalpaSeeder" php artisan serve
-cd ..
-
 timeout /nobreak /t 15
 
 dotnet test --verbosity normal ./Talpa_UITests
